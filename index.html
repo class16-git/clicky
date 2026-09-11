@@ -499,7 +499,6 @@
       height: 2px;
     }
     #tab-paper.active::after { background: var(--blue); }
-    #tab-numbers.active::after { background: var(--green); }
     #tab-terminal.active::after { background: #4ECDC4; }
     #tab-call.active::after { background: var(--blue); }
 
@@ -793,209 +792,6 @@
       text-align: right;
     }
 
-    /* ===== NUMBERS WORLD — Google Sheets ===== */
-    #numbers-world {
-      background: var(--bg);
-      font-family: 'Google Sans', 'Segoe UI', system-ui, sans-serif;
-    }
-    .sheet-toolbar {
-      background: var(--white);
-      border-bottom: 1px solid #DADCE0;
-      padding: 4px 8px;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      flex-shrink: 0;
-      overflow-x: auto;
-    }
-    .sheet-formula {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 0 8px;
-      min-width: 0;
-    }
-    .sheet-cell-id {
-      font-size: 12px;
-      color: var(--dim);
-      font-weight: 500;
-      background: #F8F9FA;
-      border: 1px solid #DADCE0;
-      border-radius: 4px;
-      padding: 3px 8px;
-      min-width: 48px;
-      text-align: center;
-    }
-    .sheet-fx {
-      font-size: 12px;
-      color: var(--dim);
-      font-style: italic;
-    }
-    .sheet-input {
-      flex: 1;
-      font-size: 12px;
-      border: 1px solid var(--blue);
-      border-radius: 4px;
-      padding: 3px 8px;
-      outline: none;
-      background: #E8F0FE;
-      min-width: 0;
-    }
-    .sheet-tabs {
-      background: var(--white);
-      border-bottom: 1px solid #DADCE0;
-      display: flex;
-      align-items: flex-end;
-      padding: 0 8px;
-      gap: 0;
-      flex-shrink: 0;
-    }
-    .sheet-tab {
-      padding: 6px 20px;
-      font-size: 13px;
-      color: var(--dim);
-      border-radius: 8px 8px 0 0;
-      cursor: pointer;
-      border: 1px solid transparent;
-      border-bottom: none;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.15s;
-    }
-    .sheet-tab.active {
-      background: var(--white);
-      border-color: #DADCE0;
-      color: var(--text);
-      font-weight: 500;
-    }
-    .sheet-tab-add {
-      padding: 6px 10px;
-      font-size: 16px;
-      color: var(--dim);
-      cursor: pointer;
-    }
-    .sheet-tab-add:hover { color: var(--text); }
-
-    .sheet-main {
-      flex: 1;
-      display: flex;
-      overflow: hidden;
-    }
-    .sheet-row-header {
-      width: 48px;
-      background: #F8F9FA;
-      border-right: 1px solid #DADCE0;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .sheet-corner {
-      height: 28px;
-      border-bottom: 1px solid #DADCE0;
-      border-right: 1px solid #DADCE0;
-      background: #F8F9FA;
-      flex-shrink: 0;
-    }
-    .sheet-rh {
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--dim);
-      border-bottom: 1px solid #E8EAED;
-      flex-shrink: 0;
-    }
-    .sheet-col-header {
-      flex: 1;
-      display: flex;
-      overflow: hidden;
-    }
-    .sheet-ch {
-      width: 80px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--dim);
-      border-right: 1px solid #E8EAED;
-      border-bottom: 1px solid #DADCE0;
-      background: #F8F9FA;
-      flex-shrink: 0;
-      font-weight: 500;
-    }
-    .sheet-grid-wrap {
-      flex: 1;
-      overflow: auto;
-      position: relative;
-    }
-    .sheet-grid {
-      display: grid;
-      grid-template-columns: repeat(10, 80px);
-      position: relative;
-    }
-    .sheet-cell {
-      height: 44px;
-      min-height: 44px;
-      min-width: 60px;
-      border-right: 1px solid #E8EAED;
-      border-bottom: 1px solid #E8EAED;
-      display: flex;
-      align-items: center;
-      padding: 0 6px;
-      font-size: 11px;
-      color: var(--text);
-      cursor: pointer;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      background: var(--white);
-      transition: background 0.1s;
-      position: relative;
-    }
-    .sheet-cell:hover { background: #F1F3F4; }
-    .sheet-cell:active { transform: scale(0.95); transition: transform 0.1s; }
-    .sheet-cell.selected {
-      outline: 2px solid var(--blue);
-      outline-offset: -2px;
-      background: #E8F0FE !important;
-      z-index: 5;
-    }
-    .sheet-cell.formula { color: var(--blue); font-style: italic; }
-    .sheet-cell.number { color: #202124; }
-    .sheet-cell.highlight-green { background: #E6F4EA !important; }
-    .sheet-cell.highlight-red { background: #FCE8E6 !important; }
-    .sheet-cell.highlight-yellow { background: #FEF7E0 !important; }
-    .sheet-cell.highlight-blue { background: #E8F0FE !important; }
-
-    /* Charts */
-    .sheet-charts {
-      padding: 8px 16px;
-      display: flex;
-      gap: 12px;
-      background: var(--white);
-      border-top: 1px solid #DADCE0;
-      flex-shrink: 0;
-      overflow-x: auto;
-    }
-    .chart-card {
-      background: var(--white);
-      border: 1px solid #DADCE0;
-      border-radius: 8px;
-      padding: 10px;
-      min-width: 160px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .chart-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .chart-title { font-size: 11px; color: var(--dim); margin-bottom: 6px; }
-    .chart-canvas { width: 140px; height: 80px; }
-
     /* ===== TERMINAL WORLD ===== */
     #terminal-world {
       background: #0d1117;
@@ -1143,6 +939,149 @@
       font-family: 'Courier New', monospace;
       text-transform: lowercase;
     }
+
+    /* Hacker logo — big pulsing emoji */
+    .term-hacker-logo {
+      font-size: 72px;
+      text-align: center;
+      animation: hackerPulse 1.5s ease-in-out infinite, hackerFloat 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(78,205,196,0.8));
+    }
+    .term-hacker-sub {
+      text-align: center;
+      font-size: 11px;
+      color: rgba(78,205,196,0.5);
+      letter-spacing: 4px;
+      margin-top: 4px;
+      font-family: 'Courier New', monospace;
+    }
+    @keyframes hackerPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(78,205,196,0.6)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 30px rgba(78,205,196,1)); }
+    }
+    @keyframes hackerFloat {
+      0%, 100% { margin-top: 0; }
+      50% { margin-top: -8px; }
+    }
+
+    /* Idle prompt — blinking TYPE TO HACK */
+    .term-idle-prompt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+      background: rgba(78,205,196,0.08);
+      border: 2px solid rgba(78,205,196,0.3);
+      border-radius: 12px;
+      padding: 10px 20px;
+      animation: idlePulse 1.2s ease-in-out infinite;
+    }
+    .term-idle-icon { font-size: 28px; }
+    .term-idle-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #4ECDC4;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 2px;
+    }
+    .term-idle-cursor {
+      font-size: 20px;
+      color: #4ECDC4;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes idlePulse {
+      0%, 100% { border-color: rgba(78,205,196,0.3); background: rgba(78,205,196,0.08); }
+      50% { border-color: rgba(78,205,196,0.8); background: rgba(78,205,196,0.15); }
+    }
+
+    /* Command echo — glow on '> command' */
+    .t-cmd {
+      color: #4ECDC4;
+      text-shadow: 0 0 10px rgba(78,205,196,0.8);
+    }
+
+    /* Success lines — big glow */
+    .t-ok.t-big {
+      font-size: 18px;
+      color: #6BCB77;
+      text-shadow: 0 0 15px rgba(107,203,119,0.8);
+      animation: okPop 0.4s var(--spring) both;
+    }
+    @keyframes okPop {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Rainbow color cycle for success lines */
+    .rainbow {
+      animation: rainbowCycle 1.5s linear infinite, okPop 0.4s var(--spring) both;
+    }
+    @keyframes rainbowCycle {
+      0% { color: #FF6B6B; text-shadow: 0 0 15px #FF6B6B; }
+      16% { color: #FFB347; text-shadow: 0 0 15px #FFB347; }
+      33% { color: #FFEB3B; text-shadow: 0 0 15px #FFEB3B; }
+      50% { color: #6BCB77; text-shadow: 0 0 15px #6BCB77; }
+      66% { color: #4ECDC4; text-shadow: 0 0 15px #4ECDC4; }
+      83% { color: #A855F7; text-shadow: 0 0 15px #A855F7; }
+      100% { color: #FF6B6B; text-shadow: 0 0 15px #FF6B6B; }
+    }
+
+    /* Command card enhanced — glowing on hover */
+    .cmd-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: rgba(78,205,196,0.1);
+      border: 2px solid rgba(78,205,196,0.25);
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+      min-width: 70px;
+      transition: all 0.2s var(--spring);
+      user-select: none;
+      box-shadow: 0 0 0 0 rgba(78,205,196,0);
+    }
+    .cmd-card:hover {
+      background: rgba(78,205,196,0.2);
+      border-color: rgba(78,205,196,0.7);
+      box-shadow: 0 0 20px rgba(78,205,196,0.3);
+      transform: scale(1.08) translateY(-3px);
+    }
+    .cmd-card:active {
+      transform: scale(0.92);
+      background: rgba(78,205,196,0.3);
+    }
+    .cmd-emoji { font-size: 32px; line-height: 1; }
+    .cmd-label {
+      font-size: 10px;
+      color: rgba(78,205,196,0.8);
+      font-family: 'Courier New', monospace;
+      text-transform: lowercase;
+    }
+
+    /* CRT screen glow on terminal window */
+    .term-window {
+      box-shadow: 0 0 30px rgba(78,205,196,0.15), 0 0 60px rgba(78,205,196,0.05);
+      border: 1px solid rgba(78,205,196,0.1);
+    }
+
+    /* Scanline effect on terminal output */
+    .term-output::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.03) 0px,
+        rgba(0,0,0,0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+    }
+
     .term-net {
       display: flex;
       gap: 6px;
@@ -1382,6 +1321,111 @@
     .meet-ctrl.end { background: #EA4335; color: white; width: 56px; border-radius: 24px; font-size: 20px; }
     .meet-ctrl:hover { transform: scale(1.1); }
 
+    /* ===== MEET ANIMATIONS ===== */
+    /* Avatar bounce */
+    @keyframes avatarBounce {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.05) translateY(-3px); }
+    }
+    /* Waving hand */
+    @keyframes wavingHand {
+      0% { transform: rotate(-20deg) scale(1.1); }
+      100% { transform: rotate(20deg) scale(1.1); }
+    }
+    .tile-waving-hand {
+      animation: wavingHand 0.8s ease-in-out infinite alternate;
+    }
+    /* Speaking indicator — pulse ring */
+    .tile-speaking {
+      display: none;
+      position: absolute;
+      inset: 0;
+      border: 3px solid #6BCB77;
+      border-radius: 12px;
+      animation: speakPulse 1s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes speakPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(107,203,119,0.5); }
+      50% { box-shadow: 0 0 0 8px rgba(107,203,119,0); }
+    }
+    /* Tile reaction pop */
+    .tile-reaction {
+      position: absolute;
+      font-size: 22px;
+      animation: reactionPop 1s ease-out forwards;
+      pointer-events: none;
+      z-index: 10;
+    }
+    @keyframes reactionPop {
+      0% { transform: scale(0) translateY(0); opacity: 1; }
+      30% { transform: scale(1.3) translateY(-10px); opacity: 1; }
+      100% { transform: scale(0.8) translateY(-40px); opacity: 0; }
+    }
+    /* Emoji float up */
+    .emoji-float {
+      position: fixed;
+      font-size: 24px;
+      animation: emojiFloat 1.8s ease-out forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    @keyframes emojiFloat {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120px) scale(0.5); opacity: 0; }
+    }
+    /* Meet control buttons — bigger touch targets */
+    .meet-ctrl {
+      width: 48px !important;
+      height: 48px !important;
+      min-width: 48px !important;
+      min-height: 48px !important;
+      border-radius: 50% !important;
+      font-size: 22px !important;
+    }
+    /* Meet grid — gap between tiles */
+    .meet-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 8px;
+    }
+    .meet-tile {
+      border-radius: 12px;
+      background: #2D2D2D;
+      border: 2px solid rgba(78,205,196,0.2);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .meet-tile:hover {
+      border-color: rgba(78,205,196,0.5);
+    }
+    /* Name label */
+    .tile-name {
+      font-size: 13px;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    }
+    /* Emoji bar — bigger buttons */
+    .emoji-btn {
+      width: 48px !important;
+      height: 48px !important;
+      min-width: 48px !important;
+      min-height: 48px !important;
+      font-size: 24px !important;
+      border-radius: 50%;
+      border: 2px solid rgba(78,205,196,0.3);
+      background: rgba(78,205,196,0.1);
+      transition: all 0.2s var(--spring);
+    }
+    .emoji-btn:hover {
+      background: rgba(78,205,196,0.25);
+      border-color: rgba(78,205,196,0.7);
+      transform: scale(1.15);
+    }
+    .emoji-btn:active {
+      transform: scale(0.9);
+    }
+
     /* ===== DESKTOP BAR ===== */
     #bar {
       height: 72px;
@@ -1556,11 +1600,6 @@
           <span class="chrome-tab-label">Docs</span>
           <span class="chrome-tab-close">×</span>
         </div>
-        <div class="chrome-tab" data-world="numbers" id="tab-numbers">
-          <span class="chrome-tab-icon">📊</span>
-          <span class="chrome-tab-label">Sheets</span>
-          <span class="chrome-tab-close">×</span>
-        </div>
         <div class="chrome-tab" data-world="terminal" id="tab-terminal">
           <span class="chrome-tab-icon">💻</span>
           <span class="chrome-tab-label">Terminal</span>
@@ -1619,58 +1658,6 @@
         <div class="doc-word-count" id="doc-wc">0 words · 0 characters</div>
       </div>
 
-      <!-- NUMBERS -->
-      <div id="numbers-world" class="world" style="display:none">
-        <div class="sheet-toolbar">
-      <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Undo">↩</div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Redo">↪</div>
-          <div class="tool-sep"></div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Font">Aa</div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Number format">123</div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Currency">$</div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Percent">%</div>
-          <div class="tool-sep"></div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Bold">B</div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Italic"><i>I</i></div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Color">🔽</div>
-          <div class="tool-sep"></div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Chart" id="btn-add-chart">📊</div>
-          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Filter">🔽</div>
-        </div>
-        <div class="sheet-formula">
-          <div class="sheet-cell-id" id="cell-id">A1</div>
-          <div class="sheet-fx">fx</div>
-          <input class="sheet-input" id="formula-input" type="text" placeholder="Enter a value or formula..." />
-        </div>
-        <div class="sheet-tabs">
-          <div class="sheet-tab active" data-sheet="0">📈 Data</div>
-          <div class="sheet-tab" data-sheet="1">📊 Charts</div>
-          <div class="sheet-tab-add" id="add-sheet">+</div>
-        </div>
-        <div class="sheet-main">
-          <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-            <div style="display:flex;overflow:hidden">
-              <div class="sheet-corner"></div>
-              <div class="sheet-col-header" id="col-header">
-                <div class="sheet-ch">A</div><div class="sheet-ch">B</div><div class="sheet-ch">C</div>
-                <div class="sheet-ch">D</div><div class="sheet-ch">E</div><div class="sheet-ch">F</div>
-                <div class="sheet-ch">G</div><div class="sheet-ch">H</div><div class="sheet-ch">I</div>
-                <div class="sheet-ch">J</div>
-              </div>
-            </div>
-            <div class="sheet-grid-wrap" id="sheet-wrap">
-              <div class="sheet-grid" id="sheet-grid"></div>
-            </div>
-          </div>
-          <!-- Charts panel (slide in) -->
-          <div id="charts-panel" style="display:none;width:200px;background:#F8F9FA;border-left:1px solid #DADCE0;overflow-y:auto;flex-shrink:0">
-            <div style="padding:8px 12px;font-size:11px;color:#5F6368;font-weight:500;border-bottom:1px solid #DADCE0">📊 Charts</div>
-            <div id="charts-list" style="padding:8px;display:flex;flex-direction:column;gap:6px"></div>
-          </div>
-        </div>
-        <div class="sheet-charts" id="sheet-charts-bar" style="display:none"></div>
-      </div>
-
       <!-- TERMINAL -->
       <div id="terminal-world" class="world" style="display:none">
         <div class="term-art" id="term-art"></div>
@@ -1702,6 +1689,14 @@
           <div class="cmd-card" data-cmd="backup" onclick="runCmd('backup')">
             <div class="cmd-emoji">💾</div>
             <div class="cmd-label">backup</div>
+          </div>
+          <div class="cmd-card" data-cmd="neofetch" onclick="runCmd('neofetch')">
+            <div class="cmd-emoji">🖥️</div>
+            <div class="cmd-label">neofetch</div>
+          </div>
+          <div class="cmd-card" data-cmd="colorbomb" onclick="runCmd('colorbomb')">
+            <div class="cmd-emoji">🎨</div>
+            <div class="cmd-label">colorbomb</div>
           </div>
           <div class="cmd-card" data-cmd="matrix" onclick="runCmd('matrix')">
             <div class="cmd-emoji">🌈</div>
@@ -1796,10 +1791,6 @@
         <div class="bar-icon" style="background:#E8F0FE">📝</div>
         <div class="bar-label">Docs</div>
       </div>
-      <div class="bar-btn" data-w="numbers">
-        <div class="bar-icon" style="background:#E6F4EA">📊</div>
-        <div class="bar-label">Sheets</div>
-      </div>
       <div class="bar-btn" data-w="terminal">
         <div class="bar-icon" style="background:#0d1117;color:#4ECDC4">💻</div>
         <div class="bar-label">Terminal</div>
@@ -1831,8 +1822,6 @@ const state = {
   keyTimes: [],
   parentPanelOpen: false,
   termNetLevel: 0,
-  sheetData: [],
-  sheetSelected: null,
   meetMuted: false,
   meetVid: true,
   meetSharing: false,
@@ -1936,7 +1925,7 @@ function emojiAt(el, emoji='🎉') {
 function switchWorld(w) {
   sound.init();
   state.world = w;
-  ['paper','numbers','terminal','call'].forEach(id => {
+  ['paper','terminal','call'].forEach(id => {
     const el = $(id + '-world');
     if (el) el.style.display = id === w ? 'flex' : 'none';
   });
@@ -1945,13 +1934,11 @@ function switchWorld(w) {
   // Update address bar URL
   const urlMap = {
     paper: '📝 docs.google.com/document — Clickety',
-    numbers: '📊 sheets.google.com — Clickety',
     terminal: '💻 terminal.google.com — Clickety',
     call: '📹 meet.google.com — Clickety'
   };
   $('url-text').textContent = urlMap[w] || 'clickety.desk';
   if (w === 'paper') initPaper();
-  if (w === 'numbers') initNumbers();
   if (w === 'terminal') initTerminal();
   if (w === 'call') initCall();
 }
@@ -2036,226 +2023,6 @@ function initPaper() {
   updateWC();
 }
 
-// ===== NUMBERS WORLD =====
-function initNumbers() {
-  // Play happy sound on world enter
-  sound.play('happy');
-  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 15);
-
-  if (state.sheetData.length === 0) {
-    // Sample data: 6 rows x 5 cols (A-E)
-    const labels = ['Month','Revenue','Expenses','Profit','Growth'];
-    const rows = [
-      ['Jan','4500','3200','1300','+12%'],
-      ['Feb','4800','3100','1700','+18%'],
-      ['Mar','5200','3400','1800','+8%'],
-      ['Apr','4900','3300','1600','-5%'],
-      ['May','5800','3600','2200','+22%'],
-      ['Jun','6100','3800','2300','+15%'],
-    ];
-    state.sheetData = [labels, ...rows];
-  }
-
-  renderSheet();
-
-  $('formula-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      sound.play('happy');
-      sparkleBurst(window.innerWidth / 2, 200, 20);
-      confettiBurst();
-      const val = $('formula-input').value;
-      if (state.sheetSelected !== null) {
-        const [r, c] = state.sheetSelected;
-        state.sheetData[r][c] = val;
-        renderSheet();
-        if (c === 1) updateCharts();
-      }
-    }
-  });
-
-  $('btn-add-chart') && ($('btn-add-chart').onclick = () => {
-    $('charts-panel').style.display = $('charts-panel').style.display === 'none' ? 'block' : 'none';
-    renderCharts();
-    sound.play('sparkle');
-    sparkleAt($('btn-add-chart'));
-  });
-
-  $('add-sheet').addEventListener('click', () => {
-    sound.play('happy');
-    sparkleAt($('add-sheet'));
-    confettiBurst();
-    const newData = [
-      ['Item','Qty','Price','Total'],
-      ['Apple',10,3,'=B2*C2'],
-      ['Banana',5,2,'=B3*C3'],
-      ['Orange',8,4,'=B4*C4'],
-    ];
-    const tab = document.createElement('div');
-    tab.className = 'sheet-tab';
-    tab.textContent = `📊 Sheet ${state.sheetData.length}`;
-    tab.dataset.sheet = state.sheetData.length;
-    $('add-sheet').before(tab);
-    tab.onclick = () => {
-      document.querySelectorAll('.sheet-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      state.sheetData.push(newData);
-      renderSheet();
-      sparkleAt(tab);
-    };
-    celebrate();
-  });
-}
-
-function renderSheet() {
-  const grid = $('sheet-grid');
-  grid.innerHTML = '';
-  const cols = state.sheetData[0]?.length || 5;
-  grid.style.gridTemplateColumns = `repeat(${cols}, 80px)`;
-
-  state.sheetData.forEach((row, ri) => {
-    row.forEach((cell, ci) => {
-      const div = document.createElement('div');
-      div.className = 'sheet-cell';
-      if (ri === 0) div.style.background = '#F8F9FA';
-      if (ri > 0 && ci > 0 && !isNaN(parseFloat(cell))) div.classList.add('number');
-      if (cell && cell.startsWith('=')) div.classList.add('formula');
-      div.textContent = cell;
-      div.dataset.r = ri;
-      div.dataset.c = ci;
-      div.addEventListener('click', () => {
-        document.querySelectorAll('.sheet-cell').forEach(c => c.classList.remove('selected'));
-        div.classList.add('selected');
-        div.classList.add('bounce');
-        setTimeout(() => div.classList.remove('bounce'), 400);
-        state.sheetSelected = [ri, ci];
-        const colLetter = String.fromCharCode(65 + ci);
-        $('cell-id').textContent = `${colLetter}${ri + 1}`;
-        $('formula-input').value = cell;
-        sound.play('sparkle');
-        sparkleAt(div);
-        emojiAt(div, '✨');
-      });
-      div.addEventListener('dblclick', () => {
-        $('formula-input').focus();
-      });
-      grid.appendChild(div);
-    });
-  });
-}
-
-function updateCharts() {
-  $('sheet-charts-bar').style.display = 'flex';
-  $('sheet-charts-bar').innerHTML = `
-    <div class="chart-card" onclick="sound.play('happy');sparkleAt(this);">
-      <div class="chart-title">Revenue Trend</div>
-      <canvas class="chart-canvas" id="chart-line" width="140" height="80"></canvas>
-    </div>
-    <div class="chart-card" onclick="sound.play('happy');sparkleAt(this);">
-      <div class="chart-title">Profit by Month</div>
-      <canvas class="chart-canvas" id="chart-bar" width="140" height="80"></canvas>
-    </div>
-    <div class="chart-card" onclick="sound.play('happy');sparkleAt(this);">
-      <div class="chart-title">Revenue Mix</div>
-      <canvas class="chart-canvas" id="chart-pie" width="140" height="80"></canvas>
-    </div>
-  `;
-  drawCharts();
-}
-
-function drawCharts() {
-  const data = state.sheetData;
-  if (!data || data.length < 2) return;
-
-  // Line chart
-  const lc = $('chart-line');
-  if (lc) {
-    const ctx = lc.getContext('2d');
-    const w = lc.width, h = lc.height;
-    const rev = data.slice(1).map(r => parseFloat(r[1]) || 0);
-    const max = Math.max(...rev);
-    ctx.clearRect(0,0,w,h);
-    ctx.strokeStyle = '#4285F4';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    rev.forEach((v,i) => {
-      const x = (i/(rev.length-1))*(w-10)+5;
-      const y = h - 10 - ((v/max)*(h-20));
-      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-    // Dots
-    ctx.fillStyle = '#4285F4';
-    rev.forEach((v,i) => {
-      const x = (i/(rev.length-1))*(w-10)+5;
-      const y = h - 10 - ((v/max)*(h-20));
-      ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
-    });
-  }
-
-  // Bar chart
-  const bc = $('chart-bar');
-  if (bc) {
-    const ctx = bc.getContext('2d');
-    const w = bc.width, h = bc.height;
-    const prof = data.slice(1).map(r => parseFloat(r[3]) || 0);
-    const max = Math.max(...prof, 1);
-    ctx.clearRect(0,0,w,h);
-    const colors = ['#4285F4','#34A853','#FBBC04','#EA4335','#A855F7','#4ECDC4'];
-    prof.forEach((v,i) => {
-      const bx = 8 + i*(w/prof.length);
-      const bw2 = (w/prof.length) - 8;
-      const bh = (v/max)*(h-10);
-      ctx.fillStyle = colors[i%colors.length];
-      ctx.fillRect(bx, h-bh, bw2, bh);
-    });
-  }
-
-  // Pie chart
-  const pc = $('chart-pie');
-  if (pc) {
-    const ctx = pc.getContext('2d');
-    const w = pc.width, h = pc.height;
-    const rev = data.slice(1).map(r => parseFloat(r[1]) || 0);
-    const total = rev.reduce((a,b)=>a+b,0);
-    const colors = ['#4285F4','#34A853','#FBBC04','#EA4335','#A855F7','#4ECDC4'];
-    let start = -Math.PI/2;
-    rev.forEach((v,i) => {
-      const slice = (v/total)*Math.PI*2;
-      ctx.fillStyle = colors[i%colors.length];
-      ctx.beginPath();
-      ctx.moveTo(w/2, h/2);
-      ctx.arc(w/2, h/2, Math.min(w,h)/2-5, start, start+slice);
-      ctx.closePath();
-      ctx.fill();
-      start += slice;
-    });
-    // Center hole
-    ctx.fillStyle = '#F8F9FA';
-    ctx.beginPath();
-    ctx.arc(w/2, h/2, 15, 0, Math.PI*2);
-    ctx.fill();
-  }
-}
-
-function renderCharts() {
-  const list = $('charts-list');
-  if (!list) return;
-  list.innerHTML = `
-    <div class="chart-card" onclick="updateCharts();$('charts-panel').style.display='none';">
-      <div style="font-size:28px;text-align:center;margin-bottom:4px">📈</div>
-      <div class="chart-title">Line Chart</div>
-    </div>
-    <div class="chart-card" onclick="updateCharts();$('charts-panel').style.display='none';">
-      <div style="font-size:28px;text-align:center;margin-bottom:4px">📊</div>
-      <div class="chart-title">Bar Chart</div>
-    </div>
-    <div class="chart-card" onclick="updateCharts();$('charts-panel').style.display='none';">
-      <div style="font-size:28px;text-align:center;margin-bottom:4px">🥧</div>
-      <div class="chart-title">Pie Chart</div>
-    </div>
-  `;
-}
-
 // ===== TERMINAL WORLD =====
 const COMMANDS = {
   ping() { addT('Pinging server @ 192.168.1.1...','t-sys'); setTimeout(()=>{addT('Reply: time=2ms','t-out');addT('🟢 PONG! Server alive!','t-ok t-big');addTN(1);sound.play('ok');},500); },
@@ -2295,6 +2062,50 @@ const COMMANDS = {
   },
   restart() {
     const svcs=['nginx','postgresql','redis','docker','vault','app'];let i=0;const iv=setInterval(()=>{addT('  ✓ '+svcs[i%svcs.length]+' restarted','t-out');sound.play('key');i++;if(i>=svcs.length){clearInterval(iv);setTimeout(()=>{addT('✅ ALL SERVICES RESTARTED','t-ok t-big');addTN(6);celebrate();},400);}},220);
+  },
+  neofetch() {
+    const line = (text, val) => addT(text.padEnd(14) + val, 't-out');
+    addT('', 't-out');
+    addT('  💻 ClicketyTerminal  ', 't-sys');
+    addT('  ═══════════════════════════════', 't-sys');
+    line('👤', 'Fadiya @ clickety');
+    line('💻', 'Terminal v2.0');
+    line('🖥️', 'Clickety OS');
+    line('📅', new Date().toLocaleDateString());
+    line('⏰', new Date().toLocaleTimeString());
+    line('🧠', 'Memory: ▰▰▰▰▰▱▱▱▱▱ 60%');
+    line('💾', 'Disk: ▰▰▰▰▰▰▱▱▱▱ 60%');
+    line('🌡️', 'CPU: ▰▰▰▱▱▱▱▱▱▱ 20%');
+    line('📶', 'Network: ▰▰▰▰▰▱▱▱▱▱ 50%');
+    addT('  ═══════════════════════════════', 't-sys');
+    addT('', 't-out');
+    addT('🎨 colors: red orange yellow green cyan purple', 't-dim');
+    sound.play('happy');
+  },
+  colorbomb() {
+    // Fire rainbow confetti across the whole screen
+    const colors = ['#FF6B6B','#FFB347','#FFEB3B','#6BCB77','#4ECDC4','#A855F7','#FF6B6B','#F472B6'];
+    const container = document.getElementById('confetti-container');
+    if (container) {
+      for (let i = 0; i < 80; i++) {
+        setTimeout(() => {
+          const conf = document.createElement('div');
+          conf.style.cssText = `position:fixed;width:10px;height:10px;background:${colors[i%colors.length]};border-radius:2px;left:${Math.random()*100}vw;top:-20px;z-index:9999;pointer-events:none;animation:confettiFall ${1.5+Math.random()*1.5}s ${Math.random()*0.5}s linear forwards`;
+          container.appendChild(conf);
+          setTimeout(() => conf.remove(), 3000);
+        }, i * 30);
+      }
+    }
+    addT('💥 COLOR BOMB!!! 💥','t-ok t-big');
+    addT('BOOM! BOOM! BOOM!','t-ok');
+    sound.play('happy');
+    celebrate();
+    setTimeout(() => {
+      const outputs = document.querySelectorAll('.term-line.t-ok');
+      outputs.forEach((el, i) => {
+        setTimeout(() => { el.classList.add('rainbow'); }, i * 100);
+      });
+    }, 300);
   }
 };
 
@@ -2349,20 +2160,43 @@ function renderTermNet() {
 }
 
 function initTerminal() {
-  // Play happy fanfare on world enter
-  sound.play('happy');
-  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 15);
+  // Full-screen terminal takeover celebration
+  sound.play('twinkle');
+  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 30);
+  emojiCascade();
 
-  // Clear output and re-init on each entry
+  // Reset state
+  state.termIdle = true;
+  state.termFirstCommand = false;
   const out = $('term-output');
   if (out) out.innerHTML = '';
   state.termInput = '';
 
-  $('term-art').innerHTML = '<div style="font-size:56px;text-align:center;line-height:1.2;animation:floatArt 3s ease-in-out infinite">💻</div><div style="font-size:11px;color:rgba(78,205,196,0.4);text-align:center;letter-spacing:2px">CLICKETY TERMINAL</div>';
-  addT('Welcome to Clickety Terminal','t-sys');
-  addT('Tap a card below or type a command!','t-sys');
-  addT('Try: ping · deploy · backup · matrix · hack','t-dim');
+  // Big glowing hacker logo + idle prompt
+  $('term-art').innerHTML = `
+    <div class="term-hacker-logo">💻</div>
+    <div class="term-hacker-sub">CLICKETY TERMINAL v2.0</div>
+    <div class="term-idle-prompt" id="term-idle-prompt">
+      <div class="term-idle-icon">⌨️</div>
+      <div class="term-idle-text">TYPE TO HACK!</div>
+      <div class="term-idle-cursor">▮</div>
+    </div>`;
+
+  addT('╔══════════════════════════════════╗','t-sys');
+  addT('║  CLICKETY TERMINAL — READY      ║','t-sys');
+  addT('╚══════════════════════════════════╝','t-sys');
+  addT('Type a command or tap a card below!','t-out');
+  addT('Commands: ping · deploy · backup · matrix · hack · neofetch · colorbomb','t-dim');
   renderTermNet();
+
+  // Auto-pulse the idle prompt
+  if (window.termIdleTimer) clearInterval(window.termIdleTimer);
+  window.termIdleTimer = setInterval(() => {
+    const prompt = $('term-idle-prompt');
+    if (prompt && state.world === 'terminal') {
+      prompt.style.opacity = prompt.style.opacity === '0.3' ? '1' : '0.3';
+    }
+  }, 800);
 
   const hiddenInp = $('term-input-hidden');
   const display = $('term-input-display');
@@ -2370,10 +2204,18 @@ function initTerminal() {
     hiddenInp.value = '';
     hiddenInp.focus();
 
-    // Show typed text in the display
+    // Echo every keystroke to output as user types
     hiddenInp.addEventListener('input', () => {
       display.textContent = hiddenInp.value;
       state.termInput = hiddenInp.value;
+      // Hide idle prompt once user starts typing
+      const idle = $('term-idle-prompt');
+      if (idle && hiddenInp.value.length > 0) {
+        idle.style.display = 'none';
+        state.termIdle = false;
+      }
+      // Key sound on each keystroke
+      sound.play('key');
     });
 
     hiddenInp.addEventListener('keydown', e => {
@@ -2383,30 +2225,46 @@ function initTerminal() {
         const cmd = state.termInput.trim().toLowerCase();
         sound.play('enter');
         if (cmd) {
-          addT(cmd,'t-cmd');
+          // First command = special hacker celebration
+          if (!state.termFirstCommand) {
+            state.termFirstCommand = true;
+            setTimeout(() => {
+              addT('','t-out');
+              addT('🎉 FIRST COMMAND EXECUTED! 🎉','t-ok t-big');
+              addT('You are now an ELITE HACKER!','t-ok');
+              addT('','t-out');
+              celebrate();
+              confettiBurst();
+            }, cmd.length * 60 + 400);
+          }
+
+          // Echo typed text as command
+          addT('> ' + cmd, 't-cmd');
+
           if (COMMANDS[cmd]) {
-            const origRun = COMMANDS[cmd];
-            COMMANDS[cmd] = function() {
-              origRun.apply(this, arguments);
-              setTimeout(() => {
-                sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
-                sound.play('happy');
-                const outputs = document.querySelectorAll('.term-line.t-ok');
-                outputs.forEach(el => { el.classList.add('rainbow'); setTimeout(() => el.classList.remove('rainbow'), 700); });
-              }, 300);
-            };
+            // Screen flash on command run
+            document.body.style.transition = 'filter 0.1s';
+            document.body.style.filter = 'brightness(1.3)';
+            setTimeout(() => { document.body.style.filter = 'none'; }, 120);
+
             COMMANDS[cmd]();
-            COMMANDS[cmd] = origRun; // restore
+            setTimeout(() => {
+              sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 25);
+              sound.play('happy');
+              document.querySelectorAll('.term-line.t-ok').forEach(el => {
+                el.classList.add('rainbow');
+                setTimeout(() => el.classList.remove('rainbow'), 1200);
+              });
+            }, 200);
           } else {
-            addT('Command not found. Type "help".','t-err');
+            addT('Command not found. Try: ping · deploy · backup · matrix', 't-err');
             sound.play('err');
+            shake();
           }
         }
         hiddenInp.value = '';
         display.textContent = '';
         state.termInput = '';
-      } else if (e.key === 'Backspace') {
-        // Browser handles naturally
       }
     });
 
@@ -2416,10 +2274,10 @@ function initTerminal() {
       hiddenInp.value += text;
       display.textContent = hiddenInp.value;
       state.termInput = hiddenInp.value;
+      sound.play('key');
     });
   }
 
-  // Click anywhere in terminal to re-focus input
   $('terminal-world') && $('terminal-world').addEventListener('click', () => {
     if (hiddenInp) hiddenInp.focus();
   });
@@ -2427,59 +2285,105 @@ function initTerminal() {
 
 // ===== CALL WORLD =====
 function initCall() {
-  // Play happy fanfare on world enter
+  // Big celebration on enter
   sound.play('happy');
-  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
+  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 30);
   confettiBurst();
 
   // Meeting timer
-  const timer = setInterval(() => {
-    if (state.world !== 'call') { clearInterval(timer); return; }
+  if (window.meetTimer) clearInterval(window.meetTimer);
+  window.meetTimer = setInterval(() => {
+    if (state.world !== 'call') { clearInterval(window.meetTimer); return; }
     const elapsed = Math.floor((Date.now() - state.meetStart) / 1000);
     const m = String(Math.floor(elapsed/60)).padStart(2,'0');
     const s = String(elapsed%60).padStart(2,'0');
     $('meet-time').textContent = `${m}:${s}`;
   }, 1000);
 
-  // Emoji reactions
+  // Animate participant tiles — auto-waving
+  const participants = [
+    { name: 'Me',     avatar: '😊', tile: 'tile-main',  wave: true },
+    { name: 'Aya',    avatar: '👧', tile: 'tile-2',    wave: true },
+    { name: 'Papa',   avatar: '👨', tile: 'tile-3',    wave: false },
+    { name: 'Ibu',    avatar: '👩', tile: 'tile-4',    wave: true },
+  ];
+  // Assign names/avatars to tiles
+  participants.forEach((p, i) => {
+    const tile = $(p.tile);
+    if (!tile) return;
+    const av = tile.querySelector('.tile-avatar');
+    const nm = tile.querySelector('.tile-name');
+    if (av) { av.textContent = p.avatar; av.style.animation = 'avatarBounce 2s ease-in-out infinite'; }
+    if (nm) nm.textContent = p.name;
+    if (p.wave) {
+      setTimeout(() => {
+        const w = document.createElement('div');
+        w.className = 'tile-waving-hand';
+        w.textContent = '👋';
+        w.style.cssText = 'position:absolute;right:8px;top:8px;font-size:20px;animation:wavingHand 0.8s ease-in-out infinite alternate;';
+        tile.appendChild(w);
+      }, i * 600);
+    }
+  });
+
+  // Auto-speaking indicator — cycles through participants
+  let speakerIdx = 0;
+  if (window.speakerTimer) clearInterval(window.speakerTimer);
+  window.speakerTimer = setInterval(() => {
+    if (state.world !== 'call') { clearInterval(window.speakerTimer); return; }
+    document.querySelectorAll('.tile-speaking').forEach(s => s.style.display = 'none');
+    const tiles = document.querySelectorAll('.meet-tile');
+    if (tiles[speakerIdx]) {
+      const sp = tiles[speakerIdx].querySelector('.tile-speaking');
+      if (sp) { sp.style.display = 'block'; sound.play('key'); }
+    }
+    speakerIdx = (speakerIdx + 1) % tiles.length;
+  }, 2200);
+
+  // Emoji reactions — more sparkles + confetti + floating chat
   document.querySelectorAll('.emoji-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const em = btn.dataset.emoji;
-      sound.play('sparkle');
-      sparkleAt(btn);
-      // Float emoji up from the button
+      sound.play('happy');
+      sparkleBurst(btn.getBoundingClientRect().left + 22, btn.getBoundingClientRect().top + 22, 8);
+      // Confetti burst from the button
       const r = btn.getBoundingClientRect();
-      for (let i = 0; i < 3; i++) {
+      confettiBurstAt(r.left + r.width/2, r.top + r.height/2);
+      // Float emoji up
+      for (let i = 0; i < 5; i++) {
         setTimeout(() => {
           const el = document.createElement('div');
           el.className = 'emoji-float';
           el.textContent = em;
-          el.style.cssText = `left:${r.left + r.width/2 - 14 + (Math.random()-0.5)*30}px;top:${r.top - 10}px`;
+          el.style.cssText = `left:${r.left + r.width/2 - 16 + (Math.random()-0.5)*50}px;top:${r.top}px;font-size:${20+Math.random()*16}px`;
           document.body.appendChild(el);
-          setTimeout(() => el.remove(), 1600);
-        }, i * 100);
+          setTimeout(() => el.remove(), 1800);
+        }, i * 80);
       }
-      // Pop reaction on all tiles
+      // Pop on all tiles
       document.querySelectorAll('.meet-tile').forEach(tile => {
-        if (Math.random() > 0.3) {
-          const pop = document.createElement('div');
-          pop.className = 'tile-reaction';
-          pop.textContent = em;
-          pop.style.cssText = `left:${10+Math.random()*60}%;top:${10+Math.random()*60}%;animation-delay:${Math.random()*.3}s`;
-          tile.appendChild(pop);
-          setTimeout(() => pop.remove(), 800);
-        }
+        const pop = document.createElement('div');
+        pop.className = 'tile-reaction';
+        pop.textContent = em;
+        pop.style.cssText = `left:${10+Math.random()*60}%;top:${10+Math.random()*50}%;animation-delay:${Math.random()*.3}s;font-size:${18+Math.random()*10}px`;
+        tile.appendChild(pop);
+        setTimeout(() => pop.remove(), 1200);
+        // Tile glow on reaction
+        tile.style.transition = 'box-shadow 0.2s';
+        tile.style.boxShadow = '0 0 20px rgba(78,205,196,0.5)';
+        setTimeout(() => { tile.style.boxShadow = ''; }, 600);
       });
-      // Add to chat
+      // Chat entry
       const chatMsg = document.createElement('div');
       chatMsg.className = 'chat-msg';
       chatMsg.innerHTML = `<span class="chat-msg-name">Me</span>${em} <span class="chat-msg-time">just now</span>`;
       $('chat-msgs').appendChild(chatMsg);
       $('chat-msgs').scrollTop = $('chat-msgs').scrollHeight;
+      celebrate();
     });
   });
 
-  // Controls — all with sparkle + happy sound
+  // Controls
   $('ctrl-mic').onclick = () => {
     state.meetMuted = !state.meetMuted;
     $('ctrl-mic').classList.toggle('active', state.meetMuted);
@@ -2519,14 +2423,16 @@ function initCall() {
   $('ctrl-hand').onclick = () => {
     state.meetHand = !state.meetHand;
     $('ctrl-hand').classList.toggle('active', state.meetHand);
-    sound.play('sparkle');
+    sound.play('happy');
     sparkleAt($('ctrl-hand'));
     if (state.meetHand) {
       const hand = document.createElement('div');
       hand.className = 'tile-hand';
       hand.textContent = '✋';
+      hand.style.animation = 'wavingHand 0.5s ease-in-out infinite alternate';
       $('tile-main').appendChild(hand);
-      sound.play('happy');
+      // Big confetti for raising hand
+      confettiBurst();
       celebrate();
     } else {
       const h = $('tile-main').querySelector('.tile-hand');
@@ -2537,7 +2443,6 @@ function initCall() {
   $('ctrl-end').onclick = () => {
     sound.play('err');
     shake();
-    // Flash red
     document.querySelectorAll('.meet-tile').forEach(t => t.style.background = '#3C3C3C');
     setTimeout(() => {
       switchWorld('paper');
@@ -2545,17 +2450,17 @@ function initCall() {
     }, 1000);
   };
 
-  // Tile click → speaking indicator
-  document.querySelectorAll('.meet-tile[data-tile]').forEach(tile => {
+  // Tile click → big sparkle
+  document.querySelectorAll('.meet-tile').forEach(tile => {
     tile.addEventListener('click', () => {
       document.querySelectorAll('.tile-speaking').forEach(s => s.style.display = 'none');
-      tile.querySelector('.tile-speaking').style.display = 'block';
-      sound.play('key');
-      setTimeout(() => { const s = tile.querySelector('.tile-speaking'); if(s) s.style.display='none'; }, 2000);
+      const sp = tile.querySelector('.tile-speaking');
+      if (sp) { sp.style.display = 'block'; setTimeout(() => { if(sp) sp.style.display='none'; }, 2000); }
+      const r = tile.getBoundingClientRect();
+      sparkleBurst(r.left + r.width/2, r.top + r.height/2, 15);
+      sound.play('happy');
     });
   });
-}
-
 // ===== KEYBOARD SMASH =====
 document.addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT' || e.target.contentEditable === 'true') return;
@@ -2568,16 +2473,6 @@ document.addEventListener('keydown', e => {
         const texts = ['Hello!','Wow!','Work work!','📝✨','Great!','🎉'];
         const body = $('doc-body');
         body.textContent += (body.textContent ? ' ' : '') + texts[Math.floor(Math.random()*texts.length)];
-        shake(); emojiCascade(); sound.play('chaos');
-        break;
-      case 'numbers':
-        // Fill random cells
-        for(let i=0;i<10;i++){
-          const idx = Math.floor(Math.random()*state.sheetData.length);
-          const cidx = Math.floor(Math.random()*(state.sheetData[0]?.length||5));
-          state.sheetData[idx][cidx] = String(Math.floor(Math.random()*999));
-        }
-        renderSheet(); updateCharts();
         shake(); emojiCascade(); sound.play('chaos');
         break;
       case 'terminal':
@@ -2726,6 +2621,55 @@ function confettiBurst() {
     container.appendChild(piece);
   }
   setTimeout(() => container.innerHTML = '', 2500);
+}
+
+// Confetti burst at specific x,y position (used by Meet emoji reactions)
+function confettiBurstAt(x, y) {
+  if (state.reducedMotion) return;
+  const container = document.getElementById('confetti-container');
+  if (!container) return;
+  const colors = ['#FF6B6B','#4ECDC4','#FFE66D','#A855F7','#6BCB77','#FF8E53','#FFB347','#FF6B9D'];
+  for (let i = 0; i < 30; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const angle = Math.random() * Math.PI * 2;
+    const velocity = 3 + Math.random() * 6;
+    const dx = Math.cos(angle) * velocity;
+    const dy = Math.sin(angle) * velocity - 4;
+    piece.style.cssText = [
+      `position:fixed`,
+      `left:${x}px`,
+      `top:${y}px`,
+      `background:${colors[Math.floor(Math.random()*colors.length)]}`,
+      `animation:confettiBurstAt ${1 + Math.random()*0.8}s ${Math.random()*0.2}s ease-out forwards`,
+      `border-radius:${Math.random()>0.5?'50%':'2px'}`,
+      `width:${6 + Math.random()*10}px`,
+      `height:${6 + Math.random()*10}px`,
+      `transform:translate(-50%,-50%)`,
+    ].join(';');
+    // Animate with JS for directional burst
+    piece.style.setProperty('--dx', dx + 'px');
+    piece.style.setProperty('--dy', dy + 'px');
+    container.appendChild(piece);
+    // Animate with JS
+    let start = null;
+    const animate = (t) => {
+      if (!start) start = t;
+      const progress = (t - start) / ((1 + Math.random() * 0.8) * 1000);
+      if (progress < 1) {
+        const px = x + dx * progress * 60;
+        const py = y + dy * progress * 60 + 0.5 * 9.8 * progress * progress * 60;
+        piece.style.left = px + 'px';
+        piece.style.top = py + 'px';
+        piece.style.opacity = 1 - progress;
+        requestAnimationFrame(animate);
+      } else {
+        piece.remove();
+      }
+    };
+    requestAnimationFrame(animate);
+    setTimeout(() => { if (piece.parentNode) piece.remove(); }, 2000);
+  }
 }
 
 function confirmEntry() {
