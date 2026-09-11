@@ -33,6 +33,7 @@
       overflow: hidden;
     }
     #home-screen.hidden { display: none; }
+    #home-screen.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 
     .home-bg {
       position: absolute;
@@ -65,20 +66,96 @@
       100% { opacity: 1; }
     }
 
+    /* Floating app icons */
+    .float-icon {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .float-icon-1 {
+      top: 12%;
+      left: 8%;
+      animation: float1 8s ease-in-out infinite;
+    }
+    .float-icon-2 {
+      top: 18%;
+      right: 10%;
+      animation: float2 10s ease-in-out infinite;
+    }
+    .float-icon-3 {
+      bottom: 20%;
+      left: 12%;
+      animation: float3 12s ease-in-out infinite;
+    }
+    .float-icon-4 {
+      bottom: 15%;
+      right: 8%;
+      animation: float4 9s ease-in-out infinite;
+    }
+    @keyframes float1 {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+      25% { transform: translate(30px, -20px) rotate(10deg); opacity: 0.5; }
+      50% { transform: translate(-20px, -40px) rotate(-5deg); opacity: 0.3; }
+      75% { transform: translate(10px, -20px) rotate(5deg); opacity: 0.5; }
+      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    }
+    @keyframes float2 {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+      33% { transform: translate(-25px, -30px) rotate(-8deg); opacity: 0.5; }
+      66% { transform: translate(20px, -15px) rotate(6deg); opacity: 0.35; }
+      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+    }
+    @keyframes float3 {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+      20% { transform: translate(15px, -25px) rotate(8deg); opacity: 0.45; }
+      50% { transform: translate(-30px, -10px) rotate(-6deg); opacity: 0.3; }
+      80% { transform: translate(20px, -30px) rotate(10deg); opacity: 0.5; }
+      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    }
+    @keyframes float4 {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.35; }
+      40% { transform: translate(-20px, -35px) rotate(-10deg); opacity: 0.5; }
+      70% { transform: translate(25px, -15px) rotate(7deg); opacity: 0.4; }
+      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.35; }
+    }
+
     .home-content {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       padding: 20px;
       max-width: 600px;
       width: 100%;
     }
 
+    /* Live counter */
+    .home-counter {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .counter-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #27C93F;
+      border-radius: 50%;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(39,201,63,0.4); }
+      50% { opacity: 0.8; transform: scale(1.1); box-shadow: 0 0 0 4px rgba(39,201,63,0); }
+    }
+
     .home-logo {
-      font-size: 56px;
+      font-size: 60px;
       filter: drop-shadow(0 0 20px rgba(78,205,196,0.4));
       animation: floatLogo 3s ease-in-out infinite;
     }
@@ -100,123 +177,13 @@
       font-size: 14px;
       color: rgba(255,255,255,0.5);
       text-align: center;
-      margin-top: -8px;
+      margin-top: -6px;
     }
 
-    .home-prompt {
-      font-size: 13px;
-      color: rgba(255,255,255,0.4);
-      margin-top: 8px;
-    }
-
-    .theme-cards {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .theme-card {
-      background: rgba(255,255,255,0.06);
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      padding: 16px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      width: 160px;
-      transition: all 0.25s var(--spring);
-    }
-    .theme-card:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.25);
-      transform: translateY(-4px);
-    }
-    .theme-card:active { transform: scale(0.96); }
-    .theme-card.selected {
-      border-color: var(--teal);
-      background: rgba(78,205,196,0.12);
-      box-shadow: 0 0 24px rgba(78,205,196,0.2);
-    }
-
-    .theme-preview {
-      width: 128px;
-      height: 80px;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Chrome preview */
-    .tc-chrome { background: #DEE1E6; }
-    .tp-tabbar {
-      height: 20px;
-      background: #DEE1E6;
-      display: flex;
-      align-items: center;
-      padding: 0 4px;
-      gap: 3px;
-    }
-    .tp-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .tp-dot.red { background: #FF5F57; }
-    .tp-dot.yellow { background: #FFBD2E; }
-    .tp-dot.green { background: #27C93F; }
-    .tp-tab {
-      height: 14px;
-      padding: 0 6px;
-      background: rgba(0,0,0,0.08);
-      border-radius: 4px 4px 0 0;
-      font-size: 6px;
-      color: #444;
-      display: flex;
-      align-items: center;
-    }
-    .tp-tab-active { background: white; font-weight: 600; }
-    .tp-addressbar {
-      height: 16px;
-      background: #F1F3F4;
-      display: flex;
-      align-items: center;
-      padding: 0 4px;
-      border-top: 1px solid #DADCE0;
-    }
-    .tp-url { font-size: 5px; color: #5F6368; }
-    .tp-content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .tp-content-light { background: white; }
-    .tp-doc-icon { font-size: 16px; }
-
-    /* Space preview */
-    .tc-space {
-      background: #0d1117;
-      position: relative;
-      overflow: hidden;
-    }
-    .tp-stars {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(1px at 10% 20%, white 0%, transparent 100%),
-        radial-gradient(1px at 30% 60%, rgba(255,255,255,0.7) 0%, transparent 100%),
-        radial-gradient(1px at 50% 10%, white 0%, transparent 100%),
-        radial-gradient(1px at 70% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px at 85% 15%, rgba(255,255,255,0.8) 0%, transparent 100%);
-    }
-    .tp-space-logo { position: relative; font-size: 20px; text-align: center; padding-top: 8px; }
-    .tp-space-label { position: relative; font-size: 7px; color: var(--teal); text-align: center; opacity: 0.7; }
-
-    .theme-name { font-size: 13px; font-weight: 600; color: white; }
-    .theme-desc { font-size: 10px; color: rgba(255,255,255,0.4); text-align: center; }
-
+    /* Big CTA button */
     .home-enter {
-      margin-top: 8px;
-      padding: 14px 48px;
+      width: min(320px, 90vw);
+      height: 56px;
       background: var(--teal);
       color: #0d1117;
       border: none;
@@ -225,17 +192,58 @@
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
-      transition: all 0.2s var(--spring);
-      box-shadow: 0 4px 20px rgba(78,205,196,0.35);
-      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 4px 24px rgba(78,205,196,0.4);
     }
-    .home-enter:hover { transform: scale(1.05); box-shadow: 0 6px 28px rgba(78,205,196,0.5); }
-    .home-enter:active { transform: scale(0.96); }
-    .home-enter.pulse { animation: enterPulse 0.6s var(--spring); }
+    .home-enter:hover { transform: scale(1.03); box-shadow: 0 6px 30px rgba(78,205,196,0.55); }
+    .home-enter:active { transform: scale(0.97); }
+    .home-enter.pulse { animation: enterPulse 0.6s cubic-bezier(0.34,1.56,0.64,1); }
     @keyframes enterPulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
+      50% { transform: scale(1.08); }
       100% { transform: scale(1); }
+    }
+
+    /* Theme pills */
+    .home-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .theme-pill {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      padding: 8px 14px;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .theme-pill:hover { color: rgba(255,255,255,0.6); }
+    .theme-pill:active { transform: scale(0.95); }
+    .theme-pill.selected { color: var(--teal); }
+    .theme-pill.pulse { animation: pillPulse 0.4s ease; }
+    @keyframes pillPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+    .pill-sep {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Footer */
+    .home-footer {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 12px;
+      text-align: center;
     }
 
     html, body {
@@ -1270,48 +1278,33 @@
   <!-- ===== HOME SCREEN ===== -->
   <div id="home-screen">
     <div class="home-bg" id="home-bg"></div>
+    <!-- Floating app icons -->
+    <div class="float-icon float-icon-1">📝</div>
+    <div class="float-icon float-icon-2">📊</div>
+    <div class="float-icon float-icon-3">💻</div>
+    <div class="float-icon float-icon-4">📹</div>
     <div class="home-content">
+      <!-- Live counter -->
+      <div class="home-counter">
+        <span class="counter-dot"></span>
+        <span>💼 1,247 offices open today</span>
+      </div>
       <div class="home-logo">⌨️</div>
       <h1 class="home-title">Clickety Desk</h1>
       <p class="home-sub">Big work for little hands</p>
 
-      <div class="home-prompt">Who is playing today?</div>
+      <button class="home-enter" id="home-enter" onclick="confirmEntry()">
+        START WORKING! ⌨️
+      </button>
 
-      <div class="theme-cards">
-        <div class="theme-card" id="theme-chrome" onclick="pickTheme('chrome')">
-          <div class="theme-preview tc-chrome">
-            <div class="tp-tabbar">
-              <div class="tp-dot red"></div>
-              <div class="tp-dot yellow"></div>
-              <div class="tp-dot green"></div>
-              <div class="tp-tab tp-tab-active">Docs</div>
-              <div class="tp-tab">Sheets</div>
-            </div>
-            <div class="tp-addressbar">
-              <span class="tp-url">docs.google.com</span>
-            </div>
-            <div class="tp-content tp-content-light">
-              <div class="tp-doc-icon">📝</div>
-            </div>
-          </div>
-          <div class="theme-name">🕶️ Chrome</div>
-          <div class="theme-desc">Like Daddy's browser</div>
-        </div>
-
-        <div class="theme-card" id="theme-space" onclick="pickTheme('space')">
-          <div class="theme-preview tc-space">
-            <div class="tp-stars" id="tp-stars"></div>
-            <div class="tp-space-logo">⌨️</div>
-            <div class="tp-space-label">Clickety Desk</div>
-          </div>
-          <div class="theme-name">🌌 Space</div>
-          <div class="theme-desc">Explore the galaxy</div>
-        </div>
+      <!-- Theme pills -->
+      <div class="home-pills">
+        <div class="theme-pill selected" id="pill-chrome" onclick="pickTheme('chrome')">Chrome 🕶️</div>
+        <div class="pill-sep">·</div>
+        <div class="theme-pill" id="pill-space" onclick="pickTheme('space')">Space 🌌</div>
       </div>
 
-      <button class="home-enter" id="home-enter" onclick="confirmEntry()">
-        <span id="enter-text">Let's go!</span>
-      </button>
+      <div class="home-footer">No account. Just pretend.</div>
     </div>
   </div>
 
@@ -2208,22 +2201,24 @@ $('menu-btn').onclick = () => {
 };
 
 // ===== HOME SCREEN =====
-let selectedTheme = null;
+let selectedTheme = 'chrome';
 
 function pickTheme(theme) {
   sound.init();
   sound.play('key');
   selectedTheme = theme;
-  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
-  document.getElementById('theme-' + theme).classList.add('selected');
-  document.getElementById('enter-text').textContent = theme === 'chrome' ? "Open Chrome 🕶️" : "Explore Space 🌌";
-  document.getElementById('home-enter').classList.add('pulse');
-  setTimeout(() => document.getElementById('home-enter').classList.remove('pulse'), 600);
+  document.querySelectorAll('.theme-pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('pill-' + theme).classList.add('selected');
+  document.getElementById('pill-' + theme).classList.add('pulse');
+  setTimeout(() => document.getElementById('pill-' + theme).classList.remove('pulse'), 400);
+  // Update button text
+  const btn = document.getElementById('home-enter');
+  btn.textContent = theme === 'chrome' ? 'START WORKING! ⌨️' : 'EXPLORE SPACE! 🌌';
 }
 
 function confirmEntry() {
   sound.init();
-  sound.play('key');
+  sound.play('ok');
   const homeScreen = document.getElementById('home-screen');
 
   // Apply theme class to #app for space mode
@@ -2235,8 +2230,7 @@ function confirmEntry() {
   }
 
   // Fade out home screen
-  homeScreen.style.transition = 'opacity 0.5s ease';
-  homeScreen.style.opacity = '0';
+  homeScreen.classList.add('fade-out');
 
   setTimeout(() => {
     homeScreen.classList.add('hidden');
@@ -2246,14 +2240,8 @@ function confirmEntry() {
     }
     // Start in paper world
     switchWorld('paper');
-    sound.play('ok');
-  }, 500);
+  }, 400);
 }
-
-// Pre-select chrome by default
-window.addEventListener('load', () => {
-  pickTheme('chrome');
-});
 
 // Start (was previously: switchWorld('paper'))
 // Home screen handles the start now
