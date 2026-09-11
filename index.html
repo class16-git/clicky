@@ -1822,6 +1822,7 @@ window.addEventListener('unhandledrejection', e => alert('UNHANDLED: ' + e.reaso
 alert('Script starting...');
 
 // ===== STATE =====
+let fullscreenLocked = false;
 const state = {
   world: 'paper',
   soundEnabled: true,
@@ -2706,6 +2707,7 @@ function confirmEntry() {
   // Sound plays async (non-blocking)
   setTimeout(() => { try { sound.init(); sound.play('happy'); } catch(e) { console.error('sound:', e); } }, 100);
   } catch(e) { console.error('confirmEntry FAILED:', e); }
+}
 }
 
 // Start — bypass homepage, go straight to Terminal (v2)
