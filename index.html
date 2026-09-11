@@ -46,57 +46,222 @@
       height: 100vh;
     }
 
-    /* ===== TOPBAR ===== */
-    #topbar {
-      height: 52px;
-      background: var(--white);
-      border-bottom: 1px solid #DADCE0;
+    /* ===== CHROME BROWSER FRAME ===== */
+    #chrome-frame {
+      display: flex;
+      flex-direction: column;
+      background: #DEE1E6;
+      flex-shrink: 0;
+    }
+
+    /* Title bar row with traffic lights */
+    #chrome-titlebar {
+      height: 40px;
       display: flex;
       align-items: center;
-      padding: 0 8px;
-      gap: 6px;
+      background: #EEF1F4;
+      padding: 0 12px;
       flex-shrink: 0;
-      z-index: 10;
     }
-    .tb-icon {
-      width: 36px; height: 36px;
+
+    /* Traffic lights */
+    #traffic-lights {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-right: 12px;
+    }
+    .tl-btn {
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
       cursor: pointer;
+      transition: filter 0.15s;
+    }
+    .tl-btn:hover { filter: brightness(0.85); }
+    .tl-btn:active { transform: scale(0.9); }
+    .tl-close { background: #FF5F57; }
+    .tl-minimize { background: #FFBD2E; }
+    .tl-maximize { background: #27C93F; }
+
+    /* New tab button */
+    #new-tab-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 18px;
+      color: #5F6368;
+      cursor: pointer;
       transition: background 0.15s;
       flex-shrink: 0;
     }
-    .tb-icon:hover { background: rgba(0,0,0,0.06); }
-    .tb-icon:active { transform: scale(0.95); }
-    .tb-title {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--dim);
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .tb-btn {
-      height: 32px;
-      padding: 0 16px;
-      border-radius: 16px;
-      border: none;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex; align-items: center; gap: 6px;
+    #new-tab-btn:hover { background: rgba(0,0,0,0.1); }
+    #new-tab-btn:active { transform: scale(0.92); }
+
+    /* Chrome tab bar */
+    #chrome-tabs {
+      display: flex;
+      align-items: flex-end;
+      padding: 0 8px;
+      gap: 2px;
+      background: #DEE1E6;
+      height: 40px;
       flex-shrink: 0;
     }
-    .tb-btn-share {
+    .chrome-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px 6px 8px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: #5F6368;
+      transition: background 0.15s;
+      position: relative;
+      height: 34px;
+      max-width: 180px;
+      min-width: 100px;
+      flex: 1;
+      user-select: none;
+    }
+    .chrome-tab:hover { background: rgba(255,255,255,0.5); }
+    .chrome-tab.active {
+      background: #FFFFFF;
+      color: #202124;
+      z-index: 2;
+      box-shadow: 0 -1px 0 0 #DADCE0 inset;
+    }
+    .chrome-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+    }
+    #tab-paper.active::after { background: var(--blue); }
+    #tab-numbers.active::after { background: var(--green); }
+    #tab-terminal.active::after { background: #4ECDC4; }
+    #tab-call.active::after { background: var(--blue); }
+
+    .chrome-tab-icon { font-size: 14px; flex-shrink: 0; }
+    .chrome-tab-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+    .chrome-tab-close {
+      font-size: 14px;
+      color: rgba(0,0,0,0.3);
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .chrome-tab-close:hover {
+      background: rgba(0,0,0,0.1);
+      color: rgba(0,0,0,0.6);
+    }
+
+    /* Chrome address bar */
+    #chrome-addressbar {
+      height: 56px;
+      background: #F1F3F4;
+      border-bottom: 1px solid #DADCE0;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    #nav-buttons {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      color: #5F6368;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover { background: rgba(0,0,0,0.06); }
+    .nav-btn:active { transform: scale(0.92); }
+
+    #url-display {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1px solid #DADCE0;
+      border-radius: 20px;
+      padding: 0 14px;
+      height: 34px;
+      min-width: 0;
+    }
+    #url-lock { font-size: 12px; flex-shrink: 0; }
+    #url-text {
+      font-size: 14px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    #menu-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: #5F6368;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    #menu-btn:hover { background: rgba(0,0,0,0.06); }
+    #menu-btn:active { transform: scale(0.92); }
+
+    #share-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: #5F6368;
       background: var(--blue);
       color: white;
+      transition: background 0.15s;
+      flex-shrink: 0;
     }
-    .tb-btn-share:hover { background: #3367D6; }
-    .tb-btn-share:active { transform: scale(0.97); }
+    #share-btn:hover { background: #3367D6; }
+    #share-btn:active { transform: scale(0.92); }
 
     /* ===== WORLD CONTAINER ===== */
     #worlds {
@@ -888,11 +1053,57 @@
 <body>
   <div id="app">
 
-    <!-- Topbar -->
-    <div id="topbar">
-      <div class="tb-icon" id="tb-menu" title="Menu">☰</div>
-      <div class="tb-title" id="tb-title">Clickety Desk</div>
-      <button class="tb-btn tb-btn-share" id="btn-share">⬆ Share</button>
+    <!-- ===== CHROME BROWSER FRAME ===== -->
+    <div id="chrome-frame">
+
+      <!-- Title bar row: traffic lights + new tab -->
+      <div id="chrome-titlebar">
+        <div id="traffic-lights">
+          <div class="tl-btn tl-close" title="Close"></div>
+          <div class="tl-btn tl-minimize" title="Minimize"></div>
+          <div class="tl-btn tl-maximize" title="Maximize"></div>
+        </div>
+        <div id="new-tab-btn" title="New tab">+</div>
+      </div>
+
+      <!-- Tab bar -->
+      <div id="chrome-tabs">
+        <div class="chrome-tab active" data-world="paper" id="tab-paper">
+          <span class="chrome-tab-icon">📝</span>
+          <span class="chrome-tab-label">Docs</span>
+          <span class="chrome-tab-close">×</span>
+        </div>
+        <div class="chrome-tab" data-world="numbers" id="tab-numbers">
+          <span class="chrome-tab-icon">📊</span>
+          <span class="chrome-tab-label">Sheets</span>
+          <span class="chrome-tab-close">×</span>
+        </div>
+        <div class="chrome-tab" data-world="terminal" id="tab-terminal">
+          <span class="chrome-tab-icon">💻</span>
+          <span class="chrome-tab-label">Terminal</span>
+          <span class="chrome-tab-close">×</span>
+        </div>
+        <div class="chrome-tab" data-world="call" id="tab-call">
+          <span class="chrome-tab-icon">📹</span>
+          <span class="chrome-tab-label">Meet</span>
+          <span class="chrome-tab-close">×</span>
+        </div>
+      </div>
+
+      <!-- Address bar row -->
+      <div id="chrome-addressbar">
+        <div id="nav-buttons">
+          <div class="nav-btn" title="Back">←</div>
+          <div class="nav-btn" title="Forward">→</div>
+          <div class="nav-btn" title="Reload" id="nav-reload">⟳</div>
+        </div>
+        <div id="url-display">
+          <span id="url-lock">🔒</span>
+          <span id="url-text">docs.google.com/document — Clickety</span>
+        </div>
+        <div id="share-btn" title="Share">⬆</div>
+        <div id="menu-btn" title="More">⋮</div>
+      </div>
     </div>
 
     <!-- Worlds -->
@@ -1154,9 +1365,16 @@ function switchWorld(w) {
     const el = $(id + '-world');
     if (el) el.style.display = id === w ? 'flex' : 'none';
   });
-  document.querySelectorAll('.bar-btn').forEach(b => b.classList.toggle('active', b.dataset.w === w));
-  const titles = {paper:'Clickety Docs',numbers:'Clickety Sheets',terminal:'IT Operations Terminal',call:'Clickety Meet'};
-  $('tb-title').textContent = titles[w] || 'Clickety Desk';
+  // Update Chrome tabs
+  document.querySelectorAll('.chrome-tab').forEach(t => t.classList.toggle('active', t.dataset.world === w));
+  // Update address bar URL
+  const urlMap = {
+    paper: '📝 docs.google.com/document — Clickety',
+    numbers: '📊 sheets.google.com — Clickety',
+    terminal: '💻 terminal.google.com — Clickety',
+    call: '📹 meet.google.com — Clickety'
+  };
+  $('url-text').textContent = urlMap[w] || 'clickety.desk';
   if (w === 'paper') initPaper();
   if (w === 'numbers') initNumbers();
   if (w === 'terminal') initTerminal();
@@ -1202,13 +1420,14 @@ function initPaper() {
     });
   });
 
-  // Share button
-  $('btn-share').addEventListener('click', () => {
+  // Share button (address bar share button)
+  $('share-btn').addEventListener('click', () => {
+    if (state.world !== 'paper') return;
     sound.play('ok');
-    const orig = $('btn-share').textContent;
-    $('btn-share').textContent = '✓ Link copied!';
-    $('btn-share').style.background = '#34A853';
-    setTimeout(() => { $('btn-share').textContent = orig; $('btn-share').style.background = ''; }, 2000);
+    const orig = $('share-btn').textContent;
+    $('share-btn').textContent = '✓';
+    $('share-btn').style.background = '#34A853';
+    setTimeout(() => { $('share-btn').textContent = '⬆'; $('share-btn').style.background = ''; }, 2000);
     celebrate();
   });
 
@@ -1697,7 +1916,16 @@ document.addEventListener('keydown', e => {
 // Reduced motion
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) state.reducedMotion = true;
 
-// ===== BAR CLICKS =====
+// ===== CHROME TAB CLICKS =====
+document.querySelectorAll('.chrome-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    sound.init();
+    switchWorld(tab.dataset.world);
+    sound.play('key');
+  });
+});
+
+// ===== BAR CLICKS (desktop dock) =====
 document.querySelectorAll('.bar-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     sound.init();
@@ -1707,7 +1935,7 @@ document.querySelectorAll('.bar-btn').forEach(btn => {
 });
 
 // ===== INIT =====
-$('tb-menu').onclick = () => {
+$('menu-btn').onclick = () => {
   sound.play('key');
   // Toggle chat in meet
   if (state.world === 'call') {
