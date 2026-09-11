@@ -2675,48 +2675,35 @@ function confettiBurstAt(x, y) {
 }
 
 function confirmEntry() {
-  sound.init();
-  // Play big success sound — guard against missing AudioContext
+  // Immediately transition the screen — do NOT wait for sound
+  const homeScreen = document.getElementById('home-screen');
+  homeScreen.style.transition = 'opacity 0.5s ease';
+  homeScreen.style.opacity = '0';
+
+  // Fire confetti NOW
+  try { confettiBurst(); } catch(e) {}
+
+  // Request fullscreen
   try {
-    const now = sound.ctx ? sound.ctx.currentTime : 0;
-    [523, 659, 784, 1047].forEach((f, i) => {
-      if (!sound.ctx) return;
-      const o = sound.ctx.createOscillator();
-      const g = sound.ctx.createGain();
-      o.connect(g); g.connect(sound.ctx.destination);
-      o.frequency.value = f; o.type = 'sine';
-      g.gain.setValueAtTime(0.18, now + i * 0.1);
-      g.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.35);
-      o.start(now + i * 0.1); o.stop(now + i * 0.1 + 0.35);
-    });
+    const el = document.documentElement;
+    const reqFS = el.requestFullscreen || el.webkitRequestFullscreen
+      || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (reqFS) reqFS().catch(() => {});
   } catch(e) {}
 
-  // Big button pulse
-  const btn = document.getElementById('home-enter');
-  btn.classList.add('pulse');
-  btn.style.transform = 'scale(1.15)';
-  btn.style.boxShadow = '0 8px 40px rgba(255,107,107,0.6)';
-
-  // Confetti burst
-  try { setTimeout(() => confettiBurst(), 100); } catch(e) {}
-
-  const homeScreen = document.getElementById('home-screen');
-  homeScreen.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  homeScreen.style.opacity = '0';
-  homeScreen.style.transform = 'scale(1.05)';
-
+  // Switch worlds after short delay
   setTimeout(() => {
     homeScreen.classList.add('hidden');
-    homeScreen.style.opacity = '';
-    homeScreen.style.transform = '';
-    // Request fullscreen — works on mobile Safari/Android Chrome
-    const reqFS = document.documentElement.requestFullscreen
-      || document.documentElement.webkitRequestFullscreen
-      || document.documentElement.mozRequestFullScreen
-      || document.documentElement.msRequestFullscreen;
-    if (reqFS) reqFS().catch(() => {});
     switchWorld('paper');
-  }, 700);
+  }, 500);
+
+  // Play happy sound async (fire and forget)
+  setTimeout(() => {
+    try {
+      sound.init();
+      sound.play('happy');
+    } catch(e) {}
+  }, 100);
 }
 
 // Start (was previously: switchWorld('paper'))
