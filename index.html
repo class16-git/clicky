@@ -22,6 +22,222 @@
       --purple: #A855F7;
     }
 
+    /* ===== HOME SCREEN ===== */
+    #home-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      overflow: hidden;
+    }
+    #home-screen.hidden { display: none; }
+
+    .home-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0d1117 0%, #1a1f2e 50%, #0d1117 100%);
+    }
+    .home-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 60% 75%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 25% 35%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(2px 2px at 5% 50%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 55%, rgba(255,255,255,0.4) 0%, transparent 100%);
+      animation: twinkle 4s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    .home-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .home-logo {
+      font-size: 56px;
+      filter: drop-shadow(0 0 20px rgba(78,205,196,0.4));
+      animation: floatLogo 3s ease-in-out infinite;
+    }
+    @keyframes floatLogo {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .home-title {
+      font-family: 'Google Sans', 'Segoe UI', system-ui, sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    .home-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      margin-top: -8px;
+    }
+
+    .home-prompt {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 8px;
+    }
+
+    .theme-cards {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .theme-card {
+      background: rgba(255,255,255,0.06);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 160px;
+      transition: all 0.25s var(--spring);
+    }
+    .theme-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.25);
+      transform: translateY(-4px);
+    }
+    .theme-card:active { transform: scale(0.96); }
+    .theme-card.selected {
+      border-color: var(--teal);
+      background: rgba(78,205,196,0.12);
+      box-shadow: 0 0 24px rgba(78,205,196,0.2);
+    }
+
+    .theme-preview {
+      width: 128px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Chrome preview */
+    .tc-chrome { background: #DEE1E6; }
+    .tp-tabbar {
+      height: 20px;
+      background: #DEE1E6;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      gap: 3px;
+    }
+    .tp-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .tp-dot.red { background: #FF5F57; }
+    .tp-dot.yellow { background: #FFBD2E; }
+    .tp-dot.green { background: #27C93F; }
+    .tp-tab {
+      height: 14px;
+      padding: 0 6px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 4px 4px 0 0;
+      font-size: 6px;
+      color: #444;
+      display: flex;
+      align-items: center;
+    }
+    .tp-tab-active { background: white; font-weight: 600; }
+    .tp-addressbar {
+      height: 16px;
+      background: #F1F3F4;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      border-top: 1px solid #DADCE0;
+    }
+    .tp-url { font-size: 5px; color: #5F6368; }
+    .tp-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tp-content-light { background: white; }
+    .tp-doc-icon { font-size: 16px; }
+
+    /* Space preview */
+    .tc-space {
+      background: #0d1117;
+      position: relative;
+      overflow: hidden;
+    }
+    .tp-stars {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px at 10% 20%, white 0%, transparent 100%),
+        radial-gradient(1px at 30% 60%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px at 50% 10%, white 0%, transparent 100%),
+        radial-gradient(1px at 70% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px at 85% 15%, rgba(255,255,255,0.8) 0%, transparent 100%);
+    }
+    .tp-space-logo { position: relative; font-size: 20px; text-align: center; padding-top: 8px; }
+    .tp-space-label { position: relative; font-size: 7px; color: var(--teal); text-align: center; opacity: 0.7; }
+
+    .theme-name { font-size: 13px; font-weight: 600; color: white; }
+    .theme-desc { font-size: 10px; color: rgba(255,255,255,0.4); text-align: center; }
+
+    .home-enter {
+      margin-top: 8px;
+      padding: 14px 48px;
+      background: var(--teal);
+      color: #0d1117;
+      border: none;
+      border-radius: 28px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s var(--spring);
+      box-shadow: 0 4px 20px rgba(78,205,196,0.35);
+      letter-spacing: 0.3px;
+    }
+    .home-enter:hover { transform: scale(1.05); box-shadow: 0 6px 28px rgba(78,205,196,0.5); }
+    .home-enter:active { transform: scale(0.96); }
+    .home-enter.pulse { animation: enterPulse 0.6s var(--spring); }
+    @keyframes enterPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
     html, body {
       height: 100%;
       overflow: hidden;
@@ -1051,6 +1267,54 @@
   </style>
 </head>
 <body>
+  <!-- ===== HOME SCREEN ===== -->
+  <div id="home-screen">
+    <div class="home-bg" id="home-bg"></div>
+    <div class="home-content">
+      <div class="home-logo">⌨️</div>
+      <h1 class="home-title">Clickety Desk</h1>
+      <p class="home-sub">Big work for little hands</p>
+
+      <div class="home-prompt">Who is playing today?</div>
+
+      <div class="theme-cards">
+        <div class="theme-card" id="theme-chrome" onclick="pickTheme('chrome')">
+          <div class="theme-preview tc-chrome">
+            <div class="tp-tabbar">
+              <div class="tp-dot red"></div>
+              <div class="tp-dot yellow"></div>
+              <div class="tp-dot green"></div>
+              <div class="tp-tab tp-tab-active">Docs</div>
+              <div class="tp-tab">Sheets</div>
+            </div>
+            <div class="tp-addressbar">
+              <span class="tp-url">docs.google.com</span>
+            </div>
+            <div class="tp-content tp-content-light">
+              <div class="tp-doc-icon">📝</div>
+            </div>
+          </div>
+          <div class="theme-name">🕶️ Chrome</div>
+          <div class="theme-desc">Like Daddy's browser</div>
+        </div>
+
+        <div class="theme-card" id="theme-space" onclick="pickTheme('space')">
+          <div class="theme-preview tc-space">
+            <div class="tp-stars" id="tp-stars"></div>
+            <div class="tp-space-logo">⌨️</div>
+            <div class="tp-space-label">Clickety Desk</div>
+          </div>
+          <div class="theme-name">🌌 Space</div>
+          <div class="theme-desc">Explore the galaxy</div>
+        </div>
+      </div>
+
+      <button class="home-enter" id="home-enter" onclick="confirmEntry()">
+        <span id="enter-text">Let's go!</span>
+      </button>
+    </div>
+  </div>
+
   <div id="app">
 
     <!-- ===== CHROME BROWSER FRAME ===== -->
@@ -1937,15 +2201,62 @@ document.querySelectorAll('.bar-btn').forEach(btn => {
 // ===== INIT =====
 $('menu-btn').onclick = () => {
   sound.play('key');
-  // Toggle chat in meet
   if (state.world === 'call') {
     const chat = $('meet-chat');
     chat.style.display = chat.style.display === 'none' ? 'flex' : 'none';
   }
 };
 
-// Start
-switchWorld('paper');
+// ===== HOME SCREEN =====
+let selectedTheme = null;
+
+function pickTheme(theme) {
+  sound.init();
+  sound.play('key');
+  selectedTheme = theme;
+  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('theme-' + theme).classList.add('selected');
+  document.getElementById('enter-text').textContent = theme === 'chrome' ? "Open Chrome 🕶️" : "Explore Space 🌌";
+  document.getElementById('home-enter').classList.add('pulse');
+  setTimeout(() => document.getElementById('home-enter').classList.remove('pulse'), 600);
+}
+
+function confirmEntry() {
+  sound.init();
+  sound.play('key');
+  const homeScreen = document.getElementById('home-screen');
+
+  // Apply theme class to #app for space mode
+  const app = document.getElementById('app');
+  if (selectedTheme === 'space') {
+    app.classList.add('space-theme');
+  } else {
+    app.classList.remove('space-theme');
+  }
+
+  // Fade out home screen
+  homeScreen.style.transition = 'opacity 0.5s ease';
+  homeScreen.style.opacity = '0';
+
+  setTimeout(() => {
+    homeScreen.classList.add('hidden');
+    // Request fullscreen
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+    // Start in paper world
+    switchWorld('paper');
+    sound.play('ok');
+  }, 500);
+}
+
+// Pre-select chrome by default
+window.addEventListener('load', () => {
+  pickTheme('chrome');
+});
+
+// Start (was previously: switchWorld('paper'))
+// Home screen handles the start now
 </script>
 </body>
 </html>
