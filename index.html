@@ -38,15 +38,31 @@
     .home-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #0d1117 0%, #1a1f2e 50%, #0d1117 100%);
+      background: linear-gradient(135deg, #1a0533 0%, #0d1117 40%, #0a1628 70%, #0d1117 100%);
     }
+    /* Colorful aurora blobs */
     .home-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 30%, rgba(78,205,196,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 35% at 80% 60%, rgba(168,85,247,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 50% 80%, rgba(255,107,107,0.1) 0%, transparent 70%);
+      animation: auroraShift 8s ease-in-out infinite alternate;
+    }
+    @keyframes auroraShift {
+      0% { opacity: 0.6; transform: scale(1) translateY(0); }
+      100% { opacity: 1; transform: scale(1.05) translateY(-10px); }
+    }
+    /* Stars */
+    .home-bg::after {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
         radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
-        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 30% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
         radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
         radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
         radial-gradient(1.5px 1.5px at 85% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
@@ -59,66 +75,50 @@
         radial-gradient(2px 2px at 5% 50%, rgba(255,255,255,0.5) 0%, transparent 100%),
         radial-gradient(1px 1px at 95% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
         radial-gradient(1px 1px at 55% 55%, rgba(255,255,255,0.4) 0%, transparent 100%);
-      animation: twinkle 4s ease-in-out infinite alternate;
+      animation: twinkle 3s ease-in-out infinite alternate;
     }
     @keyframes twinkle {
-      0% { opacity: 0.6; }
+      0% { opacity: 0.5; }
       100% { opacity: 1; }
     }
 
     /* Floating app icons */
     .float-icon {
       position: absolute;
-      font-size: 24px;
-      opacity: 0.35;
+      font-size: 28px;
+      opacity: 0.4;
       pointer-events: none;
       z-index: 1;
+      filter: drop-shadow(0 0 8px rgba(78,205,196,0.3));
     }
-    .float-icon-1 {
-      top: 12%;
-      left: 8%;
-      animation: float1 8s ease-in-out infinite;
-    }
-    .float-icon-2 {
-      top: 18%;
-      right: 10%;
-      animation: float2 10s ease-in-out infinite;
-    }
-    .float-icon-3 {
-      bottom: 20%;
-      left: 12%;
-      animation: float3 12s ease-in-out infinite;
-    }
-    .float-icon-4 {
-      bottom: 15%;
-      right: 8%;
-      animation: float4 9s ease-in-out infinite;
-    }
+    .float-icon-1 { top: 10%; left: 6%; animation: float1 7s ease-in-out infinite; }
+    .float-icon-2 { top: 15%; right: 8%; animation: float2 9s ease-in-out infinite; }
+    .float-icon-3 { bottom: 18%; left: 10%; animation: float3 11s ease-in-out infinite; }
+    .float-icon-4 { bottom: 12%; right: 6%; animation: float4 8s ease-in-out infinite; }
     @keyframes float1 {
-      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
-      25% { transform: translate(30px, -20px) rotate(10deg); opacity: 0.5; }
-      50% { transform: translate(-20px, -40px) rotate(-5deg); opacity: 0.3; }
-      75% { transform: translate(10px, -20px) rotate(5deg); opacity: 0.5; }
-      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+      0% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.35; }
+      25% { transform: translate(25px,-30px) rotate(15deg) scale(1.1); opacity: 0.55; }
+      50% { transform: translate(-15px,-50px) rotate(-8deg) scale(1); opacity: 0.35; }
+      75% { transform: translate(20px,-25px) rotate(10deg) scale(1.05); opacity: 0.5; }
+      100% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.35; }
     }
     @keyframes float2 {
-      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
-      33% { transform: translate(-25px, -30px) rotate(-8deg); opacity: 0.5; }
-      66% { transform: translate(20px, -15px) rotate(6deg); opacity: 0.35; }
-      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+      0% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.4; }
+      33% { transform: translate(-30px,-35px) rotate(-12deg) scale(1.08); opacity: 0.55; }
+      66% { transform: translate(20px,-20px) rotate(8deg) scale(1); opacity: 0.4; }
+      100% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.4; }
     }
     @keyframes float3 {
-      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
-      20% { transform: translate(15px, -25px) rotate(8deg); opacity: 0.45; }
-      50% { transform: translate(-30px, -10px) rotate(-6deg); opacity: 0.3; }
-      80% { transform: translate(20px, -30px) rotate(10deg); opacity: 0.5; }
-      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+      0% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.3; }
+      30% { transform: translate(20px,-40px) rotate(12deg) scale(1.1); opacity: 0.5; }
+      60% { transform: translate(-25px,-20px) rotate(-8deg) scale(1); opacity: 0.35; }
+      100% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.3; }
     }
     @keyframes float4 {
-      0% { transform: translate(0, 0) rotate(0deg); opacity: 0.35; }
-      40% { transform: translate(-20px, -35px) rotate(-10deg); opacity: 0.5; }
-      70% { transform: translate(25px, -15px) rotate(7deg); opacity: 0.4; }
-      100% { transform: translate(0, 0) rotate(0deg); opacity: 0.35; }
+      0% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.4; }
+      40% { transform: translate(-30px,-40px) rotate(-15deg) scale(1.1); opacity: 0.55; }
+      70% { transform: translate(25px,-15px) rotate(10deg) scale(1); opacity: 0.4; }
+      100% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 0.4; }
     }
 
     .home-content {
@@ -127,7 +127,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       padding: 20px;
       max-width: 600px;
       width: 100%;
@@ -136,73 +136,121 @@
     /* Live counter */
     .home-counter {
       font-size: 12px;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.5);
       display: flex;
       align-items: center;
       gap: 6px;
+      background: rgba(255,255,255,0.06);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .counter-dot {
       display: inline-block;
       width: 7px;
       height: 7px;
-      background: #27C93F;
+      background: #6BCB77;
       border-radius: 50%;
-      animation: pulseDot 2s ease-in-out infinite;
+      animation: pulseDot 1.5s ease-in-out infinite;
+      box-shadow: 0 0 6px rgba(107,203,119,0.6);
     }
     @keyframes pulseDot {
-      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(39,201,63,0.4); }
-      50% { opacity: 0.8; transform: scale(1.1); box-shadow: 0 0 0 4px rgba(39,201,63,0); }
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 6px rgba(107,203,119,0.6); }
+      50% { opacity: 0.7; transform: scale(1.2); box-shadow: 0 0 12px rgba(107,203,119,0.9); }
     }
 
     .home-logo {
-      font-size: 60px;
-      filter: drop-shadow(0 0 20px rgba(78,205,196,0.4));
-      animation: floatLogo 3s ease-in-out infinite;
+      font-size: 72px;
+      filter: drop-shadow(0 0 30px rgba(78,205,196,0.5)) drop-shadow(0 0 60px rgba(78,205,196,0.2));
+      animation: floatLogo 2.5s ease-in-out infinite;
     }
     @keyframes floatLogo {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-12px) scale(1.05); }
     }
 
     .home-title {
       font-family: 'Google Sans', 'Segoe UI', system-ui, sans-serif;
-      font-size: 32px;
-      font-weight: 600;
+      font-size: 36px;
+      font-weight: 700;
       color: white;
       text-align: center;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 40px rgba(78,205,196,0.15);
     }
 
     .home-sub {
-      font-size: 14px;
-      color: rgba(255,255,255,0.5);
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
       text-align: center;
-      margin-top: -6px;
+      margin-top: -8px;
+      font-weight: 400;
     }
 
-    /* Big CTA button */
+    /* BIG toddler-friendly CTA button */
     .home-enter {
-      width: min(320px, 90vw);
-      height: 56px;
-      background: var(--teal);
-      color: #0d1117;
+      width: min(340px, 92vw);
+      height: 72px;
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 50%, #FFB347 100%);
+      color: white;
       border: none;
-      border-radius: 28px;
-      font-size: 18px;
-      font-weight: 700;
+      border-radius: 36px;
+      font-size: 22px;
+      font-weight: 800;
       cursor: pointer;
       font-family: inherit;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
-      box-shadow: 0 4px 24px rgba(78,205,196,0.4);
+      letter-spacing: 1px;
+      transition: all 0.18s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 6px 30px rgba(255,107,107,0.4), 0 0 0 0 rgba(255,107,107,0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 8px;
     }
-    .home-enter:hover { transform: scale(1.03); box-shadow: 0 6px 30px rgba(78,205,196,0.55); }
-    .home-enter:active { transform: scale(0.97); }
-    .home-enter.pulse { animation: enterPulse 0.6s cubic-bezier(0.34,1.56,0.64,1); }
-    @keyframes enterPulse {
+    /* Shimmer sweep on idle */
+    .home-enter::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0% { left: -75%; }
+      50%, 100% { left: 150%; }
+    }
+    .home-enter:hover {
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,107,107,0.55), 0 0 0 4px rgba(255,107,107,0.15);
+    }
+    .home-enter:active {
+      transform: scale(0.95);
+      box-shadow: 0 3px 15px rgba(255,107,107,0.3);
+    }
+    .enter-text { position: relative; z-index: 1; }
+    .enter-sparkle {
+      font-size: 22px;
+      position: relative;
+      z-index: 1;
+      animation: sparkleRotate 1.5s linear infinite;
+    }
+    @keyframes sparkleRotate {
+      0% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(15deg) scale(1.2); }
+      50% { transform: rotate(0deg) scale(1); }
+      75% { transform: rotate(-15deg) scale(1.2); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+    .home-enter.pulse {
+      animation: bigPulse 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes bigPulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      40% { transform: scale(1.12); }
       100% { transform: scale(1); }
     }
 
@@ -217,20 +265,26 @@
       font-size: 12px;
       color: rgba(255,255,255,0.4);
       cursor: pointer;
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
       transition: all 0.2s ease;
       min-height: 44px;
       display: flex;
       align-items: center;
+      background: rgba(255,255,255,0.04);
     }
-    .theme-pill:hover { color: rgba(255,255,255,0.6); }
+    .theme-pill:hover { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2); }
     .theme-pill:active { transform: scale(0.95); }
-    .theme-pill.selected { color: var(--teal); }
-    .theme-pill.pulse { animation: pillPulse 0.4s ease; }
+    .theme-pill.selected {
+      color: #FF6B6B;
+      border-color: rgba(255,107,107,0.4);
+      background: rgba(255,107,107,0.1);
+    }
+    .theme-pill.pulse { animation: pillPulse 0.4s cubic-bezier(0.34,1.56,0.64,1); }
     @keyframes pillPulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.12); }
+      50% { transform: scale(1.15); }
       100% { transform: scale(1); }
     }
     .pill-sep {
@@ -238,10 +292,33 @@
       color: rgba(255,255,255,0.2);
     }
 
-    /* Footer */
+    /* Footer (parent reassurance — subtle) */
     .home-footer {
-      font-size: 11px;
-      color: rgba(255,255,255,0.25);
+      font-size: 10px;
+      color: rgba(255,255,255,0.2);
+      margin-top: 6px;
+    }
+
+    /* Celebration confetti on enter */
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      animation: confettiFall 1.8s ease forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-60px) rotate(0deg) scale(0); opacity: 0; }
+      10% { transform: translateY(5vh) rotate(45deg) scale(1.2); opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+    }
       margin-top: 12px;
       text-align: center;
     }
@@ -1275,6 +1352,9 @@
   </style>
 </head>
 <body>
+  <!-- Confetti (activated on enter) -->
+  <div id="confetti-container" class="confetti-container"></div>
+
   <!-- ===== HOME SCREEN ===== -->
   <div id="home-screen">
     <div class="home-bg" id="home-bg"></div>
@@ -1284,17 +1364,18 @@
     <div class="float-icon float-icon-3">💻</div>
     <div class="float-icon float-icon-4">📹</div>
     <div class="home-content">
-      <!-- Live counter -->
+      <!-- Live counter (toddler-friendly) -->
       <div class="home-counter">
         <span class="counter-dot"></span>
-        <span>💼 1,247 offices open today</span>
+        <span>💫 1,000+ little workers right now!</span>
       </div>
       <div class="home-logo">⌨️</div>
       <h1 class="home-title">Clickety Desk</h1>
-      <p class="home-sub">Big work for little hands</p>
+      <p class="home-sub">Like Daddy's computer! ⌨️</p>
 
       <button class="home-enter" id="home-enter" onclick="confirmEntry()">
-        START WORKING! ⌨️
+        <span class="enter-text">START! ⌨️</span>
+        <span class="enter-sparkle">✨</span>
       </button>
 
       <!-- Theme pills -->
@@ -2213,34 +2294,73 @@ function pickTheme(theme) {
   setTimeout(() => document.getElementById('pill-' + theme).classList.remove('pulse'), 400);
   // Update button text
   const btn = document.getElementById('home-enter');
-  btn.textContent = theme === 'chrome' ? 'START WORKING! ⌨️' : 'EXPLORE SPACE! 🌌';
+  btn.innerHTML = theme === 'chrome'
+    ? '<span class="enter-text">START! ⌨️</span><span class="enter-sparkle">✨</span>'
+    : '<span class="enter-text">EXPLORE! 🌌</span><span class="enter-sparkle">🚀</span>';
+}
+
+function confettiBurst() {
+  if (state.reducedMotion) return;
+  const container = document.getElementById('confetti-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const colors = ['#FF6B6B','#4ECDC4','#FFE66D','#A855F7','#6BCB77','#FF8E53','#FFB347','#FF6B9D'];
+  for (let i = 0; i < 50; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.cssText = [
+      `left:${Math.random()*100}%`,
+      `top:${Math.random()*30}%`,
+      `background:${colors[Math.floor(Math.random()*colors.length)]}`,
+      `animation-delay:${Math.random()*0.5}s`,
+      `animation-duration:${1.2 + Math.random()*0.8}s`,
+      `transform: rotate(${Math.random()*360}deg)`,
+      `border-radius: ${Math.random()>0.5?'50%':'2px'}`,
+      `width:${6 + Math.random()*10}px`,
+      `height:${6 + Math.random()*10}px`,
+    ].join(';');
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.innerHTML = '', 2500);
 }
 
 function confirmEntry() {
   sound.init();
-  sound.play('ok');
+  // Play big success sound
+  const now = sound.ctx.currentTime;
+  [523, 659, 784, 1047].forEach((f, i) => {
+    const o = sound.ctx.createOscillator();
+    const g = sound.ctx.createGain();
+    o.connect(g); g.connect(sound.ctx.destination);
+    o.frequency.value = f; o.type = 'sine';
+    g.gain.setValueAtTime(0.18, now + i * 0.1);
+    g.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.35);
+    o.start(now + i * 0.1); o.stop(now + i * 0.1 + 0.35);
+  });
+
+  // Big button pulse
+  const btn = document.getElementById('home-enter');
+  btn.classList.add('pulse');
+  btn.style.transform = 'scale(1.15)';
+  btn.style.boxShadow = '0 8px 40px rgba(255,107,107,0.6)';
+
+  // Confetti burst
+  setTimeout(() => confettiBurst(), 100);
+
   const homeScreen = document.getElementById('home-screen');
-
-  // Apply theme class to #app for space mode
-  const app = document.getElementById('app');
-  if (selectedTheme === 'space') {
-    app.classList.add('space-theme');
-  } else {
-    app.classList.remove('space-theme');
-  }
-
-  // Fade out home screen
-  homeScreen.classList.add('fade-out');
+  homeScreen.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  homeScreen.style.opacity = '0';
+  homeScreen.style.transform = 'scale(1.05)';
 
   setTimeout(() => {
     homeScreen.classList.add('hidden');
-    // Request fullscreen
+    homeScreen.style.opacity = '';
+    homeScreen.style.transform = '';
     if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen().catch(() => {});
     }
-    // Start in paper world
     switchWorld('paper');
-  }, 400);
+  }, 700);
 }
 
 // Start (was previously: switchWorld('paper'))
