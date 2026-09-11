@@ -188,6 +188,8 @@
 
     /* BIG toddler-friendly CTA button */
     .home-enter {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
       width: min(340px, 92vw);
       height: 72px;
       background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 50%, #FFB347 100%);
@@ -2674,17 +2676,20 @@ function confettiBurstAt(x, y) {
 
 function confirmEntry() {
   sound.init();
-  // Play big success sound
-  const now = sound.ctx.currentTime;
-  [523, 659, 784, 1047].forEach((f, i) => {
-    const o = sound.ctx.createOscillator();
-    const g = sound.ctx.createGain();
-    o.connect(g); g.connect(sound.ctx.destination);
-    o.frequency.value = f; o.type = 'sine';
-    g.gain.setValueAtTime(0.18, now + i * 0.1);
-    g.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.35);
-    o.start(now + i * 0.1); o.stop(now + i * 0.1 + 0.35);
-  });
+  // Play big success sound — guard against missing AudioContext
+  try {
+    const now = sound.ctx ? sound.ctx.currentTime : 0;
+    [523, 659, 784, 1047].forEach((f, i) => {
+      if (!sound.ctx) return;
+      const o = sound.ctx.createOscillator();
+      const g = sound.ctx.createGain();
+      o.connect(g); g.connect(sound.ctx.destination);
+      o.frequency.value = f; o.type = 'sine';
+      g.gain.setValueAtTime(0.18, now + i * 0.1);
+      g.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.35);
+      o.start(now + i * 0.1); o.stop(now + i * 0.1 + 0.35);
+    });
+  } catch(e) {}
 
   // Big button pulse
   const btn = document.getElementById('home-enter');
@@ -2693,7 +2698,7 @@ function confirmEntry() {
   btn.style.boxShadow = '0 8px 40px rgba(255,107,107,0.6)';
 
   // Confetti burst
-  setTimeout(() => confettiBurst(), 100);
+  try { setTimeout(() => confettiBurst(), 100); } catch(e) {}
 
   const homeScreen = document.getElementById('home-screen');
   homeScreen.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -2704,9 +2709,12 @@ function confirmEntry() {
     homeScreen.classList.add('hidden');
     homeScreen.style.opacity = '';
     homeScreen.style.transform = '';
-    if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    }
+    // Request fullscreen — works on mobile Safari/Android Chrome
+    const reqFS = document.documentElement.requestFullscreen
+      || document.documentElement.webkitRequestFullscreen
+      || document.documentElement.mozRequestFullScreen
+      || document.documentElement.msRequestFullscreen;
+    if (reqFS) reqFS().catch(() => {});
     switchWorld('paper');
   }, 700);
 }
