@@ -37,41 +37,42 @@ Unlike TinyFingers (pure cause-and-effect toy), Clickety Desk wraps each interac
 
 One cohesive experience containing 4 mini-apps:
 
-### Paper (Documents)
-- Colorful virtual paper
-- Tapping creates colorful letters/shapes
-- Pressing Enter draws a line or creates a new shape
-- Random keyboard typing fills the page with colorful bouncing letters
-- Pressing Space creates a rainbow gap
-- Child "writes" something, then can press Enter to "send" it
+### 📝 Paper
+- Colorful virtual paper with a blinking cursor
+- Typing creates colorful bouncing letters
+- Pressing Enter folds paper into airplane and flies away
+- Space creates a rainbow gap line
+- Backspace removes letters
+- Keyboard smashing creates a rainbow letter storm
 
-### Numbers (Spreadsheet)
-- Colorful 4×4 grid
-- Tapping a cell fills it with animated numbers
-- Numbers grow/chart when tapped repeatedly
-- Columns fill with bouncing number bubbles
-- Arrow keys move a colorful cursor around
-- Enter in a cell triggers confetti
-- Keyboard smashing fills the whole grid with animated numbers
+### 🔢 Numbers
+- A colorful 4×4 grid with large tap targets
+- Typing fills cells with animated growing numbers (1-99)
+- Arrow keys move a colorful cursor
+- Pressing Enter triggers confetti burst
+- Backspace clears cells
+- Keyboard smashing fills all cells with bouncing numbers
 
-### Fix-It (IT Guy)
-- A sad computer/server appears with a red indicator
-- Keyboard typing (any keys) repairs it progressively
-- Each keystroke makes a gear turn or a wire connect
-- Random key smashes = dramatic repair animation
-- When "fixed": celebration — confetti, stars, "✅ FIXED!" in big friendly text
-- New broken item appears — loop continues
+### 💻 Terminal (IT Guy)
+- A fake dark terminal window with a friendly command line
+- Network visualization: 6 icons (🖥️🖧📡🗄️🔌📦) that light up as commands succeed
+- Child types commands and presses Enter to run them
+- Commands: `ping` (PONG!), `deploy` (🚀 DEPLOYED!), `backup` (files animate), `fix` (WiFi comes online), `clear`, `help`, `restart`, `status`
+- Unknown commands get friendly "try: ping deploy backup fix clear help"
+- Keyboard smashing cascades through random commands
+- Each command lights up network icons progressively
+- `help` shows available commands for older kids and parents
 
-### Team Call (Meeting)
-- A grid of friendly avatar circles
-- Tapping a circle makes a reaction emoji pop up (😊 🎉 👍 ❤️)
-- Random key press makes all avatars wave or dance
-- Space bar toggles "mute/unmute" icon — satisfying visual
-- Enter triggers "applause" animation
-- Child "had a meeting"
+### 📹 Team Call
+- A grid of 6 friendly colored avatar circles in a video-call layout
+- Tapping/pressing 1-6 makes emoji reactions pop up (😊 🎉 👍 ❤️ 🔥)
+- Random key press makes all avatars wave simultaneously
+- Space toggles mute/unmute icons
+- Enter triggers applause animation
+- Keyboard smashing makes all avatars dance with emoji cascade
 
 ### Desktop Bar (always visible)
-- Icons for Paper, Numbers, Fix-It, Team Call
+- Icons for Paper, Numbers, Terminal, Team Call
 - Tapping switches worlds instantly
 - Visual indicator of current world
 
