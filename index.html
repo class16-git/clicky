@@ -1590,10 +1590,11 @@
           <div class="term-output" id="term-output"></div>
           <div class="term-input-row">
             <span class="term-prompt">&gt;</span>
-            <div class="term-input-display" id="term-input" contenteditable="true" spellcheck="false" autocomplete="off"></div>
+            <div class="term-input-display" id="term-input-display"></div>
             <span class="term-cursor"></span>
           </div>
         </div>
+        <input type="text" id="term-input-hidden" style="position:absolute;opacity:0;pointer-events:none;" autocomplete="off" tabindex="-1">
         <div class="term-hint">ENTER: run &nbsp;|&nbsp; BACKSPACE: delete &nbsp;|&nbsp; SMASH: chaos</div>
         <div class="term-net" id="term-net"></div>
       </div>
@@ -2189,15 +2190,30 @@ function initTerminal() {
   sound.play('happy');
   sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 15);
 
+  // Clear output and re-init on each entry
+  const out = $('term-output');
+  if (out) out.innerHTML = '';
+  state.termInput = '';
+
   $('term-art').textContent = ' ██▀███  ▓██   ██▓ ▄▄▄       ███▄    █  █     █░▓█████  ██▀███   ██▀███  ▓█████  ██▀███  ';
   addT('Welcome to Clickety Terminal','t-sys');
   addT('Type a command and press ENTER','t-sys');
   addT('Try: ping · deploy · backup · fix · status · help','t-dim');
   renderTermNet();
-  const inp = $('term-input');
-  if (inp) {
-    inp.focus();
-    inp.addEventListener('keydown', e => {
+
+  const hiddenInp = $('term-input-hidden');
+  const display = $('term-input-display');
+  if (hiddenInp) {
+    hiddenInp.value = '';
+    hiddenInp.focus();
+
+    // Show typed text in the display
+    hiddenInp.addEventListener('input', () => {
+      display.textContent = hiddenInp.value;
+      state.termInput = hiddenInp.value;
+    });
+
+    hiddenInp.addEventListener('keydown', e => {
       sound.init();
       if (e.key === 'Enter') {
         e.preventDefault();
@@ -2206,35 +2222,44 @@ function initTerminal() {
         if (cmd) {
           addT(cmd,'t-cmd');
           if (COMMANDS[cmd]) {
-            // Success — sparkle + happy sound after command finishes
             const origRun = COMMANDS[cmd];
             COMMANDS[cmd] = function() {
               origRun.apply(this, arguments);
               setTimeout(() => {
                 sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
                 sound.play('happy');
-                // Rainbow flash on terminal output
                 const outputs = document.querySelectorAll('.term-line.t-ok');
                 outputs.forEach(el => { el.classList.add('rainbow'); setTimeout(() => el.classList.remove('rainbow'), 700); });
               }, 300);
             };
+            COMMANDS[cmd]();
+            COMMANDS[cmd] = origRun; // restore
           } else {
             addT('Command not found. Type "help".','t-err');
             sound.play('err');
           }
         }
+        hiddenInp.value = '';
+        display.textContent = '';
         state.termInput = '';
-        inp.textContent = '';
       } else if (e.key === 'Backspace') {
-        // let browser handle
-      } else if (e.key.length === 1) {
-        sound.play('key');
-        if (Math.random() < 0.15 && state.termNetLevel < 6) addTN(state.termNetLevel + 1);
+        // Browser handles naturally
       }
     });
-    inp.addEventListener('input', e => { state.termInput = inp.textContent || ''; });
+
+    hiddenInp.addEventListener('paste', e => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+      hiddenInp.value += text;
+      display.textContent = hiddenInp.value;
+      state.termInput = hiddenInp.value;
+    });
   }
-  document.addEventListener('click', () => inp && inp.focus());
+
+  // Click anywhere in terminal to re-focus input
+  $('terminal-world') && $('terminal-world').addEventListener('click', () => {
+    if (hiddenInp) hiddenInp.focus();
+  });
 }
 
 // ===== CALL WORLD =====
