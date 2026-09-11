@@ -1542,7 +1542,7 @@
     .parent-btn span { font-size: 16px; }
   </style>
 </head>
-<body>
+<body onload="if(new URLSearchParams(location.search).get('world')){document.getElementById('home-screen').style.display='none';switchWorld(new URLSearchParams(location.search).get('world'));}">
   <!-- Confetti (activated on enter) -->
   <div id="confetti-container" class="confetti-container"></div>
 
