@@ -1816,6 +1816,11 @@
   </div>
 
 <script>
+// ===== SCRIPT BOOT LOG =====
+window.addEventListener('error', e => alert('SCRIPT ERROR: ' + e.message));
+window.addEventListener('unhandledrejection', e => alert('UNHANDLED: ' + e.reason));
+alert('Script starting...');
+
 // ===== STATE =====
 const state = {
   world: 'paper',
@@ -2671,6 +2676,7 @@ function confettiBurstAt(x, y) {
 }
 
 function confirmEntry() {
+  alert('confirmEntry fired!');
   try {
   // Prevent double-taps from firing twice
   const homeScreen = document.getElementById('home-screen');
@@ -2702,7 +2708,7 @@ function confirmEntry() {
   } catch(e) { console.error('confirmEntry FAILED:', e); }
 }
 
-// Start — bypass homepage, go straight to Terminal
+// Start — bypass homepage, go straight to Terminal (v2)
 confirmEntry(); // confirmEntry() calls switchWorld('terminal') internally
 </script>
 </body>
