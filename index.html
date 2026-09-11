@@ -70,7 +70,7 @@ body{font-family:system-ui,sans-serif;background:var(--dark);color:#fff;overflow
 .bar-btn.active{background:var(--teal);color:#000}
 /* WORLD PANELS */
 .world{position:absolute;inset:0;display:none;padding:20px;overflow:auto}
-.world.active{display:block}
+.world.active{display:block;position:absolute;inset:0;z-index:10}
 /* ===== PAPER WORLD ===== */
 #paper-world{background:var(--paper)}
 .paper-toolbar{display:flex;gap:6px;padding:10px;background:#f0f0e8;border-radius:12px 12px 0 0;border-bottom:1px solid #ddd;flex-wrap:wrap}
@@ -456,7 +456,6 @@ function switchWorld(world) {
 }
 
 function goTo(world) {
-  try { sound.play('sparkle'); } catch(e) {}
   switchWorld(world);
 }
 
