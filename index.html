@@ -2684,7 +2684,7 @@ function confirmEntry() {
   try { confettiBurst(); } catch(e) { console.error('confettiBurst:', e); }
 
   // Switch world immediately
-  switchWorld('paper');
+  switchWorld('terminal');
 
   // Fullscreen — skip on iOS (not supported)
   try {
@@ -2702,8 +2702,8 @@ function confirmEntry() {
   } catch(e) { console.error('confirmEntry FAILED:', e); }
 }
 
-// Start — bypass homepage, go straight to Docs
-confirmEntry();
+// Start — bypass homepage, go straight to Terminal
+confirmEntry(); // confirmEntry() calls switchWorld('terminal') internally
 </script>
 </body>
 </html>
