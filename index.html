@@ -1542,7 +1542,7 @@
     .parent-btn span { font-size: 16px; }
   </style>
 </head>
-<body onload="if(new URLSearchParams(location.search).get('world')){document.getElementById('home-screen').style.display='none';switchWorld(new URLSearchParams(location.search).get('world'));}">
+<body onload="document.getElementById('home-screen').style.display='none';switchWorld('paper')">
   <!-- Confetti (activated on enter) -->
   <div id="confetti-container" class="confetti-container"></div>
 
@@ -2675,6 +2675,7 @@ function confettiBurstAt(x, y) {
 }
 
 function confirmEntry() {
+  try {
   // Prevent double-taps from firing twice
   const homeScreen = document.getElementById('home-screen');
   if (homeScreen.dataset.entered) return;
@@ -2684,7 +2685,7 @@ function confirmEntry() {
   homeScreen.style.display = 'none';
 
   // Fire confetti immediately
-  try { confettiBurst(); } catch(e) {}
+  try { confettiBurst(); } catch(e) { console.error('confettiBurst:', e); }
 
   // Switch world immediately
   switchWorld('paper');
@@ -2698,10 +2699,11 @@ function confirmEntry() {
         || el.mozRequestFullScreen || el.msRequestFullscreen;
       if (reqFS) reqFS().catch(() => {});
     }
-  } catch(e) {}
+  } catch(e) { console.error('fullscreen:', e); }
 
   // Sound plays async (non-blocking)
-  setTimeout(() => { try { sound.init(); sound.play('happy'); } catch(e) {} }, 100);
+  setTimeout(() => { try { sound.init(); sound.play('happy'); } catch(e) { console.error('sound:', e); } }, 100);
+  } catch(e) { console.error('confirmEntry FAILED:', e); }
 }
 
 // Start (was previously: switchWorld('paper'))
