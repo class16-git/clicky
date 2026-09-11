@@ -2552,9 +2552,7 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) state.reduced
 // ===== CHROME TAB CLICKS =====
 document.querySelectorAll('.chrome-tab').forEach(tab => {
   tab.addEventListener('click', () => {
-    sound.init();
-    sound.play('sparkle');
-    sparkleAt(tab);
+    try { sound.init(); sound.play('sparkle'); sparkleAt(tab); } catch(e) {}
     tab.classList.add('bounce');
     setTimeout(() => tab.classList.remove('bounce'), 400);
     switchWorld(tab.dataset.world);
@@ -2564,9 +2562,7 @@ document.querySelectorAll('.chrome-tab').forEach(tab => {
 // ===== BAR CLICKS (desktop dock) =====
 document.querySelectorAll('.bar-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    sound.init();
-    sound.play('sparkle');
-    sparkleAt(btn);
+    try { sound.init(); sound.play('sparkle'); sparkleAt(btn); } catch(e) {}
     btn.classList.add('bounce');
     setTimeout(() => btn.classList.remove('bounce'), 400);
     switchWorld(btn.dataset.w);
