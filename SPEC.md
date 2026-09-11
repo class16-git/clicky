@@ -54,13 +54,12 @@ One cohesive experience containing 4 mini-apps:
 - Keyboard smashing fills all cells with bouncing numbers
 
 ### 💻 Terminal (IT Guy)
-- A fake dark terminal window with a friendly command line
-- Network visualization: 6 icons (🖥️🖧📡🗄️🔌📦) that light up as commands succeed
-- Child types commands and presses Enter to run them
-- Commands: `ping` (PONG!), `deploy` (🚀 DEPLOYED!), `backup` (files animate), `fix` (WiFi comes online), `clear`, `help`, `restart`, `status`
-- Unknown commands get friendly "try: ping deploy backup fix clear help"
-- Keyboard smashing cascades through random commands
-- Each command lights up network icons progressively
+- A friendly dark terminal window (dark blue background, teal/coral/yellow text)
+- Child types IT commands and presses Enter to run them
+- Commands: `ping` (PONG 🟢), `deploy` (🚀 DEPLOYED!), `backup` (files save animation), `fix` (WiFi comes online), `clear` (clears terminal), `help` (shows command list)
+- Unknown commands get playful error: "command not found, try: ping deploy backup fix clear"
+- Keyboard smashing cascades through random command outputs with emoji cascade
+- Progress bar fills as commands succeed
 - `help` shows available commands for older kids and parents
 
 ### 📹 Team Call
@@ -158,7 +157,7 @@ Each world is a self-contained JavaScript module object:
 const worlds = {
   paper: { init(), handleKey(e), handleTap(x,y), render() },
   numbers: { init(), handleKey(e), handleTap(x,y), render() },
-  fixit: { init(), handleKey(e), handleTap(x,y), render() },
+  terminal: { init(), handleKey(e), handleTap(x,y), render() },
   teamcall: { init(), handleKey(e), handleTap(x,y), render() }
 };
 ```
