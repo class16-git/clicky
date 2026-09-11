@@ -319,8 +319,59 @@
       90% { opacity: 1; }
       100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
     }
-      margin-top: 12px;
-      text-align: center;
+
+    /* Sparkle burst — small stars that pop around an element */
+    .sparkle-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9997;
+    }
+    .sparkle {
+      position: absolute;
+      font-size: 16px;
+      animation: sparklePop 0.8s ease forwards;
+    }
+    @keyframes sparklePop {
+      0%   { transform: scale(0) rotate(0deg) translateY(0); opacity: 0; }
+      30%  { transform: scale(1.4) rotate(90deg) translateY(-20px); opacity: 1; }
+      100% { transform: scale(0) rotate(360deg) translateY(-60px); opacity: 0; }
+    }
+    /* Emoji float up */
+    .emoji-float {
+      position: fixed;
+      font-size: 28px;
+      animation: emojiFloat 1.5s ease forwards;
+      pointer-events: none;
+      z-index: 9996;
+    }
+    @keyframes emojiFloat {
+      0%   { transform: translateY(0) scale(0); opacity: 0; }
+      20%  { transform: translateY(-20px) scale(1.3); opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(-150px) scale(0.8); opacity: 0; }
+    }
+    /* Bounce animation for cells/buttons */
+    .bounce {
+      animation: bouncePop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes bouncePop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.3); }
+      70%  { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+    /* Rainbow flash for terminal success */
+    .rainbow {
+      animation: rainbowFlash 0.6s linear;
+    }
+    @keyframes rainbowFlash {
+      0%   { color: #FF6B6B; }
+      20%  { color: #FFB347; }
+      40%  { color: #FFE66D; }
+      60%  { color: #6BCB77; }
+      80%  { color: #4ECDC4; }
+      100% { color: #A855F7; }
     }
 
     html, body {
@@ -1670,21 +1721,49 @@ const state = {
   docBody: ''
 };
 
-// ===== SOUND =====
+// ===== SOUND ENGINE =====
+// Full kid-friendly sound library
 const sound = {
   ctx: null,
   init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
-  play(t) {
+  _tone(freq, type, dur, vol=0.08, delay=0) {
     if (!state.soundEnabled || !this.ctx) return;
-    const now = this.ctx.currentTime, osc = this.ctx.createOscillator(), g = this.ctx.createGain();
-    osc.connect(g); g.connect(this.ctx.destination);
-    switch(t) {
-      case 'key': osc.frequency.value=500+Math.random()*300; osc.type='square'; g.gain.setValueAtTime(0.06,now); g.gain.linearRampToValueAtTime(0,now+0.04); osc.start(now); osc.stop(now+0.04); break;
-      case 'ok': [523,659,784].forEach((f,i)=>{const o=this.ctx.createOscillator(),gn=this.ctx.createGain();o.connect(gn);gn.connect(this.ctx.destination);o.frequency.value=f;o.type='sine';gn.gain.setValueAtTime(0.1,now+i*.12);gn.gain.linearRampToValueAtTime(0,now+i*.12+.2);o.start(now+i*.12);o.stop(now+i*.12+.2);}); return;
-      case 'err': osc.frequency.value=200; osc.type='sawtooth'; g.gain.setValueAtTime(0.07,now); g.gain.linearRampToValueAtTime(0,now+0.12); osc.start(now); osc.stop(now+0.12); break;
-      case 'chaos': for(let i=0;i<3;i++){const o=this.ctx.createOscillator(),gn=this.ctx.createGain();o.connect(gn);gn.connect(this.ctx.destination);o.frequency.value=[880,440,660][i];o.type='square';gn.gain.setValueAtTime(0.05,now+i*.04);gn.gain.linearRampToValueAtTime(0,now+i*.04+.04);o.start(now+i*.04);o.stop(now+i*.04+.04);} break;
-    }
-  }
+    const now = this.ctx.currentTime + delay;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.connect(g); g.connect(this.ctx.destination);
+    o.frequency.value = freq; o.type = type;
+    g.gain.setValueAtTime(vol, now);
+    g.gain.linearRampToValueAtTime(0, now + dur);
+    o.start(now); o.stop(now + dur);
+  },
+  key()    { this._tone(400+Math.random()*400, 'square', 0.04, 0.06); },
+  enter()  { [400,600,800].forEach((f,i)=>this._tone(f,'square',0.06,0.08,i*0.06)); },
+  ok()     { [523,659,784].forEach((f,i)=>this._tone(f,'sine',0.25,0.12,i*0.12)); },
+  happy()  { [523,659,784,1047].forEach((f,i)=>this._tone(f,'sine',0.3,0.14,i*0.1)); },
+  sparkle() {
+    if (!state.soundEnabled || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    [1200,1600,2000].forEach((f,i)=>{this._tone(f,'sine',0.08,0.06,i*0.04);});
+    // Add a quick "pop" — short noise burst via high-freq
+    this._tone(2400, 'sine', 0.05, 0.05, 0);
+  },
+  snap()   { if(!state.soundEnabled||!this.ctx)return; const now=this.ctx.currentTime; this._tone(800,'square',0.05,0.1); this._tone(600,'square',0.05,0.1,0.03); this._tone(400,'square',0.05,0.1,0.06); },
+  chaos()  { for(let i=0;i<4;i++) this._tone([880,440,660,1200][i],'square',0.06,0.07,i*0.04); },
+  err()    { this._tone(200,'sawtooth',0.12,0.07); },
+  pop()    { if(!state.soundEnabled||!this.ctx)return; const now=this.ctx.currentTime; this._tone(600,'sine',0.08,0.1); this._tone(900,'sine',0.06,0.08,0.03); },
+  twinkle() {
+    // Twinkle twinkle little star melody
+    if(!state.soundEnabled||!this.ctx)return;
+    const mel=[523,523,784,784,880,880,784,0,698,698,659,659,587,587,523,0,784,784,698,698,659,659,523,0,784,784,698,698,659,659,523,0,523,523,659,659,698,698,523];
+    const dur=[0.2,0.2,0.2,0.2,0.2,0.2,0.4,0.1,0.2,0.2,0.2,0.2,0.2,0.2,0.4,0.1,0.2,0.2,0.2,0.2,0.2,0.2,0.4,0.1,0.2,0.2,0.2,0.2,0.2,0.2,0.4,0.1,0.2,0.2,0.2,0.2,0.2,0.2,0.4];
+    mel.forEach((f,i)=>{ if(f>0) this._tone(f,'sine',dur[i],0.1,i*0.15); });
+  },
+  boot()   { this._tone(330,'sine',0.04,0.06); },
+  // Backward-compatible .play() router
+  play(t) {
+    const map = {key:'key',ok:'ok',err:'err',chaos:'chaos',happy:'happy',sparkle:'sparkle',twinkle:'twinkle',boot:'boot'};
+    if (this[map[t]]) this[map[t]]();
+  },
 };
 
 // ===== UTILS =====
@@ -1694,6 +1773,42 @@ function addStar(){const e=$('celebration'),c=document.createElement('span');c.c
 function celebrate(){if(state.reducedMotion)return;for(let i=0;i<15;i++)setTimeout(addStar,i*40);}
 function emojiCascade(){if(state.reducedMotion)return;const e=$('emoji-cascade');e.innerHTML='';['😊','🎉','👍','❤️','🔥'].forEach((em,i)=>{const s=document.createElement('span');s.textContent=em;s.style.cssText=`left:${Math.random()*100}%;animation-delay:${Math.random()*.8}s`;e.appendChild(s);});setTimeout(()=>e.innerHTML='',2500);}
 function shake(){if(state.reducedMotion)return;$('app').classList.add('shake');setTimeout(()=>$('app').classList.remove('shake'),300);}
+function sparkleBurst(x, y, count=12) {
+  if (state.reducedMotion) return;
+  const icons = ['✨','⭐','💫','🌟','💥','✦','⋆','✴'];
+  const c = document.createElement('div');
+  c.className = 'sparkle-container';
+  document.body.appendChild(c);
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    s.textContent = icons[Math.floor(Math.random() * icons.length)];
+    const angle = (i / count) * Math.PI * 2;
+    const dist = 30 + Math.random() * 40;
+    const sx = x + Math.cos(angle) * dist;
+    const sy = y + Math.sin(angle) * dist;
+    s.style.cssText = `left:${sx}px;top:${sy}px;animation-delay:${Math.random()*0.15}s;font-size:${12+Math.random()*10}px`;
+    c.appendChild(s);
+  }
+  setTimeout(() => c.remove(), 1200);
+}
+function sparkleAt(el) {
+  const r = el.getBoundingClientRect();
+  sparkleBurst(r.left + r.width/2, r.top + r.height/2);
+}
+function emojiBurst(x, y, emoji='🎉') {
+  if (state.reducedMotion) return;
+  const el = document.createElement('div');
+  el.className = 'emoji-float';
+  el.textContent = emoji;
+  el.style.cssText = `left:${x - 14}px;top:${y - 14}px`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1600);
+}
+function emojiAt(el, emoji='🎉') {
+  const r = el.getBoundingClientRect();
+  emojiBurst(r.left + r.width/2, r.top + r.height/2, emoji);
+}
 
 // ===== WORLD SWITCHING =====
 function switchWorld(w) {
@@ -1721,6 +1836,11 @@ function switchWorld(w) {
 
 // ===== PAPER WORLD =====
 function initPaper() {
+  // Play twinkle on world enter
+  sound.play('twinkle');
+  const centerX = window.innerWidth / 2;
+  sparkleBurst(centerX, window.innerHeight / 2, 20);
+
   const body = $('doc-body'), title = $('doc-title');
   body.focus();
 
@@ -1733,9 +1853,21 @@ function initPaper() {
   }
 
   body.addEventListener('input', () => {
-    sound.play('key');
+    sound.play('sparkle');
+    // Sparkle near the last character
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      if (rect.width > 0) {
+        sparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 5);
+      } else {
+        sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 5);
+      }
+    } else {
+      sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 5);
+    }
     updateWC();
-    // Highlight cursor position with blinking bar
   });
 
   title.addEventListener('input', updateWC);
@@ -1743,26 +1875,27 @@ function initPaper() {
   $('doc-paper').addEventListener('click', e => {
     if (e.target === $('doc-paper') || e.target === body) {
       body.focus();
+      sparkleAt(e.target);
     }
   });
 
-  // Tool buttons — format simulation
+  // Tool buttons — sparkle + happy + bounce
   document.querySelectorAll('.doc-toolbar .tool-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      sound.play('key');
-      const label = btn.title || btn.textContent.trim();
-      if (['B','I','U'].includes(label)) {
-        // Just play a nice click — format would require selection API
-        celebrate();
-      }
+    btn.addEventListener('click', e => {
+      sound.play('happy');
+      sparkleAt(btn);
+      btn.classList.add('bounce');
+      setTimeout(() => btn.classList.remove('bounce'), 400);
+      celebrate();
     });
   });
 
-  // Share button (address bar share button)
+  // Share button — BIG celebration
   $('share-btn').addEventListener('click', () => {
     if (state.world !== 'paper') return;
-    sound.play('ok');
-    const orig = $('share-btn').textContent;
+    sound.play('happy');
+    sparkleBurst(window.innerWidth / 2, 60, 30);
+    confettiBurst();
     $('share-btn').textContent = '✓';
     $('share-btn').style.background = '#34A853';
     setTimeout(() => { $('share-btn').textContent = '⬆'; $('share-btn').style.background = ''; }, 2000);
@@ -1774,6 +1907,10 @@ function initPaper() {
 
 // ===== NUMBERS WORLD =====
 function initNumbers() {
+  // Play happy sound on world enter
+  sound.play('happy');
+  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 15);
+
   if (state.sheetData.length === 0) {
     // Sample data: 6 rows x 5 cols (A-E)
     const labels = ['Month','Revenue','Expenses','Profit','Growth'];
@@ -1792,12 +1929,14 @@ function initNumbers() {
 
   $('formula-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') {
+      sound.play('happy');
+      sparkleBurst(window.innerWidth / 2, 200, 20);
+      confettiBurst();
       const val = $('formula-input').value;
       if (state.sheetSelected !== null) {
         const [r, c] = state.sheetSelected;
         state.sheetData[r][c] = val;
         renderSheet();
-        sound.play('ok');
         if (c === 1) updateCharts();
       }
     }
@@ -1806,10 +1945,14 @@ function initNumbers() {
   $('btn-add-chart') && ($('btn-add-chart').onclick = () => {
     $('charts-panel').style.display = $('charts-panel').style.display === 'none' ? 'block' : 'none';
     renderCharts();
+    sound.play('sparkle');
+    sparkleAt($('btn-add-chart'));
   });
 
   $('add-sheet').addEventListener('click', () => {
-    sound.play('key');
+    sound.play('happy');
+    sparkleAt($('add-sheet'));
+    confettiBurst();
     const newData = [
       ['Item','Qty','Price','Total'],
       ['Apple',10,3,'=B2*C2'],
@@ -1826,6 +1969,7 @@ function initNumbers() {
       tab.classList.add('active');
       state.sheetData.push(newData);
       renderSheet();
+      sparkleAt(tab);
     };
     celebrate();
   });
@@ -1850,11 +1994,15 @@ function renderSheet() {
       div.addEventListener('click', () => {
         document.querySelectorAll('.sheet-cell').forEach(c => c.classList.remove('selected'));
         div.classList.add('selected');
+        div.classList.add('bounce');
+        setTimeout(() => div.classList.remove('bounce'), 400);
         state.sheetSelected = [ri, ci];
         const colLetter = String.fromCharCode(65 + ci);
         $('cell-id').textContent = `${colLetter}${ri + 1}`;
         $('formula-input').value = cell;
-        sound.play('key');
+        sound.play('sparkle');
+        sparkleAt(div);
+        emojiAt(div, '✨');
       });
       div.addEventListener('dblclick', () => {
         $('formula-input').focus();
@@ -1867,15 +2015,15 @@ function renderSheet() {
 function updateCharts() {
   $('sheet-charts-bar').style.display = 'flex';
   $('sheet-charts-bar').innerHTML = `
-    <div class="chart-card" onclick="sound.play('ok')">
+    <div class="chart-card" onclick="sound.play('happy');sparkleAt(this);">
       <div class="chart-title">Revenue Trend</div>
       <canvas class="chart-canvas" id="chart-line" width="140" height="80"></canvas>
     </div>
-    <div class="chart-card" onclick="sound.play('ok')">
+    <div class="chart-card" onclick="sound.play('happy');sparkleAt(this);">
       <div class="chart-title">Profit by Month</div>
       <canvas class="chart-canvas" id="chart-bar" width="140" height="80"></canvas>
     </div>
-    <div class="chart-card" onclick="sound.play('ok')">
+    <div class="chart-card" onclick="sound.play('happy');sparkleAt(this);">
       <div class="chart-title">Revenue Mix</div>
       <canvas class="chart-canvas" id="chart-pie" width="140" height="80"></canvas>
     </div>
@@ -2037,6 +2185,10 @@ function renderTermNet() {
 }
 
 function initTerminal() {
+  // Play happy fanfare on world enter
+  sound.play('happy');
+  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 15);
+
   $('term-art').textContent = ' ██▀███  ▓██   ██▓ ▄▄▄       ███▄    █  █     █░▓█████  ██▀███   ██▀███  ▓█████  ██▀███  ';
   addT('Welcome to Clickety Terminal','t-sys');
   addT('Type a command and press ENTER','t-sys');
@@ -2050,7 +2202,27 @@ function initTerminal() {
       if (e.key === 'Enter') {
         e.preventDefault();
         const cmd = state.termInput.trim().toLowerCase();
-        if (cmd) { addT(cmd,'t-cmd'); COMMANDS[cmd] ? COMMANDS[cmd]() : (addT('Command not found. Type "help".','t-err'), sound.play('err')); }
+        sound.play('enter');
+        if (cmd) {
+          addT(cmd,'t-cmd');
+          if (COMMANDS[cmd]) {
+            // Success — sparkle + happy sound after command finishes
+            const origRun = COMMANDS[cmd];
+            COMMANDS[cmd] = function() {
+              origRun.apply(this, arguments);
+              setTimeout(() => {
+                sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
+                sound.play('happy');
+                // Rainbow flash on terminal output
+                const outputs = document.querySelectorAll('.term-line.t-ok');
+                outputs.forEach(el => { el.classList.add('rainbow'); setTimeout(() => el.classList.remove('rainbow'), 700); });
+              }, 300);
+            };
+          } else {
+            addT('Command not found. Type "help".','t-err');
+            sound.play('err');
+          }
+        }
         state.termInput = '';
         inp.textContent = '';
       } else if (e.key === 'Backspace') {
@@ -2067,6 +2239,11 @@ function initTerminal() {
 
 // ===== CALL WORLD =====
 function initCall() {
+  // Play happy fanfare on world enter
+  sound.play('happy');
+  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
+  confettiBurst();
+
   // Meeting timer
   const timer = setInterval(() => {
     if (state.world !== 'call') { clearInterval(timer); return; }
@@ -2080,16 +2257,29 @@ function initCall() {
   document.querySelectorAll('.emoji-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const em = btn.dataset.emoji;
-      sound.play('ok');
+      sound.play('sparkle');
+      sparkleAt(btn);
+      // Float emoji up from the button
+      const r = btn.getBoundingClientRect();
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'emoji-float';
+          el.textContent = em;
+          el.style.cssText = `left:${r.left + r.width/2 - 14 + (Math.random()-0.5)*30}px;top:${r.top - 10}px`;
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 1600);
+        }, i * 100);
+      }
       // Pop reaction on all tiles
       document.querySelectorAll('.meet-tile').forEach(tile => {
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0.3) {
           const pop = document.createElement('div');
           pop.className = 'tile-reaction';
           pop.textContent = em;
           pop.style.cssText = `left:${10+Math.random()*60}%;top:${10+Math.random()*60}%;animation-delay:${Math.random()*.3}s`;
           tile.appendChild(pop);
-          setTimeout(() => pop.remove(), 600);
+          setTimeout(() => pop.remove(), 800);
         }
       });
       // Add to chat
@@ -2101,14 +2291,15 @@ function initCall() {
     });
   });
 
-  // Controls
+  // Controls — all with sparkle + happy sound
   $('ctrl-mic').onclick = () => {
     state.meetMuted = !state.meetMuted;
     $('ctrl-mic').classList.toggle('active', state.meetMuted);
     $('ctrl-mic').textContent = state.meetMuted ? '🔇' : '🎤';
     $('tile-main-mic').textContent = state.meetMuted ? '🔇' : '🎤';
-    sound.play('key');
-    if (!state.meetMuted) celebrate();
+    sound.play('snap');
+    sparkleAt($('ctrl-mic'));
+    if (!state.meetMuted) { sound.play('happy'); celebrate(); }
   };
 
   $('ctrl-vid').onclick = () => {
@@ -2116,15 +2307,19 @@ function initCall() {
     $('ctrl-vid').classList.toggle('active', !state.meetVid);
     $('ctrl-vid').textContent = state.meetVid ? '📹' : '🚫';
     $('tile-main-avatar').textContent = state.meetVid ? '😊' : '🤫';
-    sound.play('key');
+    sound.play('sparkle');
+    sparkleAt($('ctrl-vid'));
+    if (!state.meetVid) { sound.play('happy'); celebrate(); }
   };
 
   $('ctrl-share').onclick = () => {
     state.meetSharing = !state.meetSharing;
     $('ctrl-share').classList.toggle('active', state.meetSharing);
     $('tile-share').style.display = state.meetSharing ? 'block' : 'none';
-    sound.play('ok');
+    sound.play('happy');
+    sparkleAt($('ctrl-share'));
     if (state.meetSharing) {
+      confettiBurst();
       const msg = document.createElement('div');
       msg.className = 'chat-msg';
       msg.innerHTML = `<span class="chat-msg-name">Me</span>📺 Started presenting <span class="chat-msg-time">just now</span>`;
@@ -2136,12 +2331,15 @@ function initCall() {
   $('ctrl-hand').onclick = () => {
     state.meetHand = !state.meetHand;
     $('ctrl-hand').classList.toggle('active', state.meetHand);
+    sound.play('sparkle');
+    sparkleAt($('ctrl-hand'));
     if (state.meetHand) {
       const hand = document.createElement('div');
       hand.className = 'tile-hand';
       hand.textContent = '✋';
       $('tile-main').appendChild(hand);
-      sound.play('ok');
+      sound.play('happy');
+      celebrate();
     } else {
       const h = $('tile-main').querySelector('.tile-hand');
       h && h.remove();
@@ -2258,8 +2456,11 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) state.reduced
 document.querySelectorAll('.chrome-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     sound.init();
+    sound.play('sparkle');
+    sparkleAt(tab);
+    tab.classList.add('bounce');
+    setTimeout(() => tab.classList.remove('bounce'), 400);
     switchWorld(tab.dataset.world);
-    sound.play('key');
   });
 });
 
@@ -2267,8 +2468,11 @@ document.querySelectorAll('.chrome-tab').forEach(tab => {
 document.querySelectorAll('.bar-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     sound.init();
+    sound.play('sparkle');
+    sparkleAt(btn);
+    btn.classList.add('bounce');
+    setTimeout(() => btn.classList.remove('bounce'), 400);
     switchWorld(btn.dataset.w);
-    sound.play('key');
   });
 });
 
