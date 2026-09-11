@@ -2675,35 +2675,33 @@ function confettiBurstAt(x, y) {
 }
 
 function confirmEntry() {
-  // Immediately transition the screen — do NOT wait for sound
+  // Prevent double-taps from firing twice
   const homeScreen = document.getElementById('home-screen');
-  homeScreen.style.transition = 'opacity 0.5s ease';
-  homeScreen.style.opacity = '0';
+  if (homeScreen.dataset.entered) return;
+  homeScreen.dataset.entered = 'true';
 
-  // Fire confetti NOW
+  // INSTANT hide — no fade delay, no confusion
+  homeScreen.style.display = 'none';
+
+  // Fire confetti immediately
   try { confettiBurst(); } catch(e) {}
 
-  // Request fullscreen
+  // Switch world immediately
+  switchWorld('paper');
+
+  // Fullscreen — skip on iOS (not supported)
   try {
-    const el = document.documentElement;
-    const reqFS = el.requestFullscreen || el.webkitRequestFullscreen
-      || el.mozRequestFullScreen || el.msRequestFullscreen;
-    if (reqFS) reqFS().catch(() => {});
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (!isIOS) {
+      const el = document.documentElement;
+      const reqFS = el.requestFullscreen || el.webkitRequestFullscreen
+        || el.mozRequestFullScreen || el.msRequestFullscreen;
+      if (reqFS) reqFS().catch(() => {});
+    }
   } catch(e) {}
 
-  // Switch worlds after short delay
-  setTimeout(() => {
-    homeScreen.classList.add('hidden');
-    switchWorld('paper');
-  }, 500);
-
-  // Play happy sound async (fire and forget)
-  setTimeout(() => {
-    try {
-      sound.init();
-      sound.play('happy');
-    } catch(e) {}
-  }, 100);
+  // Sound plays async (non-blocking)
+  setTimeout(() => { try { sound.init(); sound.play('happy'); } catch(e) {} }, 100);
 }
 
 // Start (was previously: switchWorld('paper'))
