@@ -643,8 +643,9 @@
       flex-shrink: 0;
     }
     .tool-btn {
-      width: 32px; height: 32px;
-      border-radius: 4px;
+      width: 44px; height: 44px;
+      min-width: 44px; min-height: 44px;
+      border-radius: 8px;
       border: none;
       background: transparent;
       cursor: pointer;
@@ -718,9 +719,53 @@
       word-break: break-word;
     }
     .doc-body:empty::before {
-      content: 'Start typing...';
-      color: #9AA0A6;
+      content: '✏️ TAP TO WRITE!';
+      color: transparent;
+      background: linear-gradient(135deg, #4ECDC4, #8B5CF6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      font-size: 20px;
+      font-weight: bold;
+      animation: pulseHint 2s ease-in-out infinite;
+      pointer-events: none;
+      display: block;
+      text-align: center;
+      padding-top: 120px;
+      opacity: 0.7;
     }
+
+    @keyframes pulseHint {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.05); }
+    }
+
+    /* Paper glows when body is empty — signals "tap here!" */
+    .doc-paper.pulse-glow {
+      animation: paperGlow 2s ease-in-out infinite;
+      cursor: text;
+    }
+    @keyframes paperGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(78,205,196,0); }
+      50% { box-shadow: 0 0 0 6px rgba(78,205,196,0.25); }
+    }
+    .doc-paper.pulse-glow::after {
+      content: '✨ TAP PAPER TO START WRITING ✨';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      color: rgba(78,205,196,0.6);
+      font-weight: bold;
+      letter-spacing: 1px;
+      pointer-events: none;
+      white-space: nowrap;
+      animation: pulseHint 2s ease-in-out infinite;
+    }
+    .doc-body:not(:empty) ~ .doc-paper::after { display: none; }
+    .doc-paper:has(.doc-body:not(:empty))::after { display: none; }
+    .doc-paper:has(~ .doc-body:not(:empty))::after { display: none; }
+    .doc-paper.has-content::after { display: none !important; }
     .doc-cursor {
       display: inline-block;
       width: 2px;
@@ -895,7 +940,9 @@
       position: relative;
     }
     .sheet-cell {
-      height: 28px;
+      height: 44px;
+      min-height: 44px;
+      min-width: 60px;
       border-right: 1px solid #E8EAED;
       border-bottom: 1px solid #E8EAED;
       display: flex;
@@ -912,6 +959,7 @@
       position: relative;
     }
     .sheet-cell:hover { background: #F1F3F4; }
+    .sheet-cell:active { transform: scale(0.95); transition: transform 0.1s; }
     .sheet-cell.selected {
       outline: 2px solid var(--blue);
       outline-offset: -2px;
@@ -960,10 +1008,14 @@
       font-size: 9px;
       line-height: 1.15;
       white-space: pre;
-      padding: 4px 0 6px;
-      opacity: 0.5;
+      padding: 6px 0 4px;
+      opacity: 0.8;
       flex-shrink: 0;
-      letter-spacing: 0;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .term-window {
       flex: 1;
@@ -999,7 +1051,7 @@
       overflow-y: auto;
       padding: 10px 14px;
       font-family: 'Courier New', Courier, monospace;
-      font-size: 12px;
+      font-size: 16px;
       line-height: 1.6;
       color: #c9d1d9;
       scrollbar-width: thin;
@@ -1051,6 +1103,46 @@
       letter-spacing: 0.5px;
       flex-shrink: 0;
     }
+
+    /* Command cards — big tappable emoji buttons for toddlers */
+    #term-commands {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 12px;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .cmd-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: rgba(78,205,196,0.08);
+      border: 2px solid rgba(78,205,196,0.2);
+      border-radius: 12px;
+      padding: 8px 12px;
+      cursor: pointer;
+      min-width: 64px;
+      transition: all 0.2s var(--spring);
+      user-select: none;
+    }
+    .cmd-card:hover {
+      background: rgba(78,205,196,0.15);
+      border-color: rgba(78,205,196,0.5);
+      transform: scale(1.05);
+    }
+    .cmd-card:active {
+      transform: scale(0.92);
+      background: rgba(78,205,196,0.25);
+    }
+    .cmd-emoji { font-size: 28px; line-height: 1; }
+    .cmd-label {
+      font-size: 10px;
+      color: rgba(78,205,196,0.7);
+      font-family: 'Courier New', monospace;
+      text-transform: lowercase;
+    }
     .term-net {
       display: flex;
       gap: 6px;
@@ -1096,16 +1188,17 @@
       align-items: center;
       gap: 4px;
       font-size: 11px;
-      color: #EA4335;
+      color: #34A853;
       font-weight: 500;
     }
     .rec-dot {
       width: 8px; height: 8px;
       border-radius: 50%;
-      background: #EA4335;
-      animation: recPulse 1.5s ease infinite;
+      background: #34A853;
+      animation: livePulse 1.5s ease-in-out infinite;
     }
     @keyframes recPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    @keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
     .meet-info { flex: 1; }
     .meet-title { font-size: 13px; color: rgba(255,255,255,0.7); }
 
@@ -1249,7 +1342,8 @@
       flex-shrink: 0;
     }
     .emoji-btn {
-      width: 34px; height: 34px;
+      width: 44px; height: 44px;
+      min-width: 44px; min-height: 44px;
       border-radius: 50%;
       border: none;
       background: transparent;
@@ -1528,20 +1622,20 @@
       <!-- NUMBERS -->
       <div id="numbers-world" class="world" style="display:none">
         <div class="sheet-toolbar">
-          <div class="tool-btn" title="Undo">↩</div>
-          <div class="tool-btn" title="Redo">↪</div>
+      <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Undo">↩</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Redo">↪</div>
           <div class="tool-sep"></div>
-          <div class="tool-btn" title="Font">Aa</div>
-          <div class="tool-btn" title="Number format">123</div>
-          <div class="tool-btn" title="Currency">$</div>
-          <div class="tool-btn" title="Percent">%</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Font">Aa</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Number format">123</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Currency">$</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Percent">%</div>
           <div class="tool-sep"></div>
-          <div class="tool-btn" title="Bold">B</div>
-          <div class="tool-btn" title="Italic"><i>I</i></div>
-          <div class="tool-btn" title="Color">🔽</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Bold">B</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Italic"><i>I</i></div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Color">🔽</div>
           <div class="tool-sep"></div>
-          <div class="tool-btn" title="Chart" id="btn-add-chart">📊</div>
-          <div class="tool-btn" title="Filter">🔽</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Chart" id="btn-add-chart">📊</div>
+          <div class="tool-btn" style="width:44px;height:44px;min-width:44px;min-height:44px;border-radius:8px" title="Filter">🔽</div>
         </div>
         <div class="sheet-formula">
           <div class="sheet-cell-id" id="cell-id">A1</div>
@@ -1595,7 +1689,34 @@
           </div>
         </div>
         <input type="text" id="term-input-hidden" style="position:absolute;opacity:0;pointer-events:none;" autocomplete="off" tabindex="-1">
-        <div class="term-hint">ENTER: run &nbsp;|&nbsp; BACKSPACE: delete &nbsp;|&nbsp; SMASH: chaos</div>
+        <!-- Big tappable command cards — tap the picture, run the command! -->
+        <div id="term-commands">
+          <div class="cmd-card" data-cmd="ping" onclick="runCmd('ping')">
+            <div class="cmd-emoji">🏓</div>
+            <div class="cmd-label">ping</div>
+          </div>
+          <div class="cmd-card" data-cmd="deploy" onclick="runCmd('deploy')">
+            <div class="cmd-emoji">🚀</div>
+            <div class="cmd-label">deploy</div>
+          </div>
+          <div class="cmd-card" data-cmd="backup" onclick="runCmd('backup')">
+            <div class="cmd-emoji">💾</div>
+            <div class="cmd-label">backup</div>
+          </div>
+          <div class="cmd-card" data-cmd="matrix" onclick="runCmd('matrix')">
+            <div class="cmd-emoji">🌈</div>
+            <div class="cmd-label">matrix</div>
+          </div>
+          <div class="cmd-card" data-cmd="hack" onclick="runCmd('hack')">
+            <div class="cmd-emoji">💥</div>
+            <div class="cmd-label">hack</div>
+          </div>
+          <div class="cmd-card" data-cmd="virus" onclick="runCmd('virus')">
+            <div class="cmd-emoji">🦠</div>
+            <div class="cmd-label">virus</div>
+          </div>
+        </div>
+        <div class="term-hint">💡 Or type a command and press ENTER</div>
         <div class="term-net" id="term-net"></div>
       </div>
 
@@ -1603,7 +1724,7 @@
       <div id="call-world" class="world" style="display:none">
         <div class="meet-header">
           <div>
-            <div class="meet-rec"><div class="rec-dot"></div> Recording</div>
+            <div class="meet-rec"><div class="rec-dot"></div> 📹 LIVE</div>
             <div class="meet-title">Clickety Meeting</div>
           </div>
           <div class="meet-time" id="meet-time">00:00</div>
@@ -1842,7 +1963,11 @@ function initPaper() {
   const centerX = window.innerWidth / 2;
   sparkleBurst(centerX, window.innerHeight / 2, 20);
 
-  const body = $('doc-body'), title = $('doc-title');
+  const body = $('doc-body'), title = $('doc-title'), paper = $('doc-paper');
+
+  // Start pulsing glow on paper
+  paper.classList.add('pulse-glow');
+
   body.focus();
 
   function updateWC() {
@@ -1851,6 +1976,11 @@ function initPaper() {
     const chars = text.length;
     $('doc-meta').textContent = `Clickety Desk · ${words} word${words!==1?'s':''}`;
     $('doc-wc').textContent = `${words} word${words!==1?'s':''} · ${chars} character${chars!==1?'s':''}`;
+    // Remove glow once user starts typing
+    if (text.length > 0) {
+      paper.classList.remove('pulse-glow');
+      paper.classList.add('has-content');
+    }
   }
 
   body.addEventListener('input', () => {
@@ -2180,6 +2310,39 @@ function addTN(level) {
   state.termNetLevel = Math.min(6, Math.max(state.termNetLevel, level));
   renderTermNet();
 }
+// ===== RUN COMMAND (for terminal command cards) =====
+function runCmd(cmd) {
+  cmd = cmd.toLowerCase().trim();
+  if (!cmd) return;
+  sound.init();
+  addT(cmd, 't-cmd');
+  if (COMMANDS[cmd]) {
+    COMMANDS[cmd]();
+    setTimeout(() => {
+      sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
+      sound.play('happy');
+      document.querySelectorAll('.term-line.t-ok').forEach(el => {
+        el.classList.add('rainbow');
+        setTimeout(() => el.classList.remove('rainbow'), 700);
+      });
+    }, 300);
+  } else {
+    addT('Command not found. Try one of the cards!', 't-err');
+    sound.play('err');
+  }
+}
+
+// Wire up command cards with sparkle on tap
+document.querySelectorAll('.cmd-card').forEach(card => {
+  card.addEventListener('click', () => {
+    sound.init();
+    sound.play('sparkle');
+    sparkleAt(card);
+    card.classList.add('bounce');
+    setTimeout(() => card.classList.remove('bounce'), 400);
+  });
+});
+
 function renderTermNet() {
   const icons=['🖥️','🖧','📡','🗄️','🔌','📦'];
   $('term-net').innerHTML = icons.map((ic,i)=>`<div class="net-n"><div class="net-i ${i<state.termNetLevel?'on':'off'}">${ic}</div><div class="net-l">${[ic,'SW','WF','DS','PW','BK'][i]}</div></div>`).join('');
@@ -2195,10 +2358,10 @@ function initTerminal() {
   if (out) out.innerHTML = '';
   state.termInput = '';
 
-  $('term-art').textContent = ' ██▀███  ▓██   ██▓ ▄▄▄       ███▄    █  █     █░▓█████  ██▀███   ██▀███  ▓█████  ██▀███  ';
+  $('term-art').innerHTML = '<div style="font-size:56px;text-align:center;line-height:1.2;animation:floatArt 3s ease-in-out infinite">💻</div><div style="font-size:11px;color:rgba(78,205,196,0.4);text-align:center;letter-spacing:2px">CLICKETY TERMINAL</div>';
   addT('Welcome to Clickety Terminal','t-sys');
-  addT('Type a command and press ENTER','t-sys');
-  addT('Try: ping · deploy · backup · fix · status · help','t-dim');
+  addT('Tap a card below or type a command!','t-sys');
+  addT('Try: ping · deploy · backup · matrix · hack','t-dim');
   renderTermNet();
 
   const hiddenInp = $('term-input-hidden');
@@ -2472,6 +2635,18 @@ document.addEventListener('keydown', e => {
 // Block Esc from exiting fullscreen
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.fullscreenElement) e.preventDefault();
+});
+
+// Re-request fullscreen if accidentally exited (common with toddler touches on iOS)
+let fullscreenLocked = false;
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && fullscreenLocked) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  }
+});
+// Lock fullscreen after first enter
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) fullscreenLocked = true;
 });
 
 // Reduced motion
