@@ -1542,7 +1542,7 @@
     .parent-btn span { font-size: 16px; }
   </style>
 </head>
-<body onload="document.getElementById('home-screen').style.display='none';switchWorld('paper')">
+<body>
   <!-- Confetti (activated on enter) -->
   <div id="confetti-container" class="confetti-container"></div>
 
@@ -2702,8 +2702,8 @@ function confirmEntry() {
   } catch(e) { console.error('confirmEntry FAILED:', e); }
 }
 
-// Start (was previously: switchWorld('paper'))
-// Home screen handles the start now
+// Start — bypass homepage, go straight to Docs
+confirmEntry();
 </script>
 </body>
 </html>
