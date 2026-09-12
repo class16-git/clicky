@@ -172,6 +172,29 @@ body{font-family:system-ui,sans-serif;background:var(--dark);color:#fff;overflow
 <!-- CONFETTI -->
 <div id="confetti-container"></div>
 
+<!-- WEATHER BRIEFING WIDGET -->
+<div id="briefing-widget" style="
+  display:none; position:fixed; top:60px; right:16px;
+  background:linear-gradient(135deg,#1e3a5f,#0f2744);
+  border:2px solid #4fc3f7; border-radius:20px;
+  padding:16px 20px; z-index:1000; min-width:220px;
+  box-shadow:0 4px 24px rgba(79,195,247,.3);
+  font-family:system-ui,sans-serif; color:#fff;
+  animation:briefingSlideIn .5s ease-out">
+  <div style="font-size:11px; color:#4fc3f7; margin-bottom:8px; font-weight:700; letter-spacing:1px">☀️ TODAY'S BRIEF</div>
+  <div style="font-size:13px; line-height:1.6">
+    <div style="margin-bottom:6px"><span style="font-size:18px">☀️</span> Sunny — 27–33°C</div>
+    <div style="margin-bottom:6px; color:#b3e5fc; font-size:12px">Keep an umbrella ready! 🌂</div>
+    <div style="color:#80deea; font-size:11px">Sat, Sep 12</div>
+  </div>
+  <style>
+    @keyframes briefingSlideIn {
+      from { opacity:0; transform:translateY(-12px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+  </style>
+</div>
+
 <!-- CHROME FRAME -->
 <div id="chrome-frame">
   <div class="chrome-tabs">
@@ -455,10 +478,12 @@ function switchWorld(world) {
   if (world === 'terminal') { initTerminal(); }
   else if (world === 'call') { initCall(); }
   else if (world === 'paper') { initDocs(); }
+  setTimeout(showBriefing, 500);
 }
 
-function goTo(world) {
-  switchWorld(world);
+function showBriefing() {
+  var w = document.getElementById('briefing-widget');
+  if (w) { w.style.display = 'block'; setTimeout(function() { try { sound.init(); sound.play('sparkle'); } catch(e){} }, 400); }
 }
 
 function doEnter() {
