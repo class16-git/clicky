@@ -639,6 +639,19 @@ function setupKeyboard() {
   var input = document.getElementById('term-input');
   if (!input) return;
   input.addEventListener('keydown', function(e) {
+    // chirpy keypress sound on every keystroke
+    try {
+      sound.init();
+      var now2 = audioCtx.currentTime;
+      var o2 = audioCtx.createOscillator();
+      var g3 = audioCtx.createGain();
+      o2.connect(g3); g3.connect(audioCtx.destination);
+      o2.frequency.value = 1200 + Math.random() * 200;
+      o2.type = 'square';
+      g3.gain.setValueAtTime(.06, now2);
+      g3.gain.exponentialRampToValueAtTime(.001, now2 + .06);
+      o2.start(now2); o2.stop(now2 + .06);
+    } catch(err){}
     if (e.key === 'Enter') {
       e.preventDefault();
       var val = input.value.trim();
