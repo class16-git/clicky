@@ -367,6 +367,22 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
 <!-- CONFETTI -->
 <div id="confetti-container"></div>
 
+<!-- WEATHER WIDGET (auto-dismiss after 4s, pointer-events:none so never blocks tabs) -->
+<div id="migoo-widget" style="
+  display:none; position:fixed; top:16px; right:16px; z-index:300;
+  background:linear-gradient(135deg,#1a88ff 0%,#0066cc 100%);
+  color:#fff; border-radius:16px; padding:16px 20px; min-width:200px;
+  box-shadow:0 8px 32px rgba(26,136,255,.35);
+  font-family:system-ui,-apple-system,sans-serif;
+  pointer-events:none; opacity:1; transition:opacity .5s;
+">
+  <div id="migoo-loc" style="font-size:12px; opacity:.85; margin-bottom:6px;">📍 Jakarta</div>
+  <div id="migoo-temp" style="font-size:28px; font-weight:700; line-height:1;">--°C</div>
+  <div id="migoo-desc" style="font-size:13px; opacity:.9; margin-top:4px;">Loading...</div>
+  <div id="migoo-rain" style="font-size:12px; margin-top:8px; opacity:.8;"></div>
+  <div id="migoo-time" style="font-size:11px; margin-top:6px; opacity:.6;"></div>
+</div>
+
 <script>
 'use strict';
 // ===== AUDIO ENGINE =====
@@ -459,6 +475,37 @@ function emojiCascade(emojis) {
 }
 
 // ===== SWITCH WORLD =====
+function fetchWeather() {
+  var w = document.getElementById('migoo-widget');
+  if (!w) return;
+  w.style.display = 'block';
+  w.style.opacity = '1';
+  // fetch Jakarta weather
+  try {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://wttr.in/Jakarta?format=j1', true);
+    xhr.onload = function() {
+      try {
+        var d = JSON.parse(xhr.responseText);
+        var cur = d.current_condition[0];
+        var temp = cur.temp_C + '°C';
+        var desc = cur.weatherDesc[0].value;
+        var rain = cur.chanceofrain;
+        document.getElementById('migoo-temp').textContent = temp;
+        document.getElementById('migoo-desc').textContent = desc;
+        document.getElementById('migoo-rain').textContent = rain > 40 ? '🌧 ' + rain + '% rain chance' : '';
+        document.getElementById('migoo-time').textContent = 'Updated ' + new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+      } catch(e) {}
+    };
+    xhr.onerror = function() {};
+    xhr.send();
+  } catch(e) {}
+  // auto-hide after 5 seconds
+  setTimeout(function() {
+    if (w) { w.style.opacity = '0'; setTimeout(function(){ if(w) w.style.display='none'; }, 500); }
+  }, 5000);
+}
+
 function switchWorld(world) {
   // activate chrome frame so tabs/dock receive clicks
   var cf = document.getElementById('chrome-frame');
@@ -481,6 +528,7 @@ function switchWorld(world) {
   if (world === 'terminal') initTerminal();
   else if (world === 'call') initCall();
   else if (world === 'paper') initDocs();
+  fetchWeather(); // weather widget on world switch, auto-dismisses after 5s
 }
 
 // ===== INIT WORLD FUNCTIONS =====
@@ -559,6 +607,7 @@ function doEnter() {
   sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
   confettiBurst();
   state.entered = true;
+  fetchWeather(); // weather widget on enter, auto-dismisses after 5s
 }
 
 // ===== FULLSCREEN =====
