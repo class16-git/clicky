@@ -172,8 +172,7 @@ body{font-family:system-ui,sans-serif;background:var(--dark);color:#fff;overflow
 <!-- CONFETTI -->
 <div id="confetti-container"></div>
 
-<!-- WEATHER BRIEFING WIDGET -->
-<div id="briefing-widget" style="
+<!-- CHROME FRAME -->
   display:none; position:fixed; top:60px; right:16px;
   background:linear-gradient(135deg,#1e3a5f,#0f2744);
   border:2px solid #4fc3f7; border-radius:20px;
@@ -478,13 +477,9 @@ function switchWorld(world) {
   if (world === 'terminal') { initTerminal(); }
   else if (world === 'call') { initCall(); }
   else if (world === 'paper') { initDocs(); }
-  setTimeout(showBriefing, 500);
-}
+ }
 
-function showBriefing() {
-  var w = document.getElementById('briefing-widget');
-  if (w) { w.style.display = 'block'; setTimeout(function() { try { sound.init(); sound.play('sparkle'); } catch(e){} }, 400); }
-}
+// briefing removed
 
 function doEnter() {
   try { sound.play('happy'); } catch(e) {}
