@@ -460,6 +460,9 @@ function emojiCascade(emojis) {
 
 // ===== SWITCH WORLD =====
 function switchWorld(world) {
+  // activate chrome frame so tabs/dock receive clicks
+  var cf = document.getElementById('chrome-frame');
+  if (cf) cf.classList.add('visible');
   // hide all worlds
   document.querySelectorAll('.world').forEach(function(el){ el.classList.remove('active'); });
   // show target
