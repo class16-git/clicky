@@ -20,16 +20,16 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
 .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:twink 2s infinite}
 @keyframes twink{0%,100%{opacity:.3}50%{opacity:1}}
 .aurora{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(100,60,200,.15) 0%,transparent 60%),radial-gradient(ellipse at 30% 100%,rgba(60,120,200,.1) 0%,transparent 50%);pointer-events:none}
-.home-badge{
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  border-radius:50px;padding:8px 20px;font-size:14px;color:rgba(255,255,255,.7);
-  backdrop-filter:blur(8px);display:flex;align-items:center;gap:8px;
-}
-.dot{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .home-title{font-size:clamp(28px,7vw,52px);font-weight:800;color:#fff;text-align:center;letter-spacing:-1px}
 .home-sub{font-size:16px;color:rgba(255,255,255,.5);text-align:center}
-.home-kbd{font-size:80px;margin:8px 0}
+.home-kbd{
+  font-size:96px;margin:8px 0;background:none;border:none;cursor:pointer;
+  padding:10px 22px;border-radius:28px;line-height:1;
+  animation:breathe 2.6s ease-in-out infinite;
+}
+.home-kbd:active{transform:scale(.94)}
+@keyframes breathe{0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(255,255,255,0))}50%{transform:scale(1.07);filter:drop-shadow(0 0 22px rgba(255,220,120,.6))}}
 .home-btn{
   background:linear-gradient(135deg,#ff6b6b,#ff8c42);border:none;border-radius:16px;
   color:#fff;font-size:clamp(18px,5vw,24px);font-weight:700;padding:18px 48px;
@@ -63,9 +63,9 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
 }
 #chrome-frame.visible{pointer-events:auto}
 .chrome-top{
-  display:flex;align-items:center;padding:0 12px;height:44px;
+  display:flex;align-items:center;padding:4px 12px;min-height:60px;
   background:rgba(30,30,35,.95);border-bottom:1px solid rgba(255,255,255,.08);
-  gap:0;flex-shrink:0;
+  gap:10px;flex-shrink:0;
 }
 .chrome-tab{
   display:flex;align-items:center;gap:8px;padding:0 18px;height:100%;cursor:pointer;
@@ -105,7 +105,7 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
 .bar-label{font-size:9px;color:rgba(255,255,255,.5);margin-top:2px}
 .bar-btn.active .bar-label{color:#4fc3f7}
 
-/* === DOCS WORLD === */
+/* === NOTES WORLD === */
 #paper-world{background:#fff;font-family:Georgia,serif}
 .docs-toolbar{
   display:flex;gap:6px;padding:10px 14px;background:#f4f4f5;border-bottom:1px solid #e4e4e7;
@@ -113,19 +113,25 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
 }
 .docs-btn{
   background:#fff;border:1px solid #d4d4d8;color:#444;padding:6px 12px;
-  border-radius:6px;font-size:13px;cursor:pointer;min-height:36px;min-width:36px;
+  border-radius:12px;font-size:20px;cursor:pointer;min-height:56px;min-width:56px;
   display:flex;align-items:center;justify-content:center;transition:all .15s;
 }
 .docs-btn:hover{background:#f4f4f5}
+.docs-btn.on{background:#e0f2fe;border-color:#4fc3f7;box-shadow:inset 0 0 0 2px #4fc3f7}
 .docs-write{
   flex:1;padding:24px;outline:none;overflow-y:auto;font-size:18px;line-height:1.8;
   color:#1a1a1a;min-height:200px;
 }
-.docs-write:empty::before{content:'Tap to write... ✏️';color:#d4d4d8;font-style:italic}
+.docs-write:empty::before{content:'✏️';opacity:.35}
 .docs-hint{
-  position:absolute;bottom:16px;right:16px;background:#fff;color:#999;font-size:12px;
+  position:absolute;bottom:16px;right:16px;background:#fff;color:#999;font-size:20px;
   padding:4px 10px;border-radius:20px;border:1px solid #e4e4e7;
 }
+#paper-world{display:none;flex-direction:column}
+#paper-world.active{display:flex}
+.docs-write.sz-1{font-size:18px}
+.docs-write.sz-2{font-size:26px}
+.docs-write.sz-3{font-size:36px}
 
 /* === TERMINAL WORLD === */
 #terminal-world{
@@ -154,28 +160,122 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
   display:flex;flex-wrap:wrap;gap:10px;padding:12px 16px;justify-content:center;
 }
 .term-card{
-  background:#0f0;font-size:13px;color:#000;font-weight:700;padding:10px 18px;
-  border-radius:8px;cursor:pointer;min-height:44px;min-width:80px;
+  background:#0f0;font-size:10px;color:#00230a;font-weight:700;padding:8px 10px;
+  border-radius:16px;cursor:pointer;min-height:72px;min-width:72px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  border:2px solid transparent;transition:all .15s;
+  border:3px solid rgba(0,0,0,.25);transition:transform .12s;
 }
-.term-card:hover{border-color:#0f0;background:#0a0;text-shadow:0 0 6px #0f0;color:#0f0}
-.term-card-icon{font-size:18px}
-.term-input-area{padding:12px 16px}
+.term-card:active{transform:scale(.94)}
+.term-card-icon{font-size:34px;line-height:1}     /* icon dominant, word secondary */
+.term-card-word{font-size:10px;opacity:.75;max-width:82px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.term-input-area{padding:12px 16px;display:flex;flex-direction:column;min-height:0}
 .term-display{
-  background:#050505;border:1px solid #1a1a1a;border-radius:8px;padding:12px;
-  min-height:100px;max-height:200px;overflow-y:auto;color:#0f0;font-size:13px;
+  background:#050505;border:1px solid #1a1a1a;border-radius:8px;padding:10px;
+  flex:1;min-height:120px;max-height:34vh;overflow-y:auto;color:#0f0;font-size:13px;
   line-height:1.6;margin-bottom:10px;text-shadow:0 0 4px rgba(0,255,0,.5);
+  display:flex;flex-direction:column;gap:8px;
 }
+#terminal-world{display:none}
+#terminal-world.active{display:flex;flex-direction:column}
+.term-cards{min-height:0;overflow-y:auto}
+/* persistent job rows */
+.job-row{
+  display:flex;align-items:center;gap:10px;background:#0d150d;border:1px solid #143014;
+  border-radius:10px;padding:10px 12px;flex-shrink:0;
+}
+.job-icon{font-size:24px;line-height:1;flex-shrink:0}
+.job-body{flex:1;min-width:0}
+.job-label{font-size:13px;color:#9cff9c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.job-bar{height:8px;border-radius:4px;background:#12240f;margin-top:6px;overflow:hidden}
+.job-fill{height:100%;width:0%;background:linear-gradient(90deg,#0f0,#9cff9c);transition:width .45s linear}
+.job-status{font-size:20px;flex-shrink:0;width:26px;text-align:center}
+.job-row.done{border-color:#0f0;box-shadow:0 0 10px rgba(0,255,0,.18)}
+
+/* === CALL EXTRAS === */
+.meet-tile.self{box-shadow:0 0 0 2px #4fc3f7}
+.meet-tile .tile-badge{
+  position:absolute;top:8px;left:8px;font-size:22px;display:none;
+  background:rgba(0,0,0,.6);border-radius:50%;width:38px;height:38px;
+  align-items:center;justify-content:center;
+}
+.meet-tile.is-muted{box-shadow:0 0 0 3px #ef4444}
+.meet-tile.is-muted .badge-mute{display:flex}
+.meet-tile.is-hand{box-shadow:0 0 0 3px #f59e0b}
+.meet-tile.is-hand .badge-hand{display:flex;top:8px;left:auto;right:8px}
+.meet-tile.is-muted.is-hand{box-shadow:0 0 0 3px #f59e0b,0 0 0 7px #ef4444}
+.meet-tile .badge-share{display:none;bottom:8px;top:auto;right:8px;left:auto;background:#22c55e}
+.meet-tile.is-sharing .badge-share{display:flex}
+.meet-tile.cam-off .meet-avatar{filter:blur(10px);opacity:.35}
+.meet-tile .cam-cover{
+  position:absolute;inset:0;background:#11111d;display:none;
+  align-items:center;justify-content:center;font-size:40px;
+}
+.meet-tile.cam-off .cam-cover{display:flex}
+.tile-reaction{
+  position:absolute;bottom:8px;left:8px;font-size:30px;
+  animation:reactPop 1.8s ease-out forwards;
+}
+@keyframes reactPop{0%{transform:scale(.4);opacity:0}20%{transform:scale(1.2);opacity:1}80%{opacity:1}100%{transform:translateY(-28px);opacity:0}}
+#share-view{
+  display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(74%,420px);max-height:64%;overflow:hidden;background:#fff;color:#111;
+  border-radius:14px;padding:14px;z-index:20;box-shadow:0 12px 40px rgba(0,0,0,.6);
+  font-family:Georgia,serif;font-size:14px;line-height:1.5;pointer-events:none;
+}
+#share-view.on{display:block}
+#share-view .share-doc{max-height:52vh;overflow:hidden}
+
+/* === IDLE CUE === */
+@keyframes idleOnce{0%{transform:scale(1)}35%{transform:scale(1.14)}70%{transform:scale(.97)}100%{transform:scale(1)}}
+.idle-cue{animation:idleOnce 1.1s ease-in-out 1}
+
+/* === PARENT PANEL === */
+#parent-panel{
+  position:fixed;inset:0;z-index:500;display:none;
+  align-items:center;justify-content:center;background:rgba(0,0,0,.6);
+  font-family:system-ui,-apple-system,sans-serif;
+}
+#parent-panel.on{display:flex}
+.pp-card{
+  background:#1d1d24;color:#fff;border-radius:18px;padding:22px;width:min(420px,92vw);
+  display:flex;flex-direction:column;gap:14px;max-height:92vh;overflow-y:auto;
+}
+.pp-title{font-size:18px;font-weight:700}
+.pp-row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:15px}
+.pp-btn{
+  min-height:52px;min-width:52px;border-radius:12px;border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.08);color:#fff;font-size:15px;padding:0 16px;cursor:pointer;
+}
+.pp-btn.danger{background:#7f1d1d;border-color:#ef4444}
+.pp-btn.primary{background:#2563eb;border-color:#3b82f6}
+.pp-row input[type=range]{flex:1;min-height:44px}
+#pp-confirm{display:none;gap:10px}
+#pp-confirm.on{display:flex}
+
+/* === CALM MODE (parent reduced motion) === */
+body.calm *{animation:none!important;transition:none!important}
+
+/* === SPACE THEME === */
+body.theme-space .chrome-top,body.theme-space .chrome-dock{background:rgba(18,12,45,.97)}
+body.theme-space .chrome-workspace{background:#0a061e}
+body.theme-space #paper-world{background:#140f33}
+body.theme-space .docs-toolbar{background:#1d1749;border-bottom-color:#2c2470}
+body.theme-space .docs-btn{background:#241c5c;border-color:#3a2f8a;color:#e6e1ff}
+body.theme-space .docs-write{color:#f0edff}
+body.theme-space .docs-hint{background:#241c5c;border-color:#3a2f8a;color:#b9b0ff}
+body.theme-space #call-world{background:#0f0a2b}
+body.theme-space .meet-tile{background:#1d1749}
 #term-input{
   width:100%;background:#111;border:1px solid #1a1a1a;color:#0f0;
-  padding:10px 14px;border-radius:8px;font-size:14px;outline:none;
+  padding:10px 14px;border-radius:8px;font-size:18px;outline:none;
+  min-height:56px;
   font-family:'Courier New',Courier,monospace;text-shadow:0 0 4px rgba(0,255,0,.5);
 }
 #term-input::placeholder{color:#333}
 
-/* === MEET WORLD === */
-#call-world{background:#1a1a2e;font-family:system-ui,sans-serif;display:flex;flex-direction:column}
+/* === CALL WORLD === */
+#call-world{background:#1a1a2e;font-family:system-ui,sans-serif;display:none;flex-direction:column;position:absolute}
+#call-world.active{display:flex}
 .meet-grid{
   flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:14px;
   align-content:center;
@@ -187,10 +287,8 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
 }
 .meet-avatar{font-size:48px}
 .meet-name{font-size:13px;color:rgba(255,255,255,.7)}
-.meet-wave{
-  position:absolute;bottom:10px;right:10px;font-size:20px;
-  animation:wav 1.2s ease-in-out infinite;
-}
+.meet-wave{position:absolute;bottom:10px;right:10px;font-size:20px}
+.meet-wave.go{animation:wav 1.2s ease-in-out 2}
 @keyframes wav{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}}
 .meet-tile.speaking{box-shadow:0 0 0 3px #4ade80}
 .live-badge{
@@ -206,13 +304,11 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
   display:flex;align-items:center;justify-content:center;font-size:22px;
   transition:all .15s;min-height:44px;min-width:44px;
 }
-.meet-btn.mute{background:#333;color:#fff}
-.meet-btn.mute.on{background:#ef4444;color:#fff}
-.meet-btn.cam{background:#333;color:#fff}
-.meet-btn.cam.on{background:#333;color:#4ade80}
-.meet-btn.share{background:#333;color:#fff}
-.meet-btn.hand{background:#333;color:#fff}
-.meet-btn.hand.on{background:#f59e0b;color:#fff;animation:pulse 1.5s infinite}
+.meet-btn{background:#333;color:#fff}
+.meet-btn.mute.on{background:#ef4444;color:#fff;box-shadow:0 0 0 4px rgba(239,68,68,.35)}
+.meet-btn.cam.on{background:#ef4444;color:#fff;box-shadow:0 0 0 4px rgba(239,68,68,.35)}
+.meet-btn.share.on{background:#22c55e;color:#fff;box-shadow:0 0 0 4px rgba(34,197,94,.35)}
+.meet-btn.hand.on{background:#f59e0b;color:#fff;box-shadow:0 0 0 4px rgba(245,158,11,.35)}
 .meet-reactions{
   display:flex;justify-content:center;gap:8px;padding:8px;
   background:#0e0e1a;flex-shrink:0;flex-wrap:wrap;
@@ -227,14 +323,57 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
 /* === CONFETTI === */
 #confetti-container{position:fixed;inset:0;pointer-events:none;z-index:200}
 
+/* === PARTICLE LAYER (single parent, removed as a whole) === */
+#particle-layer{position:fixed;inset:0;pointer-events:none;z-index:300;overflow:hidden}
+
 /* === SPARKLES === */
-.sparkle{position:fixed;pointer-events:none;z-index:300;font-size:20px;
+.sparkle{position:absolute;pointer-events:none;z-index:300;font-size:20px;
   animation:spk 1s forwards}
 @keyframes spk{0%{transform:scale(1) translateY(0);opacity:1}100%{transform:scale(0) translateY(-60px);opacity:0}}
 
 /* === REDUCED MOTION === */
 @media(prefers-reduced-motion:reduce){
   .star,.aurora,.float-emoji,.meet-wave,.pulse,*{animation:none!important;transition:none!important}
+}
+
+/* === TOUCH TARGET BASELINE (>=52px, >=8px separation) === */
+.chrome-tab,.bar-btn,.meet-btn,.react-btn,.term-card,.docs-btn,.pill{min-height:52px;min-width:52px}
+.docs-toolbar{gap:10px}
+.chrome-dock{gap:10px;padding:8px}
+.meet-controls{gap:12px}
+.meet-reactions{gap:10px}
+.term-cards{gap:12px}
+.home-pills{gap:12px}
+.react-btn{font-size:30px}
+
+/* === RESPONSIVE === */
+@media (max-width:480px){            /* phone */
+  .chrome-tab{font-size:12px;padding:0 8px;min-width:52px}
+  .meet-grid{grid-template-columns:repeat(2,1fr);gap:8px;padding:8px}
+  .meet-avatar{font-size:34px}
+  .term-logo{font-size:32px;padding:10px 0 4px}
+  .term-card{font-size:12px;padding:8px 12px}
+  .docs-write{padding:14px}
+}
+@media (min-width:768px){            /* tablet */
+  .meet-grid{grid-template-columns:repeat(3,1fr)}
+  .docs-btn{min-height:60px;min-width:60px;font-size:22px}
+  .term-cards{gap:14px}
+}
+@media (orientation:landscape) and (max-height:560px){   /* landscape */
+  .term-logo{display:none}
+  .term-prompt{padding:4px 16px;font-size:14px}
+  .meet-grid{grid-template-columns:repeat(4,1fr);gap:8px;padding:8px}
+  .meet-tile{aspect-ratio:auto;min-height:88px}
+  .home-kbd{font-size:44px;margin:0}
+}
+@media (max-height:480px){           /* short screens */
+  .chrome-top{min-height:60px}
+  .docs-toolbar{padding:6px 10px}
+  .term-display{max-height:26vh;min-height:88px}
+  .meet-controls{padding:8px}
+  .home-btn{min-height:56px;padding:12px 28px}
+  .home-kbd{font-size:40px;margin:0}
 }
 
 /* === Z-INDEX STACK === */
@@ -255,19 +394,18 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
   <span class="float-emoji fe3">💻</span>
   <span class="float-emoji fe4">💼</span>
 
-  <div class="home-badge"><span class="dot"></span> 1,000+ little workers right now!</div>
-  <div class="home-kbd">⌨️</div>
+  <button class="home-kbd" id="home-kbd-btn" data-action="enter" aria-label="Start working">⌨️</button>
   <h1 class="home-title">Clickety Desk</h1>
   <p class="home-sub">Like Daddy's computer! ⌨️</p>
-  <button class="home-btn" id="home-enter-btn">START WORKING! ⌨️ ✨</button>
+  <button class="home-btn" id="home-enter-btn" data-action="enter">START WORKING! ⌨️ ✨</button>
   <div class="home-pills">
-    <div class="pill active" id="pill-chrome">Chrome 👀</div>
-    <div class="pill" id="pill-space">Space 🌌</div>
+    <button class="pill active" id="pill-daylight" data-action="theme" data-theme="daylight" aria-label="Daylight desk">Daylight ☀️</button>
+    <button class="pill" id="pill-space" data-action="theme" data-theme="space" aria-label="Space desk">Space 🌌</button>
   </div>
   <p class="home-footer">No account. Just pretend.</p>
 </div>
 
-<!-- ===================== CHROME FRAME ===================== -->
+<!-- ===================== DESK FRAME ===================== -->
 <div id="chrome-frame">
   <!-- TOP BAR -->
   <div class="chrome-top">
@@ -276,25 +414,25 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
       <div class="cdot cdot-y"></div>
       <div class="cdot cdot-g"></div>
     </div>
-    <button class="chrome-tab active" id="tab-paper" data-w="paper">📄 Docs</button>
-    <button class="chrome-tab" id="tab-terminal" data-w="terminal">💻 Terminal</button>
-    <button class="chrome-tab" id="tab-call" data-w="call">📹 Meet</button>
+    <button class="chrome-tab active" id="tab-paper" data-action="world" data-w="paper" aria-label="Notes">📄 Notes</button>
+    <button class="chrome-tab" id="tab-terminal" data-action="world" data-w="terminal" aria-label="Terminal">💻 Terminal</button>
+    <button class="chrome-tab" id="tab-call" data-action="world" data-w="call" aria-label="Call">📹 Call</button>
   </div>
   <!-- WORKSPACE -->
   <div class="chrome-workspace">
 
-    <!-- ===== DOCS WORLD ===== -->
+    <!-- ===== NOTES WORLD ===== -->
     <div id="paper-world" class="world active">
       <div class="docs-toolbar">
-        <button class="docs-btn" id="btn-bold"><b>B</b></button>
-        <button class="docs-btn" id="btn-italic"><i>I</i></button>
-        <button class="docs-btn" id="btn-red" style="color:#ef4444">A</button>
-        <button class="docs-btn" id="btn-green" style="color:#22c55e">A</button>
-        <button class="docs-btn" id="btn-blue" style="color:#3b82f6">A</button>
-        <button class="docs-btn" id="btn-size">T+</button>
+        <button class="docs-btn" id="btn-bold" data-action="docs-bold" aria-label="Bold"><b>B</b></button>
+        <button class="docs-btn" id="btn-italic" data-action="docs-italic" aria-label="Italic"><i>I</i></button>
+        <button class="docs-btn" id="btn-red" data-action="docs-color" data-color="#ef4444" aria-label="Red text" style="color:#ef4444">A</button>
+        <button class="docs-btn" id="btn-green" data-action="docs-color" data-color="#22c55e" aria-label="Green text" style="color:#22c55e">A</button>
+        <button class="docs-btn" id="btn-blue" data-action="docs-color" data-color="#3b82f6" aria-label="Blue text" style="color:#3b82f6">A</button>
+        <button class="docs-btn" id="btn-size" data-action="docs-size" aria-label="Text size">T+</button>
       </div>
-      <div class="docs-write" id="docs-area" contenteditable="true" spellcheck="false"></div>
-      <div class="docs-hint">Tap to write... ✏️</div>
+      <div class="docs-write sz-1" id="docs-area" contenteditable="true" spellcheck="false"></div>
+      <div class="docs-hint">✏️</div>
     </div>
 
     <!-- ===== TERMINAL WORLD ===== -->
@@ -306,11 +444,11 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
       <div class="term-cards" id="term-cards"></div>
       <div class="term-input-area">
         <div class="term-display" id="term-display"></div>
-        <input id="term-input" type="text" placeholder="type a command..." autocomplete="off" spellcheck="false">
+        <input id="term-input" type="text" aria-label="Terminal input" placeholder="⌨️" autocomplete="off" spellcheck="false">
       </div>
     </div>
 
-    <!-- ===== MEET WORLD ===== -->
+    <!-- ===== CALL WORLD ===== -->
     <div id="call-world" class="world">
       <div class="live-badge">📹 LIVE</div>
       <div class="meet-grid">
@@ -320,116 +458,219 @@ body{overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:mani
           <div class="meet-wave">👋</div>
         </div>
         <div class="meet-tile" id="tile-1">
-          <div class="meet-avatar">👧</div>
-          <div class="meet-name">Aya</div>
-        </div>
-        <div class="meet-tile" id="tile-2">
           <div class="meet-avatar">👦</div>
           <div class="meet-name">Fadi</div>
         </div>
-        <div class="meet-tile" id="tile-3">
+        <div class="meet-tile" id="tile-2">
           <div class="meet-avatar">🧔</div>
           <div class="meet-name">Papa</div>
           <div class="meet-wave">👋</div>
         </div>
+        <div class="meet-tile self" id="tile-self">
+          <div class="cam-cover">📷</div>
+          <div class="meet-avatar">👧</div>
+          <div class="meet-name">Aya</div>
+          <div class="tile-badge badge-mute">🔇</div>
+          <div class="tile-badge badge-hand">✋</div>
+          <div class="tile-badge badge-share">📤</div>
+        </div>
       </div>
+      <div id="share-view"><div class="share-doc" id="share-doc"></div></div>
       <div class="meet-controls">
-        <button class="meet-btn mute" id="btn-mute">🎤</button>
-        <button class="meet-btn cam" id="btn-cam">📹</button>
-        <button class="meet-btn share" id="btn-share">📤</button>
-        <button class="meet-btn hand" id="btn-hand">✋</button>
+        <button class="meet-btn mute" id="btn-mute" data-action="meet-mute" aria-label="Microphone">🎤</button>
+        <button class="meet-btn cam" id="btn-cam" data-action="meet-cam" aria-label="Camera">📹</button>
+        <button class="meet-btn share" id="btn-share" data-action="meet-share" aria-label="Share notes">📤</button>
+        <button class="meet-btn hand" id="btn-hand" data-action="meet-hand" aria-label="Raise hand">✋</button>
       </div>
       <div class="meet-reactions">
-        <div class="react-btn" data-emoji="😂">😂</div>
-        <div class="react-btn" data-emoji="👏">👏</div>
-        <div class="react-btn" data-emoji="❤️">❤️</div>
-        <div class="react-btn" data-emoji="😮">😮</div>
-        <div class="react-btn" data-emoji="🎉">🎉</div>
-        <div class="react-btn" data-emoji="🔥">🔥</div>
+        <button class="react-btn" data-action="meet-react" data-emoji="😂" aria-label="Laugh">😂</button>
+        <button class="react-btn" data-action="meet-react" data-emoji="👏" aria-label="Clap">👏</button>
+        <button class="react-btn" data-action="meet-react" data-emoji="❤️" aria-label="Heart">❤️</button>
+        <button class="react-btn" data-action="meet-react" data-emoji="😮" aria-label="Wow">😮</button>
+        <button class="react-btn" data-action="meet-react" data-emoji="🎉" aria-label="Party">🎉</button>
+        <button class="react-btn" data-action="meet-react" data-emoji="🔥" aria-label="Fire">🔥</button>
       </div>
     </div>
 
   </div><!-- /workspace -->
   <!-- DOCK -->
   <div class="chrome-dock">
-    <button class="bar-btn active" id="bar-paper" data-w="paper">
-      <span class="bar-icon">📄</span><span class="bar-label">Docs</span>
+    <button class="bar-btn active" id="bar-paper" data-action="world" data-w="paper">
+      <span class="bar-icon">📄</span><span class="bar-label">Notes</span>
     </button>
-    <button class="bar-btn" id="bar-terminal" data-w="terminal">
+    <button class="bar-btn" id="bar-terminal" data-action="world" data-w="terminal">
       <span class="bar-icon">💻</span><span class="bar-label">Terminal</span>
     </button>
-    <button class="bar-btn" id="bar-call" data-w="call">
-      <span class="bar-icon">📹</span><span class="bar-label">Meet</span>
+    <button class="bar-btn" id="bar-call" data-action="world" data-w="call">
+      <span class="bar-icon">📹</span><span class="bar-label">Call</span>
     </button>
   </div>
 </div>
 
 <!-- CONFETTI -->
 <div id="confetti-container"></div>
+<div id="particle-layer"></div>
 
-<!-- WEATHER WIDGET (auto-dismiss after 4s, pointer-events:none so never blocks tabs) -->
-<div id="migoo-widget" style="
-  display:none; position:fixed; top:16px; right:16px; z-index:300;
-  background:linear-gradient(135deg,#1a88ff 0%,#0066cc 100%);
-  color:#fff; border-radius:16px; padding:16px 20px; min-width:200px;
-  box-shadow:0 8px 32px rgba(26,136,255,.35);
-  font-family:system-ui,-apple-system,sans-serif;
-  pointer-events:none; opacity:1; transition:opacity .5s;
-">
-  <div id="migoo-loc" style="font-size:12px; opacity:.85; margin-bottom:6px;">📍 Jakarta</div>
-  <div id="migoo-temp" style="font-size:28px; font-weight:700; line-height:1;">--°C</div>
-  <div id="migoo-desc" style="font-size:13px; opacity:.9; margin-top:4px;">Loading...</div>
-  <div id="migoo-rain" style="font-size:12px; margin-top:8px; opacity:.8;"></div>
-  <div id="migoo-time" style="font-size:11px; margin-top:6px; opacity:.6;"></div>
+<!-- PARENT PANEL (adults only: two-corner 2s hold, or Ctrl+Shift+P) -->
+<div id="parent-panel" aria-hidden="true">
+  <div class="pp-card">
+    <div class="pp-title">Parent settings</div>
+    <div class="pp-row"><span>Sound</span><button class="pp-btn" id="pp-sound" data-action="pp-sound">On</button></div>
+    <div class="pp-row"><span>Volume</span><input type="range" id="pp-volume" min="0" max="100" step="5"></div>
+    <div class="pp-row"><span>Calm mode (reduced motion)</span><button class="pp-btn" id="pp-calm" data-action="pp-calm">Off</button></div>
+    <div class="pp-row"><span>Fullscreen</span><button class="pp-btn" id="pp-fullscreen" data-action="pp-fullscreen">Toggle</button></div>
+    <div class="pp-row"><span>Session</span><button class="pp-btn danger" id="pp-reset" data-action="pp-reset">Reset session</button></div>
+    <div class="pp-row" id="pp-confirm">
+      <span>Clear this session's work?</span>
+      <button class="pp-btn danger" data-action="pp-reset-confirm">Yes, reset</button>
+      <button class="pp-btn" data-action="pp-reset-cancel">Cancel</button>
+    </div>
+    <div class="pp-row"><span></span><button class="pp-btn primary" data-action="pp-close">Close</button></div>
+  </div>
 </div>
 
 <script>
 'use strict';
-// ===== AUDIO ENGINE =====
+// ===== AUDIO ENGINE (Web Audio synthesis; lazily unlocked by a real gesture) =====
 var audioCtx = null;
+var masterGain = null;
+var audioUnlocked = false;
+
 var sound = {
-  init: function() {
-    if (audioCtx) return;
-    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  enabled: true,
+  volume: 0.7,
+  // Never called before a user gesture: creating a context pre-gesture leaves it
+  // suspended forever in Chrome/Safari.
+  unlock: function() {
+    try {
+      if (!audioCtx) {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        audioCtx = new AC();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = this.volume;
+        masterGain.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      audioUnlocked = true;
+    } catch(e) {}
   },
+  setVolume: function(v) {
+    this.volume = v;
+    if (masterGain) { try { masterGain.gain.value = v; } catch(e) {} }
+  },
+  playAny: function(names) { this.play(names[Math.floor(Math.random() * names.length)]); },
   play: function(name) {
-    try { this.init(); if (!audioCtx) return; } catch(e) { return; }
+    if (!this.enabled) return;
+    if (!audioUnlocked) return;           // stays silent until a gesture unlocks audio
+    this.unlock();
+    if (!audioCtx) return;
+    var dest = masterGain || audioCtx.destination;
     var now = audioCtx.currentTime;
     var o = audioCtx.createOscillator();
     var g = audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
+    o.connect(g); g.connect(dest);
+    var blip = function(f, t, dur, vol, type) {
+      var oo = audioCtx.createOscillator(), gg = audioCtx.createGain();
+      oo.connect(gg); gg.connect(dest);
+      oo.type = type || 'sine';
+      oo.frequency.value = f;
+      gg.gain.setValueAtTime(vol, now + t);
+      gg.gain.exponentialRampToValueAtTime(.001, now + t + dur);
+      oo.start(now + t); oo.stop(now + t + dur);
+    };
     try {
       switch(name) {
+        case 'pop': o.type='triangle'; o.frequency.setValueAtTime(320,now); o.frequency.exponentialRampToValueAtTime(760,now+.09); g.gain.setValueAtTime(.16,now); g.gain.exponentialRampToValueAtTime(.001,now+.12); o.start(now); o.stop(now+.12); break;
+        case 'boop': o.type='sine'; o.frequency.setValueAtTime(700,now); o.frequency.exponentialRampToValueAtTime(240,now+.14); g.gain.setValueAtTime(.14,now); g.gain.exponentialRampToValueAtTime(.001,now+.16); o.start(now); o.stop(now+.16); break;
+        case 'chime': [659,880,1319].forEach(function(f,i){ blip(f, i*.07, .28, .09, 'sine'); }); break;
+        case 'bloop': [440,554].forEach(function(f,i){ blip(f, i*.05, .14, .11, 'triangle'); }); break;
+        case 'whir': o.type='triangle'; o.frequency.setValueAtTime(220,now); o.frequency.linearRampToValueAtTime(440,now+.25); g.gain.setValueAtTime(.07,now); g.gain.exponentialRampToValueAtTime(.001,now+.28); o.start(now); o.stop(now+.28); break;
+        case 'done': [784,988,1175,1568].forEach(function(f,i){ blip(f, i*.06, .2, .1, 'sine'); }); break;
+        case 'tick': o.type='square'; o.frequency.value=1200+Math.random()*260; g.gain.setValueAtTime(.05,now); g.gain.exponentialRampToValueAtTime(.001,now+.05); o.start(now); o.stop(now+.05); break;
+        case 'type': [520,610].forEach(function(f,i){ blip(f, i*.04, .09, .07, 'square'); }); break;
+        case 'nudge': o.type='sine'; o.frequency.setValueAtTime(520,now); o.frequency.linearRampToValueAtTime(660,now+.1); g.gain.setValueAtTime(.08,now); g.gain.exponentialRampToValueAtTime(.001,now+.14); o.start(now); o.stop(now+.14); break;
         case 'sparkle': o.frequency.value=1047; g.gain.setValueAtTime(.15,now); g.gain.exponentialRampToValueAtTime(.001,now+.15); o.start(now); o.stop(now+.15); break;
-        case 'happy':
-          [523,659,784,1047].forEach(function(f,i) {
-            var o2=audioCtx.createOscillator(), g2=audioCtx.createGain();
-            o2.connect(g2); g2.connect(audioCtx.destination);
-            o2.frequency.value=f; g2.gain.setValueAtTime(.12,now+i*.08); g2.gain.exponentialRampToValueAtTime(.001,now+i*.08+.15);
-            o2.start(now+i*.08); o2.stop(now+i*.08+.15);
-          }); break;
-        case 'twinkle':
-          [264,264,396,396,440,440,396].forEach(function(f,i) {
-            var o2=audioCtx.createOscillator(), g2=audioCtx.createGain();
-            o2.connect(g2); g2.connect(audioCtx.destination);
-            o2.frequency.value=f; g2.gain.setValueAtTime(.1,now+i*.2); g2.gain.exponentialRampToValueAtTime(.001,now+i*.2+.18);
-            o2.start(now+i*.2); o2.stop(now+i*.2+.18);
-          }); break;
-        case 'enter': [392,494,587].forEach(function(f,i){var o2=audioCtx.createOscillator(),g2=audioCtx.createGain();o2.connect(g2);g2.connect(audioCtx.destination);o2.frequency.value=f;g2.gain.setValueAtTime(.1,now+i*.06);g2.gain.exponentialRampToValueAtTime(.001,now+i*.06+.12);o2.start(now+i*.06);o2.stop(now+i*.06+.12);}); break;
-        case 'snap': var buf=audioCtx.createBuffer(1,audioCtx.sampleRate*.05,audioCtx.sampleRate);var d=buf.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.3;var src=audioCtx.createBufferSource();src.buffer=buf;var g2=audioCtx.createGain();g2.gain.setValueAtTime(.3,now);g2.gain.exponentialRampToValueAtTime(.001,now+.05);src.connect(g2);g2.connect(audioCtx.destination);src.start(now); break;
-        case 'err': o.frequency.value=150;o.type='sawtooth';g.gain.setValueAtTime(.1,now);g.gain.exponentialRampToValueAtTime(.001,now+.3);o.start(now);o.stop(now+.3); break;
-        default: o.frequency.value=440;g.gain.setValueAtTime(.1,now);g.gain.exponentialRampToValueAtTime(.001,now+.1);o.start(now);o.stop(now+.1);
+        case 'happy': [523,659,784,1047].forEach(function(f,i){ blip(f, i*.08, .15, .12, 'sine'); }); break;
+        case 'twinkle': [264,264,396,396,440,440,396].forEach(function(f,i){ blip(f, i*.12, .16, .1, 'sine'); }); break;
+        case 'enter': [392,494,587].forEach(function(f,i){ blip(f, i*.06, .12, .1, 'sine'); }); break;
+        case 'snap':
+          var buf=audioCtx.createBuffer(1,Math.floor(audioCtx.sampleRate*.05),audioCtx.sampleRate);
+          var d=buf.getChannelData(0);
+          for (var i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*.3;
+          var src=audioCtx.createBufferSource(); src.buffer=buf;
+          var g2=audioCtx.createGain(); g2.gain.setValueAtTime(.3,now); g2.gain.exponentialRampToValueAtTime(.001,now+.05);
+          src.connect(g2); g2.connect(dest); src.start(now);
+          break;
+        default: o.frequency.value=440; g.gain.setValueAtTime(.1,now); g.gain.exponentialRampToValueAtTime(.001,now+.1); o.start(now); o.stop(now+.1);
       }
     } catch(e) {}
   }
 };
 
-// ===== STATE =====
-var state = { world: 'paper', entered: false };
+// ===== CENTRAL STATE (authoritative; the DOM is rendered from it) =====
+var state = {
+  screen: 'home',
+  world: 'paper',
+  theme: 'daylight',
+  docs:     { bold:false, italic:false, color:null, size:1, chars:0 },
+  terminal: { jobs:[], seq:0 },
+  meet:     { muted:false, camOff:false, hand:false, sharing:false, responder:0 },
+  session:  { celebrated:false, lastInteraction:Date.now() },
+  settings: { soundOn:true, volume:0.7, calm:false }
+};
 
-// ===== CELEBRATIONS =====
+// live timers, so a session reset can cancel every pending effect
+var timers = { jobs:[], reply:null, burst:null, idle:null };
+function clearTimerList(list) { list.forEach(function(t){ clearTimeout(t); }); list.length = 0; }
+
+var STORE_KEY = 'clickety.parent';   // parent settings ONLY - never child activity
+function loadSettings() {
+  try {
+    var raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return;
+    var v = JSON.parse(raw);
+    if (typeof v.soundOn === 'boolean') state.settings.soundOn = v.soundOn;
+    if (typeof v.volume === 'number') state.settings.volume = Math.max(0, Math.min(1, v.volume));
+    if (typeof v.calm === 'boolean') state.settings.calm = v.calm;
+  } catch(e) {}
+}
+function saveSettings() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state.settings)); } catch(e) {}
+}
+function applySettings() {
+  sound.enabled = state.settings.soundOn;
+  sound.setVolume(state.settings.volume);          // no AudioContext created here
+  document.body.classList.toggle('calm', state.settings.calm);
+  var b = document.getElementById('pp-sound'); if (b) b.textContent = state.settings.soundOn ? 'On' : 'Off';
+  var c = document.getElementById('pp-calm');  if (c) c.textContent = state.settings.calm ? 'On' : 'Off';
+  var v = document.getElementById('pp-volume'); if (v) v.value = String(Math.round(state.settings.volume * 100));
+}
+
+// ===== PARTICLES (every helper owns a container it removes as a whole) =====
+var PARTICLE_CAP = 160;
+function particleLayer() { return document.getElementById('particle-layer'); }
+function liveParticleCount() {
+  var n = 0;
+  var layer = particleLayer();
+  if (layer) { for (var i = 0; i < layer.children.length; i++) n += layer.children[i].childElementCount; }
+  var cc = document.getElementById('confetti-container');
+  if (cc) { for (var j = 0; j < cc.children.length; j++) n += cc.children[j].childElementCount; }
+  return n;
+}
+function particleBudget(want) {
+  var free = PARTICLE_CAP - liveParticleCount();
+  return Math.max(0, Math.min(want, free));
+}
+
 function sparkleBurst(x, y, n) {
-  n = n || 12;
+  if (state.settings.calm) return;
+  n = particleBudget(n || 3);
+  if (!n) return;
+  var layer = particleLayer();
+  if (!layer) return;
+  var group = document.createElement('div');       // one container, removed whole
+  group.style.cssText = 'position:absolute;inset:0;pointer-events:none';
   var emojis = ['✨','⭐','🌟','💫','✦'];
   for (var i = 0; i < n; i++) {
     var el = document.createElement('div');
@@ -437,177 +678,381 @@ function sparkleBurst(x, y, n) {
     el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     el.style.left = (x + (Math.random() - .5) * 80) + 'px';
     el.style.top  = (y + (Math.random() - .5) * 60) + 'px';
-    document.body.appendChild(el);
-    setTimeout(function() { el.remove(); }, 1000);
+    group.appendChild(el);
   }
+  layer.appendChild(group);
+  setTimeout(function() { group.remove(); }, 1100);
 }
 
 function confettiBurst() {
-  try {
-    var el = document.getElementById('confetti-container');
-    if (!el) return;
-    var colors = ['#ff6b6b','#ff8c42','#ffd93d','#6bcb77','#4d96ff','#c77dff'];
-    for (var i = 0; i < 40; i++) {
-      var c = document.createElement('div');
-      c.style.cssText = 'position:fixed;width:10px;height:10px;background:' + colors[Math.floor(Math.random()*colors.length)] +
-        ';left:' + (Math.random()*window.innerWidth) + 'px;top:-10px;border-radius:' + (Math.random()>.5?'50%':'2px') +
-        ';pointer-events:none;z-index:200;transition:transform 1.5s ease-in,opacity 1.5s ease-in';
-      document.body.appendChild(c);
-      setTimeout(function(cc){cc.style.transform='translateY('+window.innerHeight+'px) rotate('+(Math.random()*720-360)+'deg)';cc.style.opacity='0';},10,c);
-      setTimeout(function(cc){cc.remove();},1600,c);
-    }
-  } catch(e) {}
+  if (state.settings.calm) return;
+  var host = document.getElementById('confetti-container');
+  if (!host) return;
+  var n = particleBudget(40);
+  if (!n) return;
+  var group = document.createElement('div');
+  group.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden';
+  var colors = ['#ff6b6b','#ff8c42','#ffd93d','#6bcb77','#4d96ff','#c77dff'];
+  var pieces = [];
+  for (var i = 0; i < n; i++) {
+    var c = document.createElement('div');
+    c.style.cssText = 'position:absolute;width:10px;height:10px;background:' + colors[Math.floor(Math.random()*colors.length)] +
+      ';left:' + (Math.random()*window.innerWidth) + 'px;top:-10px;border-radius:' + (Math.random()>.5?'50%':'2px') +
+      ';transition:transform 1.5s ease-in,opacity 1.5s ease-in';
+    group.appendChild(c);
+    pieces.push(c);
+  }
+  host.appendChild(group);
+  setTimeout(function() {
+    pieces.forEach(function(c) {
+      c.style.transform = 'translateY(' + window.innerHeight + 'px) rotate(' + (Math.random()*720-360) + 'deg)';
+      c.style.opacity = '0';
+    });
+  }, 10);
+  setTimeout(function(){ group.remove(); }, 1700);
 }
 
 function emojiCascade(emojis) {
+  if (state.settings.calm) return;
+  var layer = particleLayer();
+  if (!layer) return;
+  var n = particleBudget(10);
+  if (!n) return;
   emojis = emojis || ['🎉','🎊','⭐','✨'];
-  var container = document.createElement('div');
-  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:400;overflow:hidden';
-  document.body.appendChild(container);
-  for (var i = 0; i < 20; i++) {
+  var group = document.createElement('div');
+  group.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden';
+  var items = [];
+  for (var i = 0; i < n; i++) {
     var e = document.createElement('div');
     e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-    e.style.cssText = 'position:absolute;font-size:32px;left:' + Math.random()*window.innerWidth + 'px;top:-40px;transition:transform 2.5s ease-in,opacity 2.5s;animation-delay:' + (Math.random()*.5) + 's';
-    container.appendChild(e);
-    setTimeout(function(ee){ee.style.transform='translateY('+(window.innerHeight+60)+'px)';ee.style.opacity='0';},50,e);
-    setTimeout(function(c){c.remove();},3000,container);
+    e.style.cssText = 'position:absolute;font-size:32px;left:' + Math.random()*window.innerWidth + 'px;top:-40px;transition:transform 2.2s ease-in,opacity 2.2s';
+    group.appendChild(e);
+    items.push(e);
+  }
+  layer.appendChild(group);
+  setTimeout(function() {
+    items.forEach(function(e) { e.style.transform = 'translateY(' + (window.innerHeight+60) + 'px)'; e.style.opacity = '0'; });
+  }, 30);
+  setTimeout(function(){ group.remove(); }, 2500);
+}
+
+// The one confetti of the session belongs to the first COMPLETED piece of work.
+function celebrateWork() {
+  if (!state.session.celebrated) {
+    state.session.celebrated = true;
+    confettiBurst();
+    sound.play('happy');
+  } else {
+    sound.playAny(['chime','done','bloop']);
   }
 }
 
-// ===== SWITCH WORLD =====
-function fetchWeather() {
-  var w = document.getElementById('migoo-widget');
-  if (!w) return;
-  w.style.display = 'block';
-  w.style.opacity = '1';
-  // fetch Jakarta weather
-  try {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://wttr.in/Jakarta?format=j1', true);
-    xhr.onload = function() {
-      try {
-        var d = JSON.parse(xhr.responseText);
-        var cur = d.current_condition[0];
-        var temp = cur.temp_C + '°C';
-        var desc = cur.weatherDesc[0].value;
-        var rain = cur.chanceofrain;
-        document.getElementById('migoo-temp').textContent = temp;
-        document.getElementById('migoo-desc').textContent = desc;
-        document.getElementById('migoo-rain').textContent = rain > 40 ? '🌧 ' + rain + '% rain chance' : '';
-        document.getElementById('migoo-time').textContent = 'Updated ' + new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-      } catch(e) {}
-    };
-    xhr.onerror = function() {};
-    xhr.send();
-  } catch(e) {}
-  // auto-hide after 5 seconds
-  setTimeout(function() {
-    if (w) { w.style.opacity = '0'; setTimeout(function(){ if(w) w.style.display='none'; }, 500); }
-  }, 5000);
-}
-
+// ===== WORLD SWITCHING =====
 function switchWorld(world) {
-  // activate chrome frame so tabs/dock receive clicks
+  flushBurst();                                   // never lose pending input
   var cf = document.getElementById('chrome-frame');
   if (cf) cf.classList.add('visible');
-  // hide all worlds
   document.querySelectorAll('.world').forEach(function(el){ el.classList.remove('active'); });
-  // show target
   var w = document.getElementById(world + '-world');
   if (w) w.classList.add('active');
-  // update chrome tabs
   document.querySelectorAll('.chrome-tab').forEach(function(t){ t.classList.remove('active'); });
   var tab = document.getElementById('tab-' + world);
   if (tab) tab.classList.add('active');
-  // update dock
   document.querySelectorAll('.bar-btn').forEach(function(b){ b.classList.remove('active'); });
   var bar = document.getElementById('bar-' + world);
   if (bar) bar.classList.add('active');
   state.world = world;
-  // init world
   if (world === 'terminal') initTerminal();
-  else if (world === 'call') initCall();
-  else if (world === 'paper') initDocs();
-  fetchWeather(); // weather widget on world switch, auto-dismisses after 5s
+  else if (world === 'call') { syncMeet(); waveOnce(); }
 }
 
-// ===== INIT WORLD FUNCTIONS =====
-function initDocs() {
-  // nothing heavy needed
+// ===== NOTES (docs) =====
+function docsArea() { return document.getElementById('docs-area'); }
+function selectionInDocs() {
+  var a = docsArea();
+  if (!a) return null;
+  try {
+    var sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return null;
+    var r = sel.getRangeAt(0);
+    if (!a.contains(r.commonAncestorContainer)) return null;
+    return { sel:sel, range:r, collapsed:sel.isCollapsed };
+  } catch(e) { return null; }
+}
+function caretToEnd() {
+  var a = docsArea();
+  if (!a) return;
+  try {
+    var r = document.createRange(); r.selectNodeContents(a); r.collapse(false);
+    var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  } catch(e) {}
+}
+function focusDocs() {
+  var a = docsArea();
+  if (!a) return;
+  a.focus();
+  if (!selectionInDocs()) caretToEnd();
+}
+// Applies to the live selection when there is one; only an empty selection gets
+// the caret moved to the end (so the latched format applies to what comes next).
+function applyDocsFormat(cmd, value) {
+  var a = docsArea();
+  if (!a) return;
+  var info = selectionInDocs();
+  if (!info) { a.focus(); caretToEnd(); }
+  else if (document.activeElement !== a) {
+    // keep the existing range alive across the focus change
+    var saved = info.range.cloneRange();
+    a.focus();
+    try { var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(saved); } catch(e) {}
+  }
+  try { document.execCommand(cmd, false, value || null); } catch(e) {}
+}
+function syncDocsButtons() {
+  var b = document.getElementById('btn-bold');   if (b) b.classList.toggle('on', state.docs.bold);
+  var i = document.getElementById('btn-italic'); if (i) i.classList.toggle('on', state.docs.italic);
+  ['btn-red','btn-green','btn-blue'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('on', state.docs.color === el.dataset.color);
+  });
+  var a = docsArea();
+  if (a) { a.classList.remove('sz-1','sz-2','sz-3'); a.classList.add('sz-' + state.docs.size); }
+}
+// Burst typing: builds nodes with textContent only, honouring the latched format.
+function typeIntoDocs(text) {
+  var a = docsArea();
+  if (!a || !text) return;
+  a.focus();
+  if (!selectionInDocs()) caretToEnd();
+  var node = document.createTextNode(text);
+  var wrap = node;
+  if (state.docs.bold)   { var bEl = document.createElement('b'); bEl.appendChild(wrap); wrap = bEl; }
+  if (state.docs.italic) { var iEl = document.createElement('i'); iEl.appendChild(wrap); wrap = iEl; }
+  if (state.docs.color)  { var sEl = document.createElement('span'); sEl.style.color = state.docs.color; sEl.appendChild(wrap); wrap = sEl; }
+  try {
+    var sel = window.getSelection();
+    var r = sel.getRangeAt(0);
+    r.deleteContents();
+    r.insertNode(wrap);
+    r.setStartAfter(wrap); r.collapse(true);
+    sel.removeAllRanges(); sel.addRange(r);
+  } catch(e) {
+    a.appendChild(wrap);
+  }
+  state.docs.chars = a.textContent.length;
+  if (state.meet.sharing) updateShareView();
+}
+function backspaceDocs(n) {
+  var a = docsArea();
+  if (!a) return;
+  var txt = a.textContent;
+  if (!txt.length) return;
+  a.textContent = txt.slice(0, Math.max(0, txt.length - n));
+  state.docs.chars = a.textContent.length;
+  caretToEnd();
+}
+
+// ===== TERMINAL: STATE-DRIVEN JOB ROWS =====
+var JOB_CAP = 6;
+// Benign, constructive pretend-work; colour + icon make cards tellable apart without reading.
+var JOB_KINDS = [
+  {icon:'🏓', label:'ping',    color:'#7dd3fc'},
+  {icon:'🚀', label:'deploy',  color:'#fca5a5'},
+  {icon:'💾', label:'backup',  color:'#c4b5fd'},
+  {icon:'🔍', label:'scan',    color:'#fcd34d'},
+  {icon:'🧹', label:'tidy',    color:'#86efac'},
+  {icon:'🎨', label:'paint',   color:'#f9a8d4'},
+  {icon:'🧱', label:'build',   color:'#fdba74'},
+  {icon:'🌈', label:'colour',  color:'#a5f3fc'},
+  {icon:'📦', label:'pack',    color:'#d9f99d'},
+  {icon:'📊', label:'chart',   color:'#93c5fd'},
+  {icon:'🔌', label:'connect', color:'#fda4af'},
+  {icon:'🧮', label:'count',   color:'#bef264'}
+];
+function pickJob(seed) {
+  if (seed) {
+    var h = 0;
+    for (var i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+    return JOB_KINDS[h % JOB_KINDS.length];
+  }
+  return JOB_KINDS[Math.floor(Math.random() * JOB_KINDS.length)];
+}
+
+function buildJobRow(job) {
+  var row = document.createElement('div');
+  row.className = 'job-row';
+  row.dataset.jobId = String(job.id);
+  var icon = document.createElement('div');
+  icon.className = 'job-icon'; icon.textContent = job.icon;
+  var body = document.createElement('div');
+  body.className = 'job-body';
+  var label = document.createElement('div');
+  label.className = 'job-label';
+  label.textContent = job.label;                  // textContent only - never innerHTML
+  var bar = document.createElement('div');
+  bar.className = 'job-bar';
+  var fill = document.createElement('div');
+  fill.className = 'job-fill';
+  bar.appendChild(fill);
+  body.appendChild(label); body.appendChild(bar);
+  var status = document.createElement('div');
+  status.className = 'job-status';
+  row.appendChild(icon); row.appendChild(body); row.appendChild(status);
+  return row;
+}
+// Rows are a pure function of state.terminal.jobs.
+function renderJobs() {
+  var display = document.getElementById('term-display');
+  if (!display) return;
+  var jobs = state.terminal.jobs;
+  Array.prototype.slice.call(display.children).forEach(function(row) {
+    var keep = jobs.some(function(j){ return String(j.id) === row.dataset.jobId; });
+    if (!keep) row.remove();
+  });
+  jobs.forEach(function(job) {
+    var row = display.querySelector('[data-job-id="' + job.id + '"]');
+    if (!row) { row = buildJobRow(job); display.appendChild(row); }
+    row.classList.toggle('done', job.status === 'done');
+    row.querySelector('.job-icon').textContent = job.icon;
+    row.querySelector('.job-label').textContent = job.label;
+    row.querySelector('.job-fill').style.width = Math.round(job.progress * 100) + '%';
+    row.querySelector('.job-status').textContent = job.status === 'done' ? '✅' : '⏳';
+  });
+  display.scrollTop = display.scrollHeight;
+}
+
+function startJob(kind) {
+  kind = kind || pickJob();
+  var job = {
+    id: ++state.terminal.seq,
+    kind: kind.label,
+    icon: kind.icon,
+    label: kind.label,
+    status: 'running',
+    progress: 0
+  };
+  state.terminal.jobs.push(job);
+  while (state.terminal.jobs.length > JOB_CAP) state.terminal.jobs.shift();
+  renderJobs();
+  sound.playAny(['whir','pop','bloop']);
+  timers.jobs.push(setTimeout(function(){ job.progress = 1; renderJobs(); }, 40));
+  timers.jobs.push(setTimeout(function() {
+    job.status = 'done';
+    job.progress = 1;
+    renderJobs();
+    celebrateWork();
+  }, state.settings.calm ? 150 : 900));
+  return job;
 }
 
 function initTerminal() {
   var container = document.getElementById('term-cards');
   if (!container || container.children.length > 0) return;
-  var cmds = [
-    {icon:'🏓',label:'ping',cmd:'ping'},
-    {icon:'🚀',label:'deploy',cmd:'deploy'},
-    {icon:'💾',label:'backup',cmd:'backup'},
-    {icon:'🖥️',label:'scan',cmd:'scan'},
-    {icon:'🎨',label:'color',cmd:'color'},
-    {icon:'🌈',label:'rainbow',cmd:'rainbow'},
-    {icon:'💥',label:'boom',cmd:'boom'},
-    {icon:'🦠',label:'virus',cmd:'virus'}
-  ];
-  cmds.forEach(function(c) {
+  JOB_KINDS.slice(0, 8).forEach(function(kind, idx) {
     var btn = document.createElement('button');
     btn.className = 'term-card';
-    btn.innerHTML = '<span class="term-card-icon">'+c.icon+'</span><span>'+c.label+'</span>';
-    btn.addEventListener('click', function(e) {
-      try { sound.play('snap'); sparkleBurst(e.clientX, e.clientY, 8); } catch(err){}
-      runCommand(c.cmd);
-    });
+    btn.dataset.action = 'run-job';
+    btn.dataset.kind = String(idx);               // runs exactly the job it displays
+    btn.style.background = kind.color;
+    btn.setAttribute('aria-label', kind.label);
+    var ic = document.createElement('span');
+    ic.className = 'term-card-icon'; ic.textContent = kind.icon;
+    var tx = document.createElement('span');
+    tx.className = 'term-card-word'; tx.textContent = kind.label;
+    btn.appendChild(ic); btn.appendChild(tx);
     container.appendChild(btn);
   });
 }
 
-function runCommand(cmd) {
-  var display = document.getElementById('term-display');
-  if (!display) return;
-  var out = document.createElement('div');
-  out.style.marginBottom = '4px';
-  switch(cmd) {
-    case 'ping': out.textContent = 'Pinging localhost... 64 bytes: time=0.1ms'; break;
-    case 'deploy': out.textContent = 'Deploying... Done! ✓'; emojiCascade(['🚀']); break;
-    case 'backup': out.textContent = 'Backing up... 100% complete ✓'; emojiCascade(['💾']); break;
-    case 'scan': out.textContent = 'Scanning... 0 vulnerabilities found ✓'; break;
-    case 'color': out.textContent = '🌈🌈🌈🌈🌈🌈🌈🌈'; out.style.color='#ff6b6b'; out.style.textShadow='0 0 8px #ff6b6b'; emojiCascade(['🎨']); break;
-    case 'rainbow': out.textContent = 'R G B Y P!'; break;
-    case 'boom': out.textContent = '💥💥💥 BOOM! 💥💥💥'; confettiBurst(); emojiCascade(['💥','🔥']); break;
-    case 'virus': out.textContent = 'VIRUS DETECTED! 🦠 quarantined ✓'; break;
-    default: out.textContent = 'command not found: ' + cmd;
-  }
-  display.appendChild(out);
-  display.scrollTop = display.scrollHeight;
+// ===== CALL (meet) =====
+var FAMILY_RESPONSES = ['👏','❤️','😊','🎉','👍'];
+function showTileReaction(tile, emoji) {
+  if (!tile) return;
+  var r = document.createElement('div');
+  r.className = 'tile-reaction';
+  r.textContent = emoji;
+  tile.appendChild(r);
+  setTimeout(function(){ r.remove(); }, 1900);
 }
-
-function initCall() {
-  // tile waving animation
-  var tiles = document.querySelectorAll('.meet-tile');
-  tiles.forEach(function(t, i) {
-    if (i % 2 === 1) {
-      t.querySelector('.meet-wave').style.animationDelay = (i * .4) + 's';
-    }
+// One brief wave when the call opens, then stillness - no infinite motion.
+function waveOnce() {
+  if (state.settings.calm) return;
+  document.querySelectorAll('.meet-wave').forEach(function(w) {
+    w.classList.add('go');
+    setTimeout(function(){ w.classList.remove('go'); }, 2500);
   });
-  // speaking highlight (fake)
-  setInterval(function() {
-    tiles.forEach(function(t){ t.classList.remove('speaking'); });
-    var idx = Math.floor(Math.random() * tiles.length);
-    tiles[idx].classList.add('speaking');
-  }, 2000);
+}
+function syncMeet() {
+  var self = document.getElementById('tile-self');
+  var m = document.getElementById('btn-mute');
+  var c = document.getElementById('btn-cam');
+  var h = document.getElementById('btn-hand');
+  var sh = document.getElementById('btn-share');
+  if (m) { m.classList.toggle('on', state.meet.muted); m.textContent = state.meet.muted ? '🔇' : '🎤'; }
+  if (c) { c.classList.toggle('on', state.meet.camOff); c.textContent = state.meet.camOff ? '📷' : '📹'; }
+  if (h) h.classList.toggle('on', state.meet.hand);
+  if (sh) sh.classList.toggle('on', state.meet.sharing);
+  if (self) {
+    self.classList.toggle('is-muted', state.meet.muted);
+    self.classList.toggle('cam-off', state.meet.camOff);
+    self.classList.toggle('is-hand', state.meet.hand);
+    self.classList.toggle('is-sharing', state.meet.sharing);
+  }
+  var sv = document.getElementById('share-view');
+  if (sv) sv.classList.toggle('on', state.meet.sharing);
+}
+function updateShareView() {
+  var doc = document.getElementById('share-doc');
+  var area = docsArea();
+  if (!doc) return;
+  // plain text only: non-editable miniature, and safe for typed input
+  doc.textContent = (area && area.textContent) ? area.textContent : '✏️';
+}
+// Exactly ONE restrained reply per event; a newer tap cancels the pending one.
+function scheduleFamilyReply() {
+  if (timers.reply) { clearTimeout(timers.reply); timers.reply = null; }
+  document.querySelectorAll('.meet-tile.speaking').forEach(function(t){ t.classList.remove('speaking'); });
+  var tiles = ['tile-0','tile-1','tile-2'];
+  var id = tiles[state.meet.responder % tiles.length];
+  state.meet.responder++;
+  timers.reply = setTimeout(function() {
+    timers.reply = null;
+    var t = document.getElementById(id);
+    if (!t) return;
+    t.classList.add('speaking');
+    var wave = t.querySelector('.meet-wave');
+    if (wave && !state.settings.calm) { wave.classList.add('go'); setTimeout(function(){ wave.classList.remove('go'); }, 2500); }
+    showTileReaction(t, FAMILY_RESPONSES[Math.floor(Math.random() * FAMILY_RESPONSES.length)]);
+    sound.play('pop');
+    setTimeout(function(){ t.classList.remove('speaking'); }, 1600);
+  }, 800);
 }
 
-// ===== ENTER =====
-function doEnter() {
-  try { sound.play('happy'); } catch(e) {}
-  var home = document.getElementById('home-screen');
-  if (home) home.style.display = 'none';
-  var frame = document.getElementById('chrome-frame');
-  if (frame) frame.classList.add('visible');
-  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
-  confettiBurst();
-  state.entered = true;
-  fetchWeather(); // weather widget on enter, auto-dismisses after 5s
+// ===== IDLE CUE (one pulse, no words) =====
+function clearIdleCue() {
+  document.querySelectorAll('.idle-cue').forEach(function(el){ el.classList.remove('idle-cue'); });
+}
+function idleTargetSelector() {
+  if (state.world === 'terminal') return '.term-card';
+  if (state.world === 'call') return '.react-btn';
+  return '#btn-bold';
+}
+function scheduleIdleCue() {
+  if (timers.idle) clearTimeout(timers.idle);
+  timers.idle = setTimeout(function() {
+    timers.idle = null;
+    if (state.screen !== 'desk' || state.settings.calm) return;
+    var el = document.querySelector(idleTargetSelector());
+    if (!el) return;
+    clearIdleCue();
+    el.classList.add('idle-cue');
+    setTimeout(function(){ el.classList.remove('idle-cue'); }, 1300);
+  }, 8000);
+}
+function noteInteraction() {
+  state.session.lastInteraction = Date.now();
+  clearIdleCue();
+  scheduleIdleCue();
 }
 
 // ===== FULLSCREEN =====
@@ -618,176 +1063,384 @@ function tryFullscreen() {
     if (rf) rf.call(el);
   } catch(e) {}
 }
+function toggleFullscreen() {
+  try {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      var ef = document.exitFullscreen || document.webkitExitFullscreen;
+      if (ef) ef.call(document);
+    } else tryFullscreen();
+  } catch(e) {}
+}
 
-// ===== STARS =====
+// ===== ENTER (light: one sparkle burst + one short sound, no confetti) =====
+function doEnter() {
+  if (state.screen === 'desk') return;
+  var home = document.getElementById('home-screen');
+  if (home) home.style.display = 'none';
+  var frame = document.getElementById('chrome-frame');
+  if (frame) frame.classList.add('visible');
+  state.screen = 'desk';
+  sound.play('enter');
+  sparkleBurst(window.innerWidth / 2, window.innerHeight / 2, 8);
+  switchWorld(state.world);
+  syncDocsButtons();
+  syncMeet();
+}
+
+// ===== PARENT PANEL =====
+function parentPanelOpen() {
+  var p = document.getElementById('parent-panel');
+  return !!(p && p.classList.contains('on'));
+}
+function setParentPanel(open) {
+  var p = document.getElementById('parent-panel');
+  if (!p) return;
+  p.classList.toggle('on', !!open);
+  p.setAttribute('aria-hidden', open ? 'false' : 'true');
+  if (!open) { var c = document.getElementById('pp-confirm'); if (c) c.classList.remove('on'); }
+  if (open) applySettings();
+}
+function resetSession() {
+  clearTimerList(timers.jobs);
+  if (timers.reply) { clearTimeout(timers.reply); timers.reply = null; }
+  if (timers.burst) { clearTimeout(timers.burst); timers.burst = null; }
+  if (timers.idle)  { clearTimeout(timers.idle);  timers.idle = null; }
+  burst = null;
+  var area = docsArea();
+  if (area) area.textContent = '';
+  state.docs = { bold:false, italic:false, color:null, size:1, chars:0 };
+  state.terminal = { jobs:[], seq:0 };
+  state.meet = { muted:false, camOff:false, hand:false, sharing:false, responder:0 };
+  state.session.celebrated = false;
+  document.querySelectorAll('.meet-tile.speaking').forEach(function(t){ t.classList.remove('speaking'); });
+  clearIdleCue();
+  renderJobs();
+  syncDocsButtons();
+  syncMeet();
+  updateShareView();
+  scheduleIdleCue();
+}
+
+// ===== SINGLE ACTION DISPATCH =====
+function dispatch(action, el, e) {
+  el = el || document.body;
+  var x = (e && e.clientX) || window.innerWidth / 2;
+  var y = (e && e.clientY) || window.innerHeight / 2;
+  switch (action) {
+    case 'enter':
+      sparkleBurst(x, y, 6);
+      tryFullscreen();
+      doEnter();
+      break;
+
+    case 'theme': {
+      var theme = el.dataset.theme || 'daylight';
+      state.theme = theme;
+      document.body.classList.toggle('theme-space', theme === 'space');
+      document.querySelectorAll('.pill').forEach(function(p){ p.classList.toggle('active', p === el); });
+      sound.playAny(['sparkle','chime']); sparkleBurst(x, y, 3);
+      break;
+    }
+
+    case 'world':
+      if (!el.dataset.w) break;
+      sound.playAny(['sparkle','pop','bloop']); sparkleBurst(x, y, 3);
+      switchWorld(el.dataset.w);
+      break;
+
+    case 'docs-bold':
+      state.docs.bold = !state.docs.bold;
+      applyDocsFormat('bold'); syncDocsButtons();
+      sound.playAny(['sparkle','pop']); sparkleBurst(x, y, 3);
+      break;
+
+    case 'docs-italic':
+      state.docs.italic = !state.docs.italic;
+      applyDocsFormat('italic'); syncDocsButtons();
+      sound.playAny(['sparkle','boop']); sparkleBurst(x, y, 3);
+      break;
+
+    case 'docs-color':
+      state.docs.color = (state.docs.color === el.dataset.color) ? null : el.dataset.color;
+      applyDocsFormat('foreColor', el.dataset.color); syncDocsButtons();
+      sound.playAny(['sparkle','chime']); sparkleBurst(x, y, 3);
+      break;
+
+    case 'docs-size':
+      state.docs.size = state.docs.size % 3 + 1;   // cycle 1 -> 2 -> 3 -> 1
+      syncDocsButtons();
+      sound.playAny(['pop','bloop','chime']); sparkleBurst(x, y, 3);
+      break;
+
+    case 'docs-input': {
+      var a = docsArea();
+      if (a) state.docs.chars = a.textContent.length;
+      if (state.meet.sharing) updateShareView();
+      break;
+    }
+
+    case 'run-job': {
+      var idx = parseInt(el.dataset.kind, 10);
+      var kind = JOB_KINDS[isNaN(idx) ? 0 : idx];
+      sparkleBurst(x, y, 4);
+      startJob(kind);
+      break;
+    }
+
+    case 'meet-mute':
+      state.meet.muted = !state.meet.muted;
+      syncMeet(); sound.playAny(['pop','boop']); sparkleBurst(x, y, 3);
+      break;
+
+    case 'meet-cam':
+      state.meet.camOff = !state.meet.camOff;
+      syncMeet(); sound.playAny(['boop','pop']); sparkleBurst(x, y, 3);
+      break;
+
+    case 'meet-share':
+      state.meet.sharing = !state.meet.sharing;
+      updateShareView(); syncMeet();
+      sound.playAny(['chime','whir']); sparkleBurst(x, y, 3);
+      break;
+
+    case 'meet-hand':
+      state.meet.hand = !state.meet.hand;
+      syncMeet(); sound.playAny(['bloop','chime']);
+      if (state.meet.hand) showTileReaction(document.getElementById('tile-self'), '✋');
+      break;
+
+    case 'meet-react': {
+      var emoji = el.dataset.emoji || '👏';
+      showTileReaction(document.getElementById('tile-self'), emoji);   // the CHILD is the source
+      sound.playAny(['twinkle','chime','bloop']);
+      sparkleBurst(x, y, 4);
+      scheduleFamilyReply();
+      break;
+    }
+
+    case 'pp-sound':
+      state.settings.soundOn = !state.settings.soundOn;
+      applySettings(); saveSettings(); sound.play('pop');
+      break;
+
+    case 'pp-volume':
+      state.settings.volume = (parseInt(el.value, 10) || 0) / 100;
+      applySettings(); saveSettings();
+      break;
+
+    case 'pp-calm':
+      state.settings.calm = !state.settings.calm;
+      applySettings(); saveSettings();
+      break;
+
+    case 'pp-fullscreen':
+      toggleFullscreen();
+      break;
+
+    case 'pp-reset': {
+      var cfm = document.getElementById('pp-confirm');
+      if (cfm) cfm.classList.add('on');           // one adult confirmation, inside the panel
+      break;
+    }
+
+    case 'pp-reset-confirm': {
+      resetSession();
+      var cfm2 = document.getElementById('pp-confirm');
+      if (cfm2) cfm2.classList.remove('on');
+      setParentPanel(false);
+      break;
+    }
+
+    case 'pp-reset-cancel': {
+      var cfm3 = document.getElementById('pp-confirm');
+      if (cfm3) cfm3.classList.remove('on');
+      break;
+    }
+
+    case 'pp-close':
+      setParentPanel(false);
+      break;
+  }
+}
+
+// ===== EVENT DELEGATION =====
+function setupDelegation() {
+  // Audio can only start inside a gesture handler.
+  document.addEventListener('pointerdown', function(){ sound.unlock(); }, true);
+  document.addEventListener('keydown', function(){ sound.unlock(); }, true);
+
+  document.addEventListener('click', function(e) {
+    noteInteraction();
+    var el = e.target.closest ? e.target.closest('[data-action]') : null;
+    if (!el) return;
+    dispatch(el.dataset.action, el, e);
+  });
+
+  var vol = document.getElementById('pp-volume');
+  if (vol) vol.addEventListener('input', function(){ dispatch('pp-volume', vol, null); });
+
+  var area = docsArea();
+  if (area) area.addEventListener('input', function(){ dispatch('docs-input', area, null); });
+}
+
+// ===== KEYBOARD: ONE MODEL, EVERY SCREEN, EVERY KEY PRODUCTIVE =====
+// Rapid keystrokes are grouped into a single ~300ms burst that produces exactly
+// one response and one sound, whatever the child pressed.
+var BURST_MS = 300;
+var burst = null;                                  // {world, screen, text, back, keys}
+
+function isPrintable(e) {
+  return !!e.key && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey;
+}
+function isModifierOnly(e) {
+  return e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta' ||
+         e.key === 'CapsLock' || e.key === 'OS';
+}
+
+// Resolve the pending burst immediately (also called before a world change).
+function flushBurst() {
+  if (timers.burst) { clearTimeout(timers.burst); timers.burst = null; }
+  if (!burst) return;
+  var b = burst;
+  burst = null;
+
+  if (b.screen !== 'desk') { dispatch('enter', document.body, null); return; }
+
+  if (b.world === 'paper') {
+    if (b.back && !b.text) { backspaceDocs(b.back); sound.play('boop'); }
+    else if (b.text) { typeIntoDocs(b.text); sound.play('type'); }
+    else { sound.play('nudge'); sparkleBurst(window.innerWidth/2, window.innerHeight/2, 2); }
+    return;
+  }
+  if (b.world === 'terminal') {
+    var input = document.getElementById('term-input');
+    if (input) input.value = '';
+    startJob(pickJob(b.text || String(b.keys)));   // always succeeds; no failure path
+    return;
+  }
+  if (b.world === 'call') {
+    var self = document.getElementById('tile-self');
+    showTileReaction(self, b.text ? '💬' : '✨');
+    sound.playAny(['bloop','chime']);
+    scheduleFamilyReply();
+    return;
+  }
+  sound.play('nudge');
+}
+
+function feedBurst(e) {
+  if (!burst) burst = { world: state.world, screen: state.screen, text: '', back: 0, keys: 0 };
+  burst.keys++;
+  if (isPrintable(e)) {
+    burst.text += e.key;
+    if (burst.text.length > 40) burst.text = burst.text.slice(-40);
+  } else if (e.key === 'Backspace') {
+    burst.back++;
+  } else if (e.key === 'Enter') {
+    burst.text += ' ';
+  }
+  if (timers.burst) clearTimeout(timers.burst);
+  timers.burst = setTimeout(function(){ timers.burst = null; flushBurst(); }, BURST_MS);
+}
+
+function setupKeyboard() {
+  document.addEventListener('keydown', function(e) {
+    // adult shortcut, deliberately outside the child keyboard model
+    if (e.ctrlKey && e.shiftKey && (e.key === 'P' || e.key === 'p')) {
+      e.preventDefault();
+      setParentPanel(!parentPanelOpen());
+      return;
+    }
+    if (parentPanelOpen()) return;
+    if (isModifierOnly(e)) return;                 // the real key that follows responds
+
+    noteInteraction();
+
+    // Docs types through our own burst, so keep the browser from double-inserting.
+    if (state.screen === 'desk' && state.world === 'paper' &&
+        (isPrintable(e) || e.key === 'Enter' || e.key === 'Backspace')) {
+      e.preventDefault();
+    }
+    // Terminal Enter would submit/echo; the burst owns it.
+    if (state.screen === 'desk' && state.world === 'terminal' && e.key === 'Enter') {
+      e.preventDefault();
+    }
+    // On the home screen ANY key starts working.
+    if (state.screen !== 'desk' && (e.key === ' ' || e.key === 'Enter')) e.preventDefault();
+
+    feedBurst(e);
+  });
+}
+
+// ===== PARENT GESTURE (no overlays: document-level pointer tracking) =====
+// Two simultaneous pointers held 2s, one in each top corner. Nothing is intercepted,
+// so a single tap always reaches whatever is underneath it.
+function setupParentGesture() {
+  var pointers = {};
+  var timer = null;
+  var CORNER_W = 0.22, CORNER_H = 140;
+
+  function corner(x, y) {
+    if (y > CORNER_H) return null;
+    if (x < window.innerWidth * CORNER_W) return 'left';
+    if (x > window.innerWidth * (1 - CORNER_W)) return 'right';
+    return null;
+  }
+  function evaluate() {
+    var ids = Object.keys(pointers);
+    var haveLeft = false, haveRight = false;
+    ids.forEach(function(id) {
+      if (pointers[id] === 'left') haveLeft = true;
+      if (pointers[id] === 'right') haveRight = true;
+    });
+    if (haveLeft && haveRight && ids.length >= 2) {
+      if (!timer) timer = setTimeout(function(){ timer = null; setParentPanel(true); }, 2000);
+    } else if (timer) { clearTimeout(timer); timer = null; }
+  }
+  function drop(e) { delete pointers[e.pointerId]; evaluate(); }
+
+  document.addEventListener('pointerdown', function(e) {
+    var c = corner(e.clientX, e.clientY);
+    if (c) pointers[e.pointerId] = c;              // never preventDefault: taps pass through
+    evaluate();
+  }, true);
+  document.addEventListener('pointermove', function(e) {
+    if (!(e.pointerId in pointers)) return;
+    var c = corner(e.clientX, e.clientY);
+    if (c !== pointers[e.pointerId]) drop(e);      // finger moved away: cancel
+  }, true);
+  ['pointerup','pointercancel'].forEach(function(evt) {
+    document.addEventListener(evt, drop, true);
+  });
+}
+
+// ===== STARS (calmer default: fewer, slower) =====
 function makeStars() {
   var container = document.getElementById('stars');
   if (!container) return;
-  for (var i = 0; i < 80; i++) {
+  for (var i = 0; i < 26; i++) {
     var s = document.createElement('div');
     s.className = 'star';
     s.style.left = Math.random() * 100 + '%';
     s.style.top = Math.random() * 100 + '%';
-    s.style.animationDelay = Math.random() * 2 + 's';
+    s.style.animationDelay = Math.random() * 3 + 's';
+    s.style.animationDuration = (2.6 + Math.random() * 2) + 's';
     s.style.width = s.style.height = (Math.random() * 2 + 1) + 'px';
     container.appendChild(s);
   }
 }
 
-// ===== KEYBOARD INPUT =====
-function setupKeyboard() {
-  var input = document.getElementById('term-input');
-  if (!input) return;
-  input.addEventListener('keydown', function(e) {
-    // chirpy keypress sound on every keystroke
-    try {
-      sound.init();
-      var now2 = audioCtx.currentTime;
-      var o2 = audioCtx.createOscillator();
-      var g3 = audioCtx.createGain();
-      o2.connect(g3); g3.connect(audioCtx.destination);
-      o2.frequency.value = 1200 + Math.random() * 200;
-      o2.type = 'square';
-      g3.gain.setValueAtTime(.06, now2);
-      g3.gain.exponentialRampToValueAtTime(.001, now2 + .06);
-      o2.start(now2); o2.stop(now2 + .06);
-    } catch(err){}
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      var val = input.value.trim();
-      if (!val) return;
-      try { sound.play('enter'); sparkleBurst(input.getBoundingClientRect().left, input.getBoundingClientRect().top, 6); } catch(err){}
-      var display = document.getElementById('term-display');
-      if (display) {
-        var line = document.createElement('div');
-        line.style.color = '#4fc3f7';
-        line.textContent = '> ' + val;
-        display.appendChild(line);
-      }
-      input.value = '';
-      // fake commands
-      var fake = {ping:'Pinging localhost... 64 bytes: time=0.1ms',help:'Available: ping, deploy, backup, scan, color, rainbow, boom, virus',neofetch:'Ichlas-PC @ clickety-desk\nOS: ClicketyOS 1.0\nKernel: Brain 5.0\nUptime: forever\nShell: clicky-sh'};
-      var display2 = document.getElementById('term-display');
-      if (display2) {
-        var out2 = document.createElement('div');
-        out2.textContent = fake[val] || 'command not found: ' + val;
-        display2.appendChild(out2);
-        display2.scrollTop = display2.scrollHeight;
-      }
-    }
-  });
-}
-
-// ===== DOCS TOOLBAR =====
-function setupDocs() {
-  var area = document.getElementById('docs-area');
-  if (!area) return;
-  var btnBold = document.getElementById('btn-bold');
-  if (btnBold) btnBold.addEventListener('click', function() {
-    try { sound.play('sparkle'); sparkleBurst(btnBold.getBoundingClientRect().left, btnBold.getBoundingClientRect().top, 5); } catch(e){}
-    document.execCommand('bold');
-  });
-  var btnItalic = document.getElementById('btn-italic');
-  if (btnItalic) btnItalic.addEventListener('click', function() {
-    try { sound.play('sparkle'); sparkleBurst(btnItalic.getBoundingClientRect().left, btnItalic.getBoundingClientRect().top, 5); } catch(e){}
-    document.execCommand('italic');
-  });
-  var colors = [
-    {id:'btn-red',color:'#ef4444'},
-    {id:'btn-green',color:'#22c55e'},
-    {id:'btn-blue',color:'#3b82f6'}
-  ];
-  colors.forEach(function(c) {
-    var btn = document.getElementById(c.id);
-    if (btn) btn.addEventListener('click', function(e) {
-      try { sound.play('sparkle'); sparkleBurst(btn.getBoundingClientRect().left, btn.getBoundingClientRect().top, 5); } catch(e){}
-      document.execCommand('foreColor', false, c.color);
-    });
-  });
-}
-
-// ===== MEET CONTROLS =====
-function setupMeet() {
-  var btnMute = document.getElementById('btn-mute');
-  if (btnMute) btnMute.addEventListener('click', function() {
-    try { sound.play('snap'); } catch(e){}
-    btnMute.classList.toggle('on');
-  });
-  var btnCam = document.getElementById('btn-cam');
-  if (btnCam) btnCam.addEventListener('click', function() {
-    try { sound.play('snap'); } catch(e){}
-    btnCam.classList.toggle('on');
-  });
-  var btnShare = document.getElementById('btn-share');
-  if (btnShare) btnShare.addEventListener('click', function() {
-    try { sound.play('sparkle'); emojiCascade(['📤','📎']); } catch(e){}
-  });
-  var btnHand = document.getElementById('btn-hand');
-  if (btnHand) btnHand.addEventListener('click', function() {
-    try { sound.play('happy'); } catch(e){}
-    btnHand.classList.toggle('on');
-    if (btnHand.classList.contains('on')) emojiCascade(['✋','🙋']);
-  });
-  document.querySelectorAll('.react-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      try { sound.play('twinkle'); sparkleBurst(e.clientX, e.clientY, 8); emojiCascade([btn.dataset.emoji]); } catch(err){}
-    });
-  });
-}
-
-// ===== SETUP ALL CLICK HANDLERS =====
-function setupHandlers() {
-  // HOME ENTER
-  var homeBtn = document.getElementById('home-enter-btn');
-  if (homeBtn) homeBtn.addEventListener('click', function(e) {
-    try { sound.play('happy'); sparkleBurst(e.clientX, e.clientY, 15); confettiBurst(); } catch(err){}
-    tryFullscreen();
-    doEnter();
-    switchWorld('paper');
-  });
-
-  // THEME PILLS
-  document.querySelectorAll('.pill').forEach(function(p) {
-    p.addEventListener('click', function(e) {
-      try { sound.play('sparkle'); sparkleBurst(e.clientX, e.clientY, 6); } catch(err){}
-      document.querySelectorAll('.pill').forEach(function(pp){ pp.classList.remove('active'); });
-      p.classList.add('active');
-    });
-  });
-
-  // CHROME TABS
-  document.querySelectorAll('.chrome-tab').forEach(function(tab) {
-    tab.addEventListener('click', function(e) {
-      var w = tab.dataset.w;
-      if (!w) return;
-      try { sound.play('sparkle'); sparkleBurst(e.clientX, e.clientY, 6); } catch(err){}
-      switchWorld(w);
-    });
-  });
-
-  // DOCK BUTTONS
-  document.querySelectorAll('.bar-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      var w = btn.dataset.w;
-      if (!w) return;
-      try { sound.play('sparkle'); sparkleBurst(e.clientX, e.clientY, 6); } catch(err){}
-      switchWorld(w);
-    });
-  });
-
-  // DOCS
-  setupDocs();
-
-  // MEET CONTROLS
-  setupMeet();
-
-  // TERMINAL INPUT
-  setupKeyboard();
-}
-
 // ===== AUTO START =====
+loadSettings();
+applySettings();
 makeStars();
-setupHandlers();
+setupDelegation();
+setupKeyboard();
+setupParentGesture();
+syncDocsButtons();
+syncMeet();
+renderJobs();
+scheduleIdleCue();
 </script>
 </body>
 </html>
