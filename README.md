@@ -19,7 +19,7 @@ using. She can:
 - 🎹 **Smash the keyboard** — it always produces work, never an error
 - 👆 **Tap** on a phone or tablet
 
-Every interaction should leave her feeling: *"I am working like Papa."*
+Every interaction should leave her feeling: *"I am working like a grown-up."*
 
 ---
 
@@ -35,9 +35,10 @@ keyboard both start real-looking jobs that show progress and then **finish with 
 Finished jobs stay on screen — the work accumulates. There is no way to fail.
 
 ### 📹 Call
-The family video call: Mama, Fadi, Aya and Papa. She can mute, cover the camera, raise
-her hand, send a reaction, and **share her Notes page into the call** so the others can
-see what she made. Reactions come from her first, then one family member responds.
+A playful video call with four friendly colleagues (Momo, Kiki, Bubu and You). She can
+mute, cover the camera, raise her hand, send a reaction, and **share her Notes page into
+the call** so the others can see what she made. Reactions come from her first, then one
+other person responds. (Names are invented - the product contains no real people.)
 
 ---
 
